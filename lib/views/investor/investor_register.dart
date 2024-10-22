@@ -1,7 +1,7 @@
-import 'package:cabonconnet/investor/investor_register_continue.dart';
+import 'package:cabonconnet/views/investor/investor_register_continue.dart';
 import 'package:cabonconnet/constant/app_color.dart';
-import 'package:cabonconnet/textstyles/textstyles.dart';
-import 'package:cabonconnet/widget/app_text_field.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cabonconnet/views/widget/app_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';

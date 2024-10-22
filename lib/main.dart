@@ -1,4 +1,4 @@
-import 'package:cabonconnet/splashscreen/splashscreen.dart';
+import 'package:cabonconnet/views/splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:get/get.dart';

@@ -1,10 +1,10 @@
-import 'package:cabonconnet/forgot_password/forgotpassword.dart';
+import 'package:cabonconnet/views/forgot_password/forgotpassword.dart';
 import 'package:cabonconnet/constant/app_color.dart';
-import 'package:cabonconnet/home/home.dart';
-import 'package:cabonconnet/textstyles/textstyles.dart';
+import 'package:cabonconnet/views/home/home.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/welcome.dart';
-import 'package:cabonconnet/widget/app_button.dart';
-import 'package:cabonconnet/widget/app_text_field.dart';
+import 'package:cabonconnet/views/widget/app_button.dart';
+import 'package:cabonconnet/views/widget/app_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';

@@ -1,7 +1,7 @@
-import 'package:cabonconnet/forgot_password/create_new_password.dart';
+import 'package:cabonconnet/views/forgot_password/create_new_password.dart';
 import 'package:cabonconnet/constant/app_color.dart';
-import 'package:cabonconnet/textstyles/textstyles.dart';
-import 'package:cabonconnet/widget/app_button.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';

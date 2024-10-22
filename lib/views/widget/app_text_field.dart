@@ -1,4 +1,4 @@
-import 'package:cabonconnet/textstyles/textstyles.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:flutter/material.dart';
 
 class AppTextFields extends StatefulWidget {

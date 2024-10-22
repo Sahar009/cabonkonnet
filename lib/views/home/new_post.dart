@@ -1,7 +1,7 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
-import 'package:cabonconnet/home/showcase_product.dart';
-import 'package:cabonconnet/textstyles/textstyles.dart';
+import 'package:cabonconnet/views/home/showcase_product.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 

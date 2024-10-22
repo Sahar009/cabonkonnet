@@ -1,8 +1,8 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
-import 'package:cabonconnet/textstyles/textstyles.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/welcome.dart';
-import 'package:cabonconnet/widget/app_button.dart';
+import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:flutter/material.dart';
 
 class Onboarding1 extends StatefulWidget {

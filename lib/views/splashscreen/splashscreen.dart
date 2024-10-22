@@ -1,5 +1,5 @@
 import 'package:cabonconnet/constant/app_images.dart';
-import 'package:cabonconnet/onboarding/onboarding.dart';
+import 'package:cabonconnet/views/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

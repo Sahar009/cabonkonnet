@@ -1,5 +1,5 @@
 import 'package:cabonconnet/constant/app_color.dart';
-import 'package:cabonconnet/textstyles/textstyles.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {

@@ -1,8 +1,8 @@
-import 'package:cabonconnet/investor/investor_register.dart';
-import 'package:cabonconnet/product_owner/register.dart';
+import 'package:cabonconnet/views/investor/investor_register.dart';
+import 'package:cabonconnet/views/product_owner/register.dart';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
-import 'package:cabonconnet/textstyles/textstyles.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
