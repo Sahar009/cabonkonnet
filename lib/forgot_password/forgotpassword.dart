@@ -1,4 +1,4 @@
-import 'package:cabonconnet/Product_Owner/verification_code.dart';
+import 'package:cabonconnet/product_owner/verification_code.dart';
 import 'package:cabonconnet/textstyles/textstyles.dart';
 import 'package:cabonconnet/widget/app_button.dart';
 import 'package:cabonconnet/widget/app_text_field.dart';

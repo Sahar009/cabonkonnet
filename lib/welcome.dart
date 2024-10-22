@@ -1,5 +1,5 @@
-import 'package:cabonconnet/Investor/investor_register.dart';
-import 'package:cabonconnet/Product_Owner/register.dart';
+import 'package:cabonconnet/investor/investor_register.dart';
+import 'package:cabonconnet/product_owner/register.dart';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/textstyles/textstyles.dart';

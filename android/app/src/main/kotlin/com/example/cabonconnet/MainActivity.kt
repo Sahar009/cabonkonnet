@@ -1,4 +1,4 @@
-package com.example.cabonconnet
+package com.cabon.connet
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,20 +1,43 @@
-import 'package:cabonconnet/Product_Owner/verification_code.dart';
+import 'package:cabonconnet/product_owner/verification_code.dart';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/textstyles/textstyles.dart';
 import 'package:cabonconnet/widget/app_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:file_picker/file_picker.dart';
 
-class RegisterContinue extends StatefulWidget {
-  const RegisterContinue({super.key});
+class InvestorRegisterContinue extends StatefulWidget {
+  const InvestorRegisterContinue({super.key});
 
   @override
-  State<RegisterContinue> createState() => _RegisterContinueState();
+  State<InvestorRegisterContinue> createState() =>
+      _InvestorRegisterContinueState();
 }
 
-class _RegisterContinueState extends State<RegisterContinue> {
-  TextEditingController addressController = TextEditingController();
+class _InvestorRegisterContinueState extends State<InvestorRegisterContinue> {
+  final TextEditingController companyNameController = TextEditingController();
+  final TextEditingController countryController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  String? bankStatementPath;
+  String? idCardPath;
+
+  Future<void> _pickFile(String type) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.any,
+    );
+
+    if (result != null) {
+      setState(() {
+        if (type == 'bank_statement') {
+          bankStatementPath = result.files.single.path;
+        } else if (type == 'id_card') {
+          idCardPath = result.files.single.path;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +49,13 @@ class _RegisterContinueState extends State<RegisterContinue> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 80),
-              const Row(
-                children: [Icon(Icons.arrow_back_ios, size: 16)],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Row(
+                  children: [Icon(Icons.arrow_back_ios, size: 16)],
+                ),
               ),
               const SizedBox(height: 10),
               Text(
@@ -49,8 +77,14 @@ class _RegisterContinueState extends State<RegisterContinue> {
               const SizedBox(height: 5),
               AppTextFields(
                   hint: 'Enter your company name',
-                  controller: addressController,
-                  iconData: IconsaxPlusLinear.bank),
+                  controller: companyNameController,
+                  iconData: IconsaxPlusLinear.bank,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your company name';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 20),
               Text(
                 'Country',
@@ -60,8 +94,14 @@ class _RegisterContinueState extends State<RegisterContinue> {
               const SizedBox(height: 5),
               AppTextFields(
                   hint: 'Enter country',
-                  controller: addressController,
-                  iconData: IconsaxPlusBold.cloud),
+                  controller: countryController,
+                  iconData: IconsaxPlusBold.cloud,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your country';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 20),
               Text(
                 'Address',
@@ -72,29 +112,48 @@ class _RegisterContinueState extends State<RegisterContinue> {
               AppTextFields(
                   hint: 'Enter your address',
                   controller: addressController,
-                  iconData: IconsaxPlusLinear.sms_edit),
+                  iconData: IconsaxPlusLinear.sms_edit,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your address';
+                    }
+                    return null;
+                  }),
               const SizedBox(height: 20),
               Text(
-                'Business Reg. Number',
+                'Upload your bank statement or tax return',
                 style:
                     AppTextStyle.body(size: 13, fontWeight: FontWeight.normal),
               ),
               const SizedBox(height: 5),
-              AppTextFields(
-                  hint: 'Enter business reg number',
-                  controller: addressController,
-                  iconData: IconsaxPlusLinear.document),
+              GestureDetector(
+                onTap: () => _pickFile('bank_statement'),
+                child: AppTextFields(
+                  hint:
+                      bankStatementPath ?? 'Tap to upload your bank statement',
+                  controller: TextEditingController(),
+                  iconData: IconsaxPlusLinear.document,
+                  isPassword: false,
+                  validator: null,
+                ),
+              ),
               const SizedBox(height: 20),
               Text(
-                'Website (optional)',
+                'Upload valid ID card',
                 style:
                     AppTextStyle.body(size: 13, fontWeight: FontWeight.normal),
               ),
               const SizedBox(height: 5),
-              AppTextFields(
-                  hint: 'Enter your company website',
-                  controller: addressController,
-                  iconData: IconsaxPlusBold.global),
+              GestureDetector(
+                onTap: () => _pickFile('id_card'),
+                child: AppTextFields(
+                  hint: idCardPath ?? 'Tap to upload your ID card',
+                  controller: TextEditingController(),
+                  iconData: IconsaxPlusBold.document,
+                  isPassword: false,
+                  validator: null,
+                ),
+              ),
               const SizedBox(height: 80),
               GestureDetector(
                 onTap: () {
@@ -110,10 +169,9 @@ class _RegisterContinueState extends State<RegisterContinue> {
                   decoration: BoxDecoration(
                       color: AppColor.primaryColor,
                       borderRadius: BorderRadius.circular(6)),
-                  child: Text(
-                    'Continue',
-                    style: AppTextStyle.body(color: AppColor.white, size: 14),
-                  ),
+                  child: Text('Continue',
+                      style:
+                          AppTextStyle.body(color: AppColor.white, size: 14)),
                 ),
               ),
               const SizedBox(height: 30),

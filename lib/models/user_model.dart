@@ -1,0 +1,138 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
+class UserModel {
+  final String id; // Use UUID for unique identification
+  final String fullName;
+  final String email;
+  final String phoneNumber;
+  final String role; // 'product_owner' or 'investor'
+
+  // Product Owner Fields
+  final String? companyName; // Nullable for investors
+  final String? address; // Nullable for investors
+  final String? businessRegNumber; // Nullable for product owners
+  final String? website; // Nullable for product owners
+
+  // Investor Fields
+  final String? bankStatementUrl; // URL or path for bank statement
+  final String? idCardUrl; // URL or path for ID card
+
+  UserModel({
+    required this.id,
+    required this.fullName,
+    required this.email,
+    required this.phoneNumber,
+    required this.role,
+    this.companyName,
+    this.address,
+    this.businessRegNumber,
+    this.website,
+    this.bankStatementUrl,
+    this.idCardUrl,
+  });
+
+  // Method to convert UserModel to a Map for storage (e.g., in Firestore)
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'fullName': fullName,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'role': role,
+      'companyName': companyName,
+      'address': address,
+      'businessRegNumber': businessRegNumber,
+      'website': website,
+      'bankStatementUrl': bankStatementUrl,
+      'idCardUrl': idCardUrl,
+    };
+  }
+
+  // Factory method to create UserModel from a Map
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      id: map['id'] as String,
+      fullName: map['fullName'] as String,
+      email: map['email'] as String,
+      phoneNumber: map['phoneNumber'] as String,
+      role: map['role'] as String,
+      companyName: map['companyName'] != null ? map['companyName'] as String : null,
+      address: map['address'] != null ? map['address'] as String : null,
+      businessRegNumber: map['businessRegNumber'] != null ? map['businessRegNumber'] as String : null,
+      website: map['website'] != null ? map['website'] as String : null,
+      bankStatementUrl: map['bankStatementUrl'] != null ? map['bankStatementUrl'] as String : null,
+      idCardUrl: map['idCardUrl'] != null ? map['idCardUrl'] as String : null,
+    );
+  }
+
+  UserModel copyWith({
+    String? id,
+    String? fullName,
+    String? email,
+    String? phoneNumber,
+    String? role,
+    String? companyName,
+    String? address,
+    String? businessRegNumber,
+    String? website,
+    String? bankStatementUrl,
+    String? idCardUrl,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      role: role ?? this.role,
+      companyName: companyName ?? this.companyName,
+      address: address ?? this.address,
+      businessRegNumber: businessRegNumber ?? this.businessRegNumber,
+      website: website ?? this.website,
+      bankStatementUrl: bankStatementUrl ?? this.bankStatementUrl,
+      idCardUrl: idCardUrl ?? this.idCardUrl,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl)';
+  }
+
+  @override
+  bool operator ==(covariant UserModel other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.id == id &&
+      other.fullName == fullName &&
+      other.email == email &&
+      other.phoneNumber == phoneNumber &&
+      other.role == role &&
+      other.companyName == companyName &&
+      other.address == address &&
+      other.businessRegNumber == businessRegNumber &&
+      other.website == website &&
+      other.bankStatementUrl == bankStatementUrl &&
+      other.idCardUrl == idCardUrl;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+      fullName.hashCode ^
+      email.hashCode ^
+      phoneNumber.hashCode ^
+      role.hashCode ^
+      companyName.hashCode ^
+      address.hashCode ^
+      businessRegNumber.hashCode ^
+      website.hashCode ^
+      bankStatementUrl.hashCode ^
+      idCardUrl.hashCode;
+  }
+}
