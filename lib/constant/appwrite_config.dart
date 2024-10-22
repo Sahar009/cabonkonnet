@@ -3,7 +3,7 @@ import 'package:appwrite/appwrite.dart';
 class AppwriteConfig {
   static String projectId = "671737250034dc45f228";
   static String databaseId = "6717388600333d9d6235";
-  static String userCollectionId = '671738970021b19aefb7';
+  static String userCollectionId = '6717d17b0019f7ec1a83';
 
   late Client _client;
   late Account _account;

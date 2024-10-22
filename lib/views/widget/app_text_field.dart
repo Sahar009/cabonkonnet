@@ -8,7 +8,8 @@ class AppTextFields extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final bool isPassword;
-
+  final bool isReadOnly;
+  final VoidCallback? onTab;
   const AppTextFields(
       {super.key,
       required this.controller,
@@ -16,7 +17,9 @@ class AppTextFields extends StatefulWidget {
       required this.iconData,
       this.validator,
       this.isPassword = false,
-      this.keyboardType});
+      this.keyboardType,
+      this.isReadOnly = false,
+      this.onTab});
 
   @override
   State<AppTextFields> createState() => _AppTextFieldsState();
@@ -29,12 +32,14 @@ class _AppTextFieldsState extends State<AppTextFields> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: widget.onTab,
       keyboardType: widget.keyboardType,
       controller: widget.controller,
       obscureText: widget.isPassword &&
           !_isPasswordVisible, // Toggles obscureText for password
       style: AppTextStyle.body(fontWeight: FontWeight.normal, size: 12),
       validator: widget.validator,
+      readOnly: widget.isReadOnly,
       decoration: InputDecoration(
         prefixIcon: Icon(widget.iconData),
         hintText: widget.hint,

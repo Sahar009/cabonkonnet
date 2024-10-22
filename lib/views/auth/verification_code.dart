@@ -1,4 +1,4 @@
-import 'package:cabonconnet/views/forgot_password/create_new_password.dart';
+import 'package:cabonconnet/views/auth/create_new_password.dart';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/widget/app_button.dart';

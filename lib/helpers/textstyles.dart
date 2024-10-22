@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTextStyle {
   static TextStyle body({
     Color? color,
-    FontStyle,
-    Decoration,
+    FontStyle? fontStyle,
+    TextDecoration? decoration,
     double size = 18,
     FontWeight fontWeight = FontWeight.bold,
   }) {
@@ -14,8 +14,8 @@ class AppTextStyle {
       color: color,
       letterSpacing: 0.1,
       fontWeight: fontWeight,
-      decoration: Decoration,
-      fontStyle: FontStyle,
+      decoration: decoration,
+      fontStyle: fontStyle,
     );
   }
 }

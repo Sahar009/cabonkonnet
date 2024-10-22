@@ -13,6 +13,7 @@ class UserModel {
   final String? address; // Nullable for investors
   final String? businessRegNumber; // Nullable for product owners
   final String? website; // Nullable for product owners
+  final String? country;
 
   // Investor Fields
   final String? bankStatementUrl; // URL or path for bank statement
@@ -28,6 +29,7 @@ class UserModel {
     this.address,
     this.businessRegNumber,
     this.website,
+    this.country,
     this.bankStatementUrl,
     this.idCardUrl,
   });
@@ -44,6 +46,7 @@ class UserModel {
       'address': address,
       'businessRegNumber': businessRegNumber,
       'website': website,
+      'country': country,
       'bankStatementUrl': bankStatementUrl,
       'idCardUrl': idCardUrl,
     };
@@ -61,6 +64,7 @@ class UserModel {
       address: map['address'] != null ? map['address'] as String : null,
       businessRegNumber: map['businessRegNumber'] != null ? map['businessRegNumber'] as String : null,
       website: map['website'] != null ? map['website'] as String : null,
+      country: map['country'] != null ? map['country'] as String : null,
       bankStatementUrl: map['bankStatementUrl'] != null ? map['bankStatementUrl'] as String : null,
       idCardUrl: map['idCardUrl'] != null ? map['idCardUrl'] as String : null,
     );
@@ -76,6 +80,7 @@ class UserModel {
     String? address,
     String? businessRegNumber,
     String? website,
+    String? country,
     String? bankStatementUrl,
     String? idCardUrl,
   }) {
@@ -89,6 +94,7 @@ class UserModel {
       address: address ?? this.address,
       businessRegNumber: businessRegNumber ?? this.businessRegNumber,
       website: website ?? this.website,
+      country: country ?? this.country,
       bankStatementUrl: bankStatementUrl ?? this.bankStatementUrl,
       idCardUrl: idCardUrl ?? this.idCardUrl,
     );
@@ -96,11 +102,12 @@ class UserModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl)';
+    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, country: $country, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl)';
   }
 
   @override
@@ -117,6 +124,7 @@ class UserModel {
       other.address == address &&
       other.businessRegNumber == businessRegNumber &&
       other.website == website &&
+      other.country == country &&
       other.bankStatementUrl == bankStatementUrl &&
       other.idCardUrl == idCardUrl;
   }
@@ -132,6 +140,7 @@ class UserModel {
       address.hashCode ^
       businessRegNumber.hashCode ^
       website.hashCode ^
+      country.hashCode ^
       bankStatementUrl.hashCode ^
       idCardUrl.hashCode;
   }

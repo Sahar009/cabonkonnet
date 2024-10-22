@@ -1,5 +1,4 @@
-import 'package:cabonconnet/views/investor/investor_register.dart';
-import 'package:cabonconnet/views/product_owner/register.dart';
+import 'package:cabonconnet/views/auth/register.dart';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
@@ -37,18 +36,20 @@ class Welcome extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 45),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ProductOwnerRegister()));
+                          builder: (context) => const Register(
+                                role: "product_owner",
+                              )));
                 },
                 child: Container(
                   alignment: Alignment.center,
                   width: double.infinity,
-                  height: 40,
+                  height: 45,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: AppColor.black)),
@@ -64,12 +65,13 @@ class Welcome extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const InvestorRegister()));
+                          builder: (context) =>
+                              const Register(role: "investor")));
                 },
                 child: Container(
                   alignment: Alignment.center,
                   width: double.infinity,
-                  height: 40,
+                  height: 45,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: AppColor.black)),
@@ -83,7 +85,7 @@ class Welcome extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: 40,
+                height: 45,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(color: AppColor.black)),

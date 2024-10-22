@@ -1,18 +1,17 @@
-import 'package:cabonconnet/views/product_owner/verification_code.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:cabonconnet/views/widget/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
-class Forgotpassword extends StatefulWidget {
-  const Forgotpassword({super.key});
+class CreateNewPassword extends StatefulWidget {
+  const CreateNewPassword({super.key});
 
   @override
-  State<Forgotpassword> createState() => _ForgotpasswordState();
+  State<CreateNewPassword> createState() => _CreateNewPasswordState();
 }
 
-class _ForgotpasswordState extends State<Forgotpassword> {
+class _CreateNewPasswordState extends State<CreateNewPassword> {
   TextEditingController addressController = TextEditingController();
 
   @override
@@ -32,7 +31,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
               Row(
                 children: [
                   Text(
-                    'Register',
+                    'Create new password',
                     style: AppTextStyle.body(size: 22),
                   ),
                 ],
@@ -41,7 +40,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
               Row(
                 children: [
                   Text(
-                    'Please fill in all information correctly',
+                    'Create a new password',
                     style: AppTextStyle.body(
                         size: 13, fontWeight: FontWeight.normal),
                   ),
@@ -49,24 +48,29 @@ class _ForgotpasswordState extends State<Forgotpassword> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Email',
+                'New Password',
                 style:
                     AppTextStyle.body(size: 13, fontWeight: FontWeight.normal),
               ),
               const SizedBox(height: 5),
               AppTextFields(
-                  hint: 'Enter email address',
+                  hint: 'Enter New Password',
                   controller: addressController,
-                  iconData: IconsaxPlusLinear.sms),
+                  iconData: IconsaxPlusLinear.lock),
+              const SizedBox(height: 20),
+              Text(
+                'Confirm Password',
+                style:
+                    AppTextStyle.body(size: 13, fontWeight: FontWeight.normal),
+              ),
+              const SizedBox(height: 5),
+              AppTextFields(
+                  hint: 'Confirm your Password',
+                  controller: addressController,
+                  iconData: IconsaxPlusLinear.lock),
               const Spacer(),
               AppButton(
-                onTab: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const VerificationCode()));
-                },
-                title: 'Reset Password',
+                onTab: () {},
               ),
               const SizedBox(height: 100)
             ],
