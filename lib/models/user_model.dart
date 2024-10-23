@@ -37,7 +37,6 @@ class UserModel {
   // Method to convert UserModel to a Map for storage (e.g., in Firestore)
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'fullName': fullName,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -55,7 +54,7 @@ class UserModel {
   // Factory method to create UserModel from a Map
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as String,
+      id: map['\$id'] as String,
       fullName: map['fullName'] as String,
       email: map['email'] as String,
       phoneNumber: map['phoneNumber'] as String,

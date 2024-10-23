@@ -1,5 +1,6 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
+import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/welcome.dart';
 import 'package:cabonconnet/views/widget/app_button.dart';
@@ -22,15 +23,23 @@ class _Onboarding1State extends State<Onboarding1> {
           padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 50),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Skip',
-                    style: AppTextStyle.body(size: 14),
-                  ),
-                  const Icon(Icons.arrow_forward, size: 22)
-                ],
+              GestureDetector(
+                onTap: () {
+                  AppLocalStorage().setOnboard();
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Welcome()));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Skip',
+                      style: AppTextStyle.body(size: 14),
+                    ),
+                    const Icon(Icons.arrow_forward, size: 22)
+                  ],
+                ),
               ),
               SizedBox(
                 height: 600,
@@ -63,6 +72,8 @@ class _Onboarding1State extends State<Onboarding1> {
               AppButton(
                 onTab: () {
                   if (controller.page == 2) {
+                    AppLocalStorage().setOnboard();
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -1,5 +1,7 @@
 import 'package:cabonconnet/constant/app_images.dart';
+import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/views/onboarding/onboarding.dart';
+import 'package:cabonconnet/welcome.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,11 +12,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  AppLocalStorage appLocalStorage = AppLocalStorage();
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const Onboarding1()));
+      appLocalStorage.getOnBoarding().then((value) {
+        if (value == "true") {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const Welcome()));
+        } else {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const Onboarding1()));
+        }
+      });
     });
     super.initState();
   }

@@ -169,23 +169,6 @@ class _RegisterState extends State<Register> {
                         Obx(() => GestureDetector(
                               onTap: () async {
                                 // Validate the input fields
-                                if (fullNameController.text.isEmpty ||
-                                    emailController.text.isEmpty ||
-                                    phoneController.text.isEmpty ||
-                                    passwordController.text.isEmpty ||
-                                    confirmPasswordController.text.isEmpty) {
-                                  Get.snackbar(
-                                      'Error', 'Please fill in all fields.');
-                                  return;
-                                }
-
-                                // Check if passwords match
-                                if (passwordController.text !=
-                                    confirmPasswordController.text) {
-                                  Get.snackbar(
-                                      'Error', 'Passwords do not match.');
-                                  return;
-                                }
 
                                 // Set the busy state to true
                                 if (_formKey.currentState!.validate()) {
@@ -195,8 +178,17 @@ class _RegisterState extends State<Register> {
                                     passwordController.text,
                                     fullNameController.text,
                                     phoneController.text,
-                                    'investor', // Set role to 'investor'
+                                    widget.role, // Set role to 'investor'
                                   );
+                                }
+                                if (fullNameController.text.isEmpty ||
+                                    emailController.text.isEmpty ||
+                                    phoneController.text.isEmpty ||
+                                    passwordController.text.isEmpty ||
+                                    confirmPasswordController.text.isEmpty) {
+                                  Get.snackbar(
+                                      'Error', 'Please fill in all fields.');
+                                  return;
                                 }
 
                                 // Reset the busy state

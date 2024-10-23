@@ -11,7 +11,6 @@ class UserController extends GetxController {
     userCollectionId: AppwriteConfig.userCollectionId,
     databaseId: AppwriteConfig.databaseId,
   );
-
   Future updateUser({
     required UserModel userModel,
     required String address,

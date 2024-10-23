@@ -1,8 +1,10 @@
 import 'package:cabonconnet/constant/country.dart';
+import 'package:cabonconnet/controllers/user_controller.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/views/auth/verification_code.dart';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:cabonconnet/views/widget/app_text_field.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/gestures.dart';
@@ -27,6 +29,7 @@ class _RegisterContinueState extends State<RegisterContinue> {
   TextEditingController addressController = TextEditingController();
   TextEditingController businessRegNumberController = TextEditingController();
   TextEditingController websiteController = TextEditingController();
+  UserController userController = UserController();
 
   String? bankStatementPath;
   String? idCardPath;
@@ -34,10 +37,7 @@ class _RegisterContinueState extends State<RegisterContinue> {
   String? selectedCountry;
 
   Future<void> _pickFile(String type) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
-      type: FileType.any,
-    );
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
       setState(() {
@@ -155,7 +155,7 @@ class _RegisterContinueState extends State<RegisterContinue> {
                       _validateField(value, 'Address'), // Validator
                 ),
                 const SizedBox(height: 20),
-                widget.role == "investor"
+                widget.role == "product_owner"
                     ? Column(
                         children: [
                           Text(
@@ -185,37 +185,22 @@ class _RegisterContinueState extends State<RegisterContinue> {
                             // Website field doesn't need validation as it's optional
                           ),
                           const SizedBox(height: 80),
-                          GestureDetector(
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const VerificationCode(),
-                                  ),
-                                );
-                              }
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: AppColor.primaryColor,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                'Continue',
-                                style: AppTextStyle.body(
-                                    color: AppColor.white, size: 14),
-                              ),
-                            ),
-                          ),
+                          AppButton(onTab: () {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const VerificationCode(),
+                                ),
+                              );
+                            }
+                          }),
                           const SizedBox(height: 30),
                         ],
                       )
                     : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Upload your bank statement or tax return',
@@ -254,22 +239,17 @@ class _RegisterContinueState extends State<RegisterContinue> {
                             ),
                           ),
                           const SizedBox(height: 80),
-                          GestureDetector(
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {}
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  color: AppColor.primaryColor,
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Text('Continue',
-                                  style: AppTextStyle.body(
-                                      color: AppColor.white, size: 14)),
-                            ),
-                          ),
+                          AppButton(onTab: () {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const VerificationCode(),
+                                ),
+                              );
+                            }
+                          }),
                           const SizedBox(height: 30),
                         ],
                       ),
