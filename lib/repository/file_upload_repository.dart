@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart' as models;
+import 'package:cabonconnet/constant/appwrite_config.dart';
 
-class FileUploadService {
+class FileUploadRepository {
   final Storage storage;
   final String bucketId;
 
-  FileUploadService({required this.storage, required this.bucketId});
+  FileUploadRepository({required this.storage, required this.bucketId});
 
-  Future<models.File?> uploadFile(File file, String fileName) async {
+  Future<String?> uploadFile(File file, String fileName) async {
     try {
       // Create the file and upload it to Appwrite
       final uploadedFile = await storage.createFile(
@@ -22,7 +22,9 @@ class FileUploadService {
 
       // Return the uploaded file information
       print('File uploaded successfully: ${uploadedFile.$id}');
-      return uploadedFile;
+
+      String fileUrl = AppwriteConfig.getFileUrl(bucketId, uploadedFile.$id);
+      return fileUrl;
     } on AppwriteException catch (e) {
       print('Failed to upload file: ${e.message}');
       return null;

@@ -1,20 +1,24 @@
 import 'package:appwrite/appwrite.dart';
 
 class AppwriteConfig {
+  static String appwriteEndpoint = "https://cloud.appwrite.io/v1";
   static String projectId = "671737250034dc45f228";
   static String databaseId = "6717388600333d9d6235";
   static String userCollectionId = '6717d17b0019f7ec1a83';
   static String userFileBukectId = "67188621002cc7456b26";
+  static String ss = "6718f9ed001ed7ba1571";
 
   late Client _client;
   late Account _account;
   late Databases _databases;
+  late Storage _storage;
 
   AppwriteConfig() {
     _client = Client().setProject(projectId);
 
     _account = Account(_client);
     _databases = Databases(client);
+    _storage = Storage(client);
   }
 
   // Getter to access the client
@@ -25,11 +29,12 @@ class AppwriteConfig {
   // Getter to access the databases
   Databases get databases => _databases;
 
-  String getFileUrl(String bucketId, String fileId) {
-    String appwriteEndpoint =
-        'https://your-appwrite-server/v1'; // Your Appwrite endpoint
-   // Your project ID
+  Storage get storage => _storage;
 
+  static String getFileUrl(String bucketId, String fileId) {
+    
+    // Your project ID
+// https://cloud.appwrite.io/v1/storage/buckets/67188621002cc7456b26/files/67188dfd2618c29f1f37/view?project=671737250034dc45f228
     return '$appwriteEndpoint/storage/buckets/$bucketId/files/$fileId/view?project=$projectId';
   }
 }
