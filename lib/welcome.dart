@@ -54,7 +54,7 @@ class Welcome extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: AppColor.black)),
                   child: Text(
-                    'Product Owner',
+                    'Founder',
                     style: AppTextStyle.body(size: 14),
                   ),
                 ),

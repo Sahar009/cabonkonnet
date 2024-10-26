@@ -12,7 +12,7 @@ class UserRepository {
     required this.databaseId,
   });
 
-  Future<void> updateUserDetails(UserModel user) async {
+  Future<(bool, UserModel?, String)> updateUserDetails(UserModel user) async {
     try {
       await database.updateDocument(
         databaseId: databaseId,
@@ -20,10 +20,13 @@ class UserRepository {
         documentId: user.id,
         data: user.toMap(),
       );
+      return (true, user, "Update successful");
     } on AppwriteException catch (e) {
       print('Error saving user details: ${e.message}');
+      return (false, null, 'Error saving user details: ${e.message}');
     } catch (e) {
       print('An unexpected error occurred: $e');
+      return (false, null, 'An unexpected error occurred: $e');
     }
   }
 }

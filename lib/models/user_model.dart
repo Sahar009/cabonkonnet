@@ -14,7 +14,7 @@ class UserModel {
   final String? businessRegNumber; // Nullable for product owners
   final String? website; // Nullable for product owners
   final String? country;
-
+  final String? teamNumber;
   // Investor Fields
   final String? bankStatementUrl; // URL or path for bank statement
   final String? idCardUrl; // URL or path for ID card
@@ -30,6 +30,7 @@ class UserModel {
     this.businessRegNumber,
     this.website,
     this.country,
+    this.teamNumber,
     this.bankStatementUrl,
     this.idCardUrl,
   });
@@ -37,6 +38,7 @@ class UserModel {
   // Method to convert UserModel to a Map for storage (e.g., in Firestore)
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+   
       'fullName': fullName,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -46,6 +48,7 @@ class UserModel {
       'businessRegNumber': businessRegNumber,
       'website': website,
       'country': country,
+      'teamNumber': teamNumber,
       'bankStatementUrl': bankStatementUrl,
       'idCardUrl': idCardUrl,
     };
@@ -64,6 +67,7 @@ class UserModel {
       businessRegNumber: map['businessRegNumber'] != null ? map['businessRegNumber'] as String : null,
       website: map['website'] != null ? map['website'] as String : null,
       country: map['country'] != null ? map['country'] as String : null,
+      teamNumber: map['teamNumber'] != null ? map['teamNumber'] as String : null,
       bankStatementUrl: map['bankStatementUrl'] != null ? map['bankStatementUrl'] as String : null,
       idCardUrl: map['idCardUrl'] != null ? map['idCardUrl'] as String : null,
     );
@@ -80,6 +84,7 @@ class UserModel {
     String? businessRegNumber,
     String? website,
     String? country,
+    String? teamNumber,
     String? bankStatementUrl,
     String? idCardUrl,
   }) {
@@ -94,6 +99,7 @@ class UserModel {
       businessRegNumber: businessRegNumber ?? this.businessRegNumber,
       website: website ?? this.website,
       country: country ?? this.country,
+      teamNumber: teamNumber ?? this.teamNumber,
       bankStatementUrl: bankStatementUrl ?? this.bankStatementUrl,
       idCardUrl: idCardUrl ?? this.idCardUrl,
     );
@@ -106,7 +112,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, country: $country, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl)';
+    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, country: $country, teamNumber: $teamNumber, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl)';
   }
 
   @override
@@ -124,6 +130,7 @@ class UserModel {
       other.businessRegNumber == businessRegNumber &&
       other.website == website &&
       other.country == country &&
+      other.teamNumber == teamNumber &&
       other.bankStatementUrl == bankStatementUrl &&
       other.idCardUrl == idCardUrl;
   }
@@ -140,6 +147,7 @@ class UserModel {
       businessRegNumber.hashCode ^
       website.hashCode ^
       country.hashCode ^
+      teamNumber.hashCode ^
       bankStatementUrl.hashCode ^
       idCardUrl.hashCode;
   }
