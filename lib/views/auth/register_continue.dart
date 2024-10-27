@@ -8,7 +8,6 @@ import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:cabonconnet/views/widget/app_text_field.dart';
 import 'package:cabonconnet/views/widget/loading_widget.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -71,7 +70,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
     return Scaffold(
       body: Obx(() {
         return userController.isBusy.value
-            ? Loading()
+            ? const Loading()
             : SingleChildScrollView(
                 child: Center(
                   child: Padding(
@@ -213,7 +212,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                         child: ListView.builder(
                                             shrinkWrap: true,
                                             physics:
-                                                NeverScrollableScrollPhysics(),
+                                                const NeverScrollableScrollPhysics(),
                                             itemCount: _teamSizes.length,
                                             itemBuilder: (context, index) {
                                               return RadioListTile<String>(
@@ -236,7 +235,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                                         horizontal: -2,
                                                         vertical: -4),
                                                 contentPadding:
-                                                    EdgeInsets.symmetric(
+                                                    const EdgeInsets.symmetric(
                                                         horizontal: 0,
                                                         vertical: -4),
                                               );

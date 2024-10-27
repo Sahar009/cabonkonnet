@@ -5,7 +5,6 @@ import 'package:cabonconnet/views/widget/app_text_field.dart';
 import 'package:cabonconnet/views/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 class CreateNewPassword extends StatefulWidget {
@@ -25,7 +24,7 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
     return Obx(() {
       return Scaffold(
         body: authController.isBusy.value
-            ? Loading()
+            ? const Loading()
             : Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),

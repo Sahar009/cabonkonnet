@@ -1,6 +1,6 @@
-import 'package:cabonconnet/views/home/new_post.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/widget/app_button.dart';
+import 'package:cabonconnet/views/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
 
 class ShowcaseProduct extends StatefulWidget {

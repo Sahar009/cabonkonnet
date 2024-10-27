@@ -181,7 +181,6 @@ class AuthRepository {
     if (token == null) {
       return (false, "Reverify user");
     }
-    print(token);
     try {
       final response = await http.post(
         Uri.parse(baseUrl),
@@ -193,7 +192,6 @@ class AuthRepository {
           "token": token,
         }),
       );
-      print(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data['status']) {

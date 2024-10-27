@@ -18,6 +18,7 @@ class UserModel {
   // Investor Fields
   final String? bankStatementUrl; // URL or path for bank statement
   final String? idCardUrl; // URL or path for ID card
+  final String? profileImage;
 
   UserModel({
     required this.id,
@@ -33,12 +34,12 @@ class UserModel {
     this.teamNumber,
     this.bankStatementUrl,
     this.idCardUrl,
+    this.profileImage,
   });
 
   // Method to convert UserModel to a Map for storage (e.g., in Firestore)
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-   
       'fullName': fullName,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -51,6 +52,7 @@ class UserModel {
       'teamNumber': teamNumber,
       'bankStatementUrl': bankStatementUrl,
       'idCardUrl': idCardUrl,
+      'profileImage': profileImage,
     };
   }
 
@@ -62,14 +64,22 @@ class UserModel {
       email: map['email'] as String,
       phoneNumber: map['phoneNumber'] as String,
       role: map['role'] as String,
-      companyName: map['companyName'] != null ? map['companyName'] as String : null,
+      companyName:
+          map['companyName'] != null ? map['companyName'] as String : null,
       address: map['address'] != null ? map['address'] as String : null,
-      businessRegNumber: map['businessRegNumber'] != null ? map['businessRegNumber'] as String : null,
+      businessRegNumber: map['businessRegNumber'] != null
+          ? map['businessRegNumber'] as String
+          : null,
       website: map['website'] != null ? map['website'] as String : null,
       country: map['country'] != null ? map['country'] as String : null,
-      teamNumber: map['teamNumber'] != null ? map['teamNumber'] as String : null,
-      bankStatementUrl: map['bankStatementUrl'] != null ? map['bankStatementUrl'] as String : null,
+      teamNumber:
+          map['teamNumber'] != null ? map['teamNumber'] as String : null,
+      bankStatementUrl: map['bankStatementUrl'] != null
+          ? map['bankStatementUrl'] as String
+          : null,
       idCardUrl: map['idCardUrl'] != null ? map['idCardUrl'] as String : null,
+      profileImage:
+          map['profileImage'] != null ? map['profileImage'] as String : null,
     );
   }
 
@@ -87,6 +97,7 @@ class UserModel {
     String? teamNumber,
     String? bankStatementUrl,
     String? idCardUrl,
+    String? profileImage,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -102,6 +113,7 @@ class UserModel {
       teamNumber: teamNumber ?? this.teamNumber,
       bankStatementUrl: bankStatementUrl ?? this.bankStatementUrl,
       idCardUrl: idCardUrl ?? this.idCardUrl,
+      profileImage: profileImage ?? this.profileImage,
     );
   }
 
@@ -112,43 +124,44 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, country: $country, teamNumber: $teamNumber, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl)';
+    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, country: $country, teamNumber: $teamNumber, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl, profileImage: $profileImage)';
   }
 
   @override
   bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.fullName == fullName &&
-      other.email == email &&
-      other.phoneNumber == phoneNumber &&
-      other.role == role &&
-      other.companyName == companyName &&
-      other.address == address &&
-      other.businessRegNumber == businessRegNumber &&
-      other.website == website &&
-      other.country == country &&
-      other.teamNumber == teamNumber &&
-      other.bankStatementUrl == bankStatementUrl &&
-      other.idCardUrl == idCardUrl;
+
+    return other.id == id &&
+        other.fullName == fullName &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber &&
+        other.role == role &&
+        other.companyName == companyName &&
+        other.address == address &&
+        other.businessRegNumber == businessRegNumber &&
+        other.website == website &&
+        other.country == country &&
+        other.teamNumber == teamNumber &&
+        other.bankStatementUrl == bankStatementUrl &&
+        other.idCardUrl == idCardUrl &&
+        other.profileImage == profileImage;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      fullName.hashCode ^
-      email.hashCode ^
-      phoneNumber.hashCode ^
-      role.hashCode ^
-      companyName.hashCode ^
-      address.hashCode ^
-      businessRegNumber.hashCode ^
-      website.hashCode ^
-      country.hashCode ^
-      teamNumber.hashCode ^
-      bankStatementUrl.hashCode ^
-      idCardUrl.hashCode;
+        fullName.hashCode ^
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        role.hashCode ^
+        companyName.hashCode ^
+        address.hashCode ^
+        businessRegNumber.hashCode ^
+        website.hashCode ^
+        country.hashCode ^
+        teamNumber.hashCode ^
+        bankStatementUrl.hashCode ^
+        idCardUrl.hashCode ^
+        profileImage.hashCode;
   }
 }

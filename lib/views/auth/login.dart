@@ -1,7 +1,6 @@
 import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/views/auth/forgotpassword.dart';
 import 'package:cabonconnet/constant/app_color.dart';
-import 'package:cabonconnet/views/home/home.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/widget/loading_widget.dart';
 import 'package:cabonconnet/welcome.dart';
@@ -28,7 +27,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Obx(() {
         return authController.isBusy.value
-            ? Loading()
+            ? const Loading()
             : Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),

@@ -21,15 +21,12 @@ class FileUploadRepository {
       );
 
       // Return the uploaded file information
-      print('File uploaded successfully: ${uploadedFile.$id}');
 
       String fileUrl = AppwriteConfig.getFileUrl(bucketId, uploadedFile.$id);
       return fileUrl;
-    } on AppwriteException catch (e) {
-      print('Failed to upload file: ${e.message}');
+    } on AppwriteException {
       return null;
     } catch (e) {
-      print('An unexpected error occurred: $e');
       return null;
     }
   }

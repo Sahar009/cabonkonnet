@@ -32,7 +32,7 @@ class _VerificationCodeState extends State<VerificationCode> {
     return Scaffold(
       body: Obx(() {
         return authController.isBusy.value
-            ? Loading()
+            ? const Loading()
             : Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -77,7 +77,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                         pinBoxColor: const Color.fromARGB(255, 243, 238, 238),
                         pinBoxHeight: 50,
                         pinBoxWidth: 50,
-                        pinBoxOuterPadding: EdgeInsets.all(10),
+                        pinBoxOuterPadding: const EdgeInsets.all(10),
                         highlightPinBoxColor: Colors.white,
                         defaultBorderColor: Colors.white,
                       ),

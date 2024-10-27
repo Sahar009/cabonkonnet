@@ -25,7 +25,7 @@ class AuthController extends GetxController {
   );
 
   var otpStatus = "".obs;
-  var _user = Rx<UserModel?>(null);
+  final _user = Rx<UserModel?>(null);
   UserModel? get user => _user.value;
   var userRole;
   // Register a new user
@@ -43,10 +43,9 @@ class AuthController extends GetxController {
       if (isSuccess && userModel != null) {
         Get.snackbar("Registration", message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             colorText: Colors.green);
         isBusy.value = false;
-        print(passwordController.text);
         // Navigate to OTP Verification Screen
         Get.to(() => VerificationCode(
               isFirstVerify: true,
@@ -56,7 +55,7 @@ class AuthController extends GetxController {
       } else {
         Get.snackbar('Error', message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.error),
+            icon: const Icon(Icons.error),
             colorText: Colors.red);
       }
     } catch (e) {
@@ -64,7 +63,7 @@ class AuthController extends GetxController {
         'Error',
         'An error occurred: ${e.toString()}',
         snackPosition: SnackPosition.BOTTOM,
-        icon: Icon(Icons.error),
+        icon: const Icon(Icons.error),
         colorText: Colors.red,
       );
     } finally {
@@ -95,13 +94,13 @@ class AuthController extends GetxController {
       } else {
         Get.snackbar('Error', message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.error),
+            icon: const Icon(Icons.error),
             colorText: Colors.red);
       }
     } catch (e) {
       Get.snackbar('Error', 'Login failed: ${e.toString()}',
           snackPosition: SnackPosition.BOTTOM,
-          icon: Icon(Icons.error),
+          icon: const Icon(Icons.error),
           colorText: Colors.red);
     } finally {
       isBusy.value = false;
@@ -122,21 +121,21 @@ class AuthController extends GetxController {
 
         Get.snackbar("OTP Sent", message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             colorText: Colors.green);
       } else {
         isBusy.value = false; // Set to false before redirect
 
         Get.snackbar('Error', message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.error),
+            icon: const Icon(Icons.error),
             colorText: Colors.red);
       }
       isBusy.value = false; // Set to false before redirect
     } catch (e) {
       Get.snackbar('Error', 'Failed to send OTP: ${e.toString()}',
           snackPosition: SnackPosition.BOTTOM,
-          icon: Icon(Icons.error),
+          icon: const Icon(Icons.error),
           colorText: Colors.red);
     } finally {
       isBusy.value = false;
@@ -146,11 +145,10 @@ class AuthController extends GetxController {
   // Verify OTP and then call loginUser
   Future<void> verifyOtp(String email, String otp, String password) async {
     isBusy.value = true;
-    print(password);
     if (otp.length != 4) {
       Get.snackbar('Error', "Input Valid OTP",
           snackPosition: SnackPosition.BOTTOM,
-          icon: Icon(Icons.error),
+          icon: const Icon(Icons.error),
           colorText: Colors.red);
       isBusy.value = false;
       return;
@@ -163,7 +161,7 @@ class AuthController extends GetxController {
       if (status) {
         Get.snackbar("OTP Verified", message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             colorText: Colors.green);
 
         if (isRecover == true) {
@@ -185,19 +183,20 @@ class AuthController extends GetxController {
         } else {
           Get.snackbar('Error', "Password not found, please retry login.",
               snackPosition: SnackPosition.BOTTOM,
-              icon: Icon(Icons.error),
+              icon: const Icon(Icons.error),
               colorText: Colors.red);
+          Get.to(() => const Login());
         }
       } else {
         Get.snackbar('Error', message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.error),
+            icon: const Icon(Icons.error),
             colorText: Colors.red);
       }
     } catch (e) {
       Get.snackbar('Error', 'OTP verification failed: ${e.toString()}',
           snackPosition: SnackPosition.BOTTOM,
-          icon: Icon(Icons.error),
+          icon: const Icon(Icons.error),
           colorText: Colors.red);
     } finally {
       isBusy.value = false;
@@ -216,7 +215,7 @@ class AuthController extends GetxController {
       if (status) {
         Get.snackbar("OTP Sent", message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             colorText: Colors.green);
         isBusy.value = false;
         Get.to(() => VerificationCode(
@@ -228,13 +227,13 @@ class AuthController extends GetxController {
         isBusy.value = false;
         Get.snackbar('Error', message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.error),
+            icon: const Icon(Icons.error),
             colorText: Colors.red);
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to send OTP: ${e.toString()}',
           snackPosition: SnackPosition.BOTTOM,
-          icon: Icon(Icons.error),
+          icon: const Icon(Icons.error),
           colorText: Colors.red);
     } finally {
       isBusy.value = false;
@@ -256,19 +255,19 @@ class AuthController extends GetxController {
       if (status) {
         Get.snackbar("Success", message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             colorText: Colors.green);
         Get.offAll(() => const Login());
       } else {
         Get.snackbar('Error', message,
             snackPosition: SnackPosition.BOTTOM,
-            icon: Icon(Icons.error),
+            icon: const Icon(Icons.error),
             colorText: Colors.red);
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to update password: ${e.toString()}',
           snackPosition: SnackPosition.BOTTOM,
-          icon: Icon(Icons.error),
+          icon: const Icon(Icons.error),
           colorText: Colors.red);
     } finally {
       isBusy.value = false;
@@ -279,7 +278,7 @@ class AuthController extends GetxController {
   Future<void> logoutUser() async {
     _user.value = null;
     Get.snackbar('Success', 'Successfully logged out',
-        icon: Icon(Icons.logout), colorText: Colors.green);
+        icon: const Icon(Icons.logout), colorText: Colors.green);
     Get.offAllNamed('/login');
   }
 }

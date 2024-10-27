@@ -23,7 +23,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
       body: Center(
         child: Obx(() {
           return authController.isBusy.value
-              ? Loading()
+              ? const Loading()
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(

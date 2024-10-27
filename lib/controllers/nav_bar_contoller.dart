@@ -1,5 +1,5 @@
 import 'package:cabonconnet/views/home/home_page.dart';
-import 'package:cabonconnet/views/home/new_post.dart';
+import 'package:cabonconnet/views/home/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,11 +7,11 @@ class NavBarContoller extends GetxController {
   RxInt currentIndex = 0.obs;
 
   List<Widget> screens = [
-    HomePage(),
+    const HomePage(),
     const Text('Events'),
-    NewPost(),
+    Container(),
     const Text('Chats'),
-    const Text('Profile')
+    const ProfileView()
   ];
 
   updateCurrentIndex(int value) {

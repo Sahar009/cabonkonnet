@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/models/user_model.dart';
@@ -78,6 +79,7 @@ class UserController extends GetxController {
         );
       }
     } catch (e) {
+      log(e.toString());
     } finally {
       isBusy.value = false;
     }

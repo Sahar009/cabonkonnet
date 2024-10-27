@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/models/user_model.dart';
 
@@ -22,10 +24,52 @@ class UserRepository {
       );
       return (true, user, "Update successful");
     } on AppwriteException catch (e) {
-      print('Error saving user details: ${e.message}');
       return (false, null, 'Error saving user details: ${e.message}');
     } catch (e) {
-      print('An unexpected error occurred: $e');
+      return (false, null, 'An unexpected error occurred: $e');
+    }
+  }
+
+  Future<(bool, UserModel?)> getUserDetails(String userId) async {
+    try {
+      var doc = await database.getDocument(
+        databaseId: databaseId,
+        collectionId: userCollectionId,
+        documentId: userId,
+      );
+
+      UserModel userModel = UserModel.fromMap(doc.data);
+      return (
+        true,
+        userModel,
+      );
+    } on AppwriteException catch (e) {
+      log(e.toString());
+
+      return (
+        false,
+        null,
+      );
+    } catch (e) {
+      return (
+        false,
+        null,
+      );
+    }
+  }
+
+  Future<(bool, UserModel?, String)> getConrrentDetails(UserModel user) async {
+    try {
+      await database.updateDocument(
+        databaseId: databaseId,
+        collectionId: userCollectionId,
+        documentId: user.id,
+        data: user.toMap(),
+      );
+      return (true, user, "Update successful");
+    } on AppwriteException catch (e) {
+      return (false, null, 'Error saving user details: ${e.message}');
+    } catch (e) {
       return (false, null, 'An unexpected error occurred: $e');
     }
   }

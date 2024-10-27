@@ -2,7 +2,6 @@ import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/auth/login.dart';
-import 'package:cabonconnet/views/auth/register_continue.dart';
 import 'package:cabonconnet/views/widget/app_text_field.dart';
 import 'package:cabonconnet/views/widget/loading_widget.dart';
 import 'package:flutter/gestures.dart';
@@ -56,7 +55,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       body: Obx(() {
         return authController.isBusy.value
-            ? Loading()
+            ? const Loading()
             : Center(
                 child: SingleChildScrollView(
                   child: Padding(
@@ -210,7 +209,7 @@ class _RegisterState extends State<Register> {
                                       text: 'Login',
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          Get.to(() => Login());
+                                          Get.to(() => const Login());
                                           // Add navigation logic here
                                         },
                                       style: AppTextStyle.body(

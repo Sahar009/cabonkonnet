@@ -1,18 +1,20 @@
 import 'package:cabonconnet/constant/app_images.dart';
+import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/home/new_post.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
-import 'package:cabonconnet/views/widget/user_button.dart';
+import 'package:cabonconnet/views/widget/post_wiget.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
-class Posts extends StatefulWidget {
-  const Posts({super.key});
+class CommentScreen extends StatefulWidget {
+  final PostModel postModel;
+  const CommentScreen({super.key, required this.postModel});
 
   @override
-  State<Posts> createState() => _PostsState();
+  State<CommentScreen> createState() => _CommentScreenState();
 }
 
-class _PostsState extends State<Posts> {
+class _CommentScreenState extends State<CommentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,16 +31,7 @@ class _PostsState extends State<Posts> {
                   },
                   child: const Icon(Icons.arrow_back_ios)),
               const SizedBox(height: 5),
-              PostWidget(
-                  name: 'Tony Thompson',
-                  location: 'Texas USA',
-                  profilePicture: AppImages.tasha,
-                  status:
-                      'Switching to clean energy is no longer just a choice-its a necessity for our planet! From solar panels to wind turbines. Every small steps counts. Are you ready to make the switch? #CleanEnergy # Sustainability # GoGreen #Renewables #ClimateAction',
-                  statusImage: AppImages.picture,
-                  likes: '11',
-                  comment: '8',
-                  share: '5'),
+              PostWidget(postModel: widget.postModel),
               const SizedBox(height: 5),
               const Divider(),
               const SizedBox(height: 10),
@@ -105,91 +98,6 @@ class _PostsState extends State<Posts> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class PostWidget extends StatelessWidget {
-  final String profilePicture;
-  final String name;
-  final String location;
-  final String status;
-  final String statusImage;
-  final String likes;
-  final String comment;
-  final String share;
-  const PostWidget(
-      {super.key,
-      required this.name,
-      required this.location,
-      required this.profilePicture,
-      required this.status,
-      required this.statusImage,
-      required this.likes,
-      required this.comment,
-      required this.share});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Image(image: AssetImage(profilePicture)),
-            const SizedBox(width: 5),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: AppTextStyle.body(fontWeight: FontWeight.w500),
-                ),
-                Text(location)
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Text(
-          status,
-          style: AppTextStyle.body(size: 13, fontWeight: FontWeight.normal),
-        ),
-        const SizedBox(height: 5),
-        Image(image: AssetImage(statusImage)),
-        const SizedBox(height: 7),
-        Row(
-          children: [
-            const Icon(Icons.favorite_border, size: 16),
-            const SizedBox(width: 3),
-            Text(likes,
-                style:
-                    AppTextStyle.body(size: 13, fontWeight: FontWeight.normal)),
-            const Spacer(),
-            Text('$comment comments',
-                style:
-                    AppTextStyle.body(size: 13, fontWeight: FontWeight.normal)),
-            const SizedBox(width: 5),
-            const Icon(Icons.circle, size: 6),
-            const SizedBox(width: 5),
-            Text('$share shares',
-                style:
-                    AppTextStyle.body(size: 13, fontWeight: FontWeight.normal))
-          ],
-        ),
-        const Divider(),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              UserButton(iconData: IconsaxPlusLinear.like_1, text: 'Like'),
-              UserButton(iconData: IconsaxPlusLinear.share, text: 'Share'),
-              UserButton(iconData: IconsaxPlusLinear.send_2, text: 'Send'),
-              UserButton(iconData: IconsaxPlusLinear.document, text: 'Save'),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
