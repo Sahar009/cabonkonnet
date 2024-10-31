@@ -26,10 +26,10 @@ class EventsWidget extends StatelessWidget {
           height: 120,
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Color(0xff0091CC),
+              color: const Color(0xff0091CC),
               borderRadius: isUpcoming
                   ? BorderRadius.circular(10)
-                  : BorderRadius.only(
+                  : const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10))),
           child: Padding(
@@ -37,7 +37,7 @@ class EventsWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(heading,
                     style: AppTextStyle.body(
                         size: 16,
@@ -67,9 +67,9 @@ class EventsWidget extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Image(image: AssetImage(imagePath)),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,

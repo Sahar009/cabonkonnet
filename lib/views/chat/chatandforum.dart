@@ -63,7 +63,7 @@ class _ChatAndForumState extends State<ChatAndForum> {
               ),
             ],
           ),
-          bottom: TabBar(
+          bottom: const TabBar(
             indicatorColor: Colors.blue,
             indicator: UnderlineTabIndicator(
                 borderSide: BorderSide(width: 4),

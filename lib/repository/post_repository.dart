@@ -69,7 +69,7 @@ class PostRepository {
   Future<bool> toggleLikePost(String userId, PostModel post) async {
     try {
       // Step 1: Check if the like already exists for this user and post
-      log("${post.id}");
+      log(post.id);
       // Step 3: If no previous like exists, create a new like document
       await databases.updateDocument(
         databaseId: AppwriteConfig.databaseId,
@@ -79,7 +79,7 @@ class PostRepository {
       );
       return true; // Post was liked
     } catch (e) {
-      log("${e.toString()}");
+      log(e.toString());
       return false; // Return false if there's an error
     }
   }

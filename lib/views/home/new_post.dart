@@ -43,45 +43,6 @@ class _NewPostState extends State<NewPost> {
     });
   }
 
-  List<InlineSpan> _buildTextSpans(String text) {
-    final List<InlineSpan> spans = [];
-    final hashtagRegExp = RegExp(r'#\w+');
-
-    int lastMatchEnd = 0;
-    for (final match in hashtagRegExp.allMatches(text)) {
-      // Add the non-hashtag text
-      if (match.start > lastMatchEnd) {
-        spans.add(
-          TextSpan(
-            text: text.substring(lastMatchEnd, match.start),
-            style: AppTextStyle.body(size: 14),
-          ),
-        );
-      }
-      // Add the hashtag text with primary color
-      spans.add(
-        TextSpan(
-          text: match.group(0),
-          style: AppTextStyle.body(
-              size: 14,
-              color: AppColor.primaryColor,
-              fontWeight: FontWeight.bold),
-        ),
-      );
-      lastMatchEnd = match.end;
-    }
-    // Add remaining text after the last hashtag
-    if (lastMatchEnd < text.length) {
-      spans.add(
-        TextSpan(
-          text: text.substring(lastMatchEnd),
-          style: AppTextStyle.body(size: 14),
-        ),
-      );
-    }
-
-    return spans;
-  }
 
   @override
   Widget build(BuildContext context) {
