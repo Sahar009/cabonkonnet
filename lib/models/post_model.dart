@@ -1,29 +1,32 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
+import 'package:cabonconnet/models/product_model.dart';
 import 'package:cabonconnet/models/user_model.dart';
 
 class PostModel {
   final String id;
   final UserModel? user; // Changed from userId to user
+  final ProductModel? product;
   final String content;
+  final bool isProduct;
   final List<String> hashtags;
   final List<String> imageUrls;
   final DateTime createdAt;
-  final List<dynamic>? comments; // You can change this type as needed
+  final int? commentCount; // You can change this type as needed
   final List<dynamic>? sharedBy; // You can change this type as needed
   final List<dynamic>? likes; // You can change this type as needed
 
   PostModel({
     required this.id,
     this.user,
+    this.product,
     required this.content,
     required this.hashtags,
     required this.imageUrls,
     required this.createdAt,
-    this.comments,
+    this.isProduct = false,
+    this.commentCount,
     this.sharedBy,
     this.likes,
   });
@@ -34,12 +37,16 @@ class PostModel {
       user: map['user'] != null
           ? UserModel.fromMap(map['user'] as Map<String, dynamic>)
           : null,
+      product: map['product'] != null
+          ? ProductModel.fromMap(map['product'] as Map<String, dynamic>)
+          : null,
+      isProduct: map["isProduct"],
       content: map['content'] as String,
-      hashtags: List<String>.from((map['hashtags'] as List<dynamic>)),
-      imageUrls: List<String>.from((map['imageUrls'] as List<dynamic>)),
+      hashtags: List<String>.from((map['hashtags'] as List<dynamic>? ?? [])),
+      imageUrls: List<String>.from((map['imageUrls'] as List<dynamic>? ?? [])),
       createdAt: DateTime.parse(map['createdAt']),
-      comments: List<dynamic>.from((map['comments'] as List<dynamic>)),
-      sharedBy: List<dynamic>.from((map['sharedBy'] as List<dynamic>)),
+      commentCount: (map['commentCount']),
+      sharedBy: List<dynamic>.from((map['sharedBy'] as List<dynamic>? ?? [])),
       likes: List<dynamic>.from((map['likes'] as List<dynamic>? ?? [])),
     );
   }
@@ -49,8 +56,9 @@ class PostModel {
       'content': content,
       'hashtags': hashtags,
       'imageUrls': imageUrls,
+      "isProduct": isProduct,
       'createdAt': createdAt.millisecondsSinceEpoch,
-      'comments': comments,
+      'commentCount': commentCount,
       'sharedBy': sharedBy,
     };
   }
@@ -62,18 +70,19 @@ class PostModel {
     List<String>? hashtags,
     List<String>? imageUrls,
     DateTime? createdAt,
-    List<dynamic>? comments,
+    int? commentCount,
     List<dynamic>? sharedBy,
     List<dynamic>? like,
   }) {
     return PostModel(
       id: id ?? this.id,
       user: user ?? this.user,
+      isProduct: isProduct,
       content: content ?? this.content,
       hashtags: hashtags ?? this.hashtags,
       imageUrls: imageUrls ?? this.imageUrls,
       createdAt: createdAt ?? this.createdAt,
-      comments: comments ?? this.comments,
+      commentCount: commentCount ?? this.commentCount,
       sharedBy: sharedBy ?? this.sharedBy,
     );
   }
@@ -85,32 +94,6 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel(id: $id, user: $user, content: $content, hashtags: $hashtags, imageUrls: $imageUrls, createdAt: $createdAt, comments: $comments, sharedBy: $sharedBy)';
-  }
-
-  @override
-  bool operator ==(covariant PostModel other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.user == user &&
-        other.content == content &&
-        listEquals(other.hashtags, hashtags) &&
-        listEquals(other.imageUrls, imageUrls) &&
-        other.createdAt == createdAt &&
-        listEquals(other.comments, comments) &&
-        listEquals(other.sharedBy, sharedBy);
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        user.hashCode ^
-        content.hashCode ^
-        hashtags.hashCode ^
-        imageUrls.hashCode ^
-        createdAt.hashCode ^
-        comments.hashCode ^
-        sharedBy.hashCode;
+    return 'PostModel(id: $id, user: $user, content: $content, isProduct:$isProduct, product:$product hashtags: $hashtags, imageUrls: $imageUrls, createdAt: $createdAt, commentCount: $commentCount, sharedBy: $sharedBy)';
   }
 }

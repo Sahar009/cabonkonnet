@@ -15,18 +15,20 @@ class UserController extends GetxController {
     databaseId: AppwriteConfig.databaseId,
   );
   FileUploadRepository fileUploadRepository = FileUploadRepository(
-      bucketId: AppwriteConfig.userFileBukectId,
-      storage: AppwriteConfig().storage);
-  Future updateUser(
-      {required UserModel userModel,
-      required String address,
-      required String country,
-      required String companyName,
-      String? busRegNum,
-      String? website,
-      File? bankStat,
-      File? validId,
-      String? teamNumber}) async {
+    bucketId: AppwriteConfig.userFileBukectId,
+    storage: AppwriteConfig().storage,
+  );
+  Future updateUser({
+    required UserModel userModel,
+    required String address,
+    required String country,
+    required String companyName,
+    String? busRegNum,
+    String? website,
+    File? bankStat,
+    File? validId,
+    String? teamNumber,
+  }) async {
     try {
       isBusy.value = true;
       String? validUrl;

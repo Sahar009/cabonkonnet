@@ -4,16 +4,24 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
+import 'package:cabonconnet/models/product_model.dart';
 
-class PostRepository {
+class ProductRepository {
   final Databases databases;
 
-  PostRepository({required this.databases});
+  ProductRepository({required this.databases});
 
   // Create a new post
-  Future<(bool isSuccess, String? message)> createPost(
-      PostModel post, String userId) async {
+  Future<(bool isSuccess, String? message)> createProductPost(
+      ProductModel product, PostModel post, String userId) async {
     try {
+      await databases.createDocument(
+          databaseId: AppwriteConfig.databaseId,
+          collectionId:
+              AppwriteConfig.productCollectionId, // Your post collection ID
+          documentId: product.id, // Unique ID for the document
+          data: product.toMap());
+
       final Document document = await databases.createDocument(
         databaseId: AppwriteConfig.databaseId,
         collectionId:
@@ -23,6 +31,7 @@ class PostRepository {
           'content': post.content,
           'hashtags': post.hashtags,
           'imageUrls': post.imageUrls,
+          "product": product.id,
           'createdAt':
               post.createdAt.toIso8601String(), // Ensure date is in ISO format
           'user': userId, // Store only the user ID
@@ -66,20 +75,38 @@ class PostRepository {
     }
   }
 
-  Future<bool> toggleLikePost(String userId, PostModel post) async {
+  Future<bool> toggleLikePost(String userId, String postId) async {
     try {
       // Step 1: Check if the like already exists for this user and post
-      log("${post.id}");
-      // Step 3: If no previous like exists, create a new like document
-      await databases.updateDocument(
+      final result = await databases.listDocuments(
         databaseId: AppwriteConfig.databaseId,
-        collectionId: AppwriteConfig.postCollectionId,
-        documentId: post.id,
-        data: {"likes": post.likes},
+        collectionId: AppwriteConfig.postLikeCollectionId,
+        queries: [
+          Query.equal("user", userId),
+          Query.equal("post", postId),
+        ],
       );
-      return true; // Post was liked
+
+      if (result.documents.isNotEmpty) {
+        // Step 2: If the like exists, remove it (unlike the post)
+        await databases.deleteDocument(
+          databaseId: AppwriteConfig.databaseId,
+          collectionId: AppwriteConfig.postLikeCollectionId,
+          documentId: result
+              .documents.first.$id, // Use the ID of the found like document
+        );
+        return false; // Post was unliked
+      } else {
+        // Step 3: If no previous like exists, create a new like document
+        await databases.createDocument(
+          databaseId: AppwriteConfig.databaseId,
+          collectionId: AppwriteConfig.postLikeCollectionId,
+          documentId: ID.unique(),
+          data: {"user": userId, "post": postId},
+        );
+        return true; // Post was liked
+      }
     } catch (e) {
-      log("${e.toString()}");
       return false; // Return false if there's an error
     }
   }

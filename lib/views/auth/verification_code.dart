@@ -81,6 +81,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                         highlightPinBoxColor: Colors.white,
                         defaultBorderColor: Colors.white,
                       ),
+                      Text(authController.otpStatus.value),
                       const SizedBox(height: 50),
                       Text.rich(TextSpan(children: [
                         TextSpan(

@@ -22,6 +22,6 @@ extension HashtagExtractor on String {
 extension ListToString on List<String> {
   /// Converts the list of strings to a single string with an optional separator.
   String toSingleString({String separator = ', '}) {
-    return this.join(separator);
+    return join(separator);
   }
 }

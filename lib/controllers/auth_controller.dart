@@ -27,7 +27,7 @@ class AuthController extends GetxController {
   var otpStatus = "".obs;
   final _user = Rx<UserModel?>(null);
   UserModel? get user => _user.value;
-  var userRole;
+//  var userRole;
   // Register a new user
   Future<void> registerUser({required String role}) async {
     isBusy.value = true;
@@ -74,8 +74,10 @@ class AuthController extends GetxController {
   Future resendOtp() async {}
 
   // Login the user and navigate to Profile Update if navigateToProfile is true
-  Future<void> loginUser(String email, String password,
-      {bool navigateToProfile = false}) async {
+  Future<void> loginUser(
+    String email,
+    String password,
+  ) async {
     isBusy.value = true;
     try {
       final (status, userModel, message) =
@@ -83,10 +85,11 @@ class AuthController extends GetxController {
 
       if (status) {
         // Navigate to Profile Update page after successful login
-        if (navigateToProfile) {
+        if (userModel != null &&
+            (userModel.companyName == null || userModel.country == null)) {
           Get.off(() => UpdateUserDetails(
-                role: _user.value?.role ?? userModel!.role,
-                userModel: _user.value ?? userModel!,
+                role: _user.value?.role ?? userModel.role,
+                userModel: _user.value ?? userModel,
               )); // Navigate to Profile Update Page
         } else {
           Get.offAll(() => Home()); // Navigate to Home if not updating profile

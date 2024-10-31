@@ -53,6 +53,7 @@ class Home extends StatelessWidget {
             ),
             ListTile(
               onTap: () {
+                Navigator.pop(context);
                 Get.to(() => const NewPost());
               },
               leading: const Icon(IconsaxPlusBold.edit),
@@ -67,6 +68,7 @@ class Home extends StatelessWidget {
             const Divider(),
             ListTile(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(

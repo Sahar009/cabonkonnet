@@ -7,11 +7,14 @@ class AppwriteConfig {
   static String userCollectionId = '6717d17b0019f7ec1a83';
   static String userFileBukectId = "67188621002cc7456b26";
   static String postBukectId = "671ddd77003c891557e5";
-  static String postCollectionId = "671d256f0000bb1dc0b9";
+  static String postCollectionId = "672346d30033885ebc75";
+  static String productCollectionId = "6723471d001494c80f00";
+  static String chatRoomCollectionId = "6723d35b0001452827fb";
+  static String messagesCollectionId = "6723d3ca002008ab424e";
   static String ss = "6718f9ed001ed7ba1571";
-  static String postLikeCollectionId = "671df06100142deea281";
-  static String postShareCollectionId = "671df06100142deea281";
-  static String postCommentCollectionId = "671df06100142deea281";
+  static String postLikeCollectionId = "672348e50025a8d9d6cb";
+  static String postShareCollectionId = "6723490a00245a40e093";
+  static String postCommentCollectionId = "67234f8a003419eeccc7";
 
   late Client _client;
   late Account _account;
@@ -20,7 +23,6 @@ class AppwriteConfig {
 
   AppwriteConfig() {
     _client = Client().setProject(projectId);
-
     _account = Account(_client);
     _databases = Databases(client);
     _storage = Storage(client);
@@ -37,8 +39,6 @@ class AppwriteConfig {
   Storage get storage => _storage;
 
   static String getFileUrl(String bucketId, String fileId) {
-    // Your project ID
-// https://cloud.appwrite.io/v1/storage/buckets/67188621002cc7456b26/files/67188dfd2618c29f1f37/view?project=671737250034dc45f228
     return '$appwriteEndpoint/storage/buckets/$bucketId/files/$fileId/view?project=$projectId';
   }
 }

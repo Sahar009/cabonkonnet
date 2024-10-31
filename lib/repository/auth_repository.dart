@@ -85,6 +85,7 @@ class AuthRepository {
         documentId: session.userId,
       );
 
+      AppLocalStorage.setCurrentUserId(session.$id);
       var userModel = UserModel.fromMap(userDoc.data);
       return (true, userModel, "Login successful");
     } on AppwriteException catch (e) {

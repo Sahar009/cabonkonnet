@@ -1,3 +1,5 @@
+import 'package:cabonconnet/views/chat/chatandforum.dart';
+import 'package:cabonconnet/views/events/events.dart';
 import 'package:cabonconnet/views/home/home_page.dart';
 import 'package:cabonconnet/views/home/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +10,9 @@ class NavBarContoller extends GetxController {
 
   List<Widget> screens = [
     const HomePage(),
-    const Text('Events'),
+    const EventsPage(),
     Container(),
-    const Text('Chats'),
+    const ChatAndForum(),
     const ProfileView()
   ];
 

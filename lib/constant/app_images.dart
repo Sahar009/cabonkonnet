@@ -12,4 +12,11 @@ class AppImages {
   static String tasha = '$imagePath/tasha.png';
   static String smallpicture1 = '$imagePath/smallpicture1.png';
   static String smallpicture2 = '$imagePath/smallpicture2.png';
+  static String messageIcon = '$imagePath/message.png';
+  static String shareIcon = '$imagePath/share.png';
+  static String saveIcon = '$imagePath/save.png';
+  static String reportIcon = '$imagePath/report.png';
+    static String mic = '$imagePath/mic.png';
+  static String liveimage = '$imagePath/liveimage.png';
+  static String redcircle = '$imagePath/redcircle.png';
 }

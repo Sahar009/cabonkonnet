@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               // Use Obx to reactively display posts
               Obx(() {
                 if (postController.posts.isEmpty) {
-                  return Center(child: Text('No posts available'));
+                  return const Center(child: Text('No posts available'));
                 }
                 return Column(
                   children: postController.posts.map((post) {

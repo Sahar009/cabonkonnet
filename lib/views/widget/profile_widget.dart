@@ -1,6 +1,6 @@
-import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProfileController profileController = Get.find<ProfileController>();
+    final ProfileController profileController = Get.put(ProfileController());
 
     return Obx(() {
       final userModel = profileController.userModelRx.value;
@@ -18,11 +18,15 @@ class ProfileWidget extends StatelessWidget {
           ? Container()
           : Row(
               children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage(userModel.profileImage ??
-                      AppImages.tasha), // Default image
-                ),
+                userModel.profileImage != null
+                    ? CircleAvatar(
+                        radius: 25,
+                        backgroundImage:
+                            CachedNetworkImageProvider(userModel.profileImage!),
+                      )
+                    : const CircleAvatar(
+                        radius: 25,
+                      ),
                 const SizedBox(width: 5),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

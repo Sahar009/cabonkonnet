@@ -3,7 +3,6 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
-import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/views/widget/loading_widget.dart';
 import 'package:cabonconnet/views/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ class NewPost extends StatefulWidget {
 }
 
 class _NewPostState extends State<NewPost> {
-  final ProfileController profileController = Get.put(ProfileController());
   final PostController postController = Get.put(PostController());
   final TextEditingController contentEditingController =
       TextEditingController();
