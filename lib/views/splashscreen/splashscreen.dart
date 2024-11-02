@@ -8,7 +8,6 @@ import 'package:cabonconnet/views/auth/register_continue.dart';
 import 'package:cabonconnet/views/auth/verification_code.dart';
 import 'package:cabonconnet/views/home/home.dart';
 import 'package:cabonconnet/views/onboarding/onboarding.dart';
-import 'package:cabonconnet/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
