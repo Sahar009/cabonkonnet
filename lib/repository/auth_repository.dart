@@ -48,6 +48,7 @@ class AuthRepository {
         phoneNumber: phoneNumber,
         role: role,
       );
+      AppLocalStorage.setCurrentUserId(user.$id);
 
       await database.createDocument(
         databaseId: databaseId,
@@ -85,7 +86,7 @@ class AuthRepository {
         documentId: session.userId,
       );
 
-      AppLocalStorage.setCurrentUserId(session.$id);
+      AppLocalStorage.setCurrentUserId(session.userId);
       var userModel = UserModel.fromMap(userDoc.data);
       return (true, userModel, "Login successful");
     } on AppwriteException catch (e) {

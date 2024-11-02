@@ -43,7 +43,7 @@ class Welcome extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const Register(
-                                role: "product_owner",
+                                role: "founder",
                               )));
                 },
                 child: Container(

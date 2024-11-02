@@ -1,3 +1,6 @@
+
+import 'package:timeago/timeago.dart' as timeago;
+
 String getUserTitle(String value) {
   return value == "product_owner"
       ? "Founder"
@@ -23,5 +26,27 @@ extension ListToString on List<String> {
   /// Converts the list of strings to a single string with an optional separator.
   String toSingleString({String separator = ', '}) {
     return join(separator);
+  }
+}
+
+
+
+
+extension CustomTimeAgo on DateTime {
+  String toCustomTimeAgo() {
+    final now = DateTime.now();
+    final difference = now.difference(this);
+
+    // If the date is less than or equal to 4 days ago, use 'time ago' format
+    if (difference.inDays <= 4) {
+      return timeago.format(this);
+    }
+
+    // If more than 4 days ago, use specific date formatting
+    if (now.year == this.year) {
+      return "${this.day}-${this.month}"; // day-month for same year
+    } else {
+      return "${this.day}-${this.month}-${this.year}"; // day-month-year for different year
+    }
   }
 }

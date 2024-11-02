@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
@@ -8,7 +10,8 @@ import 'package:get/get.dart';
 class ProfileController extends GetxController {
   UserModel? _userModel;
   final Rx<UserModel?> userModelRx = Rx<UserModel?>(null);
-  final Rx<RealtimeSubscription?> _subscription = Rx<RealtimeSubscription?>(null);
+  final Rx<RealtimeSubscription?> _subscription =
+      Rx<RealtimeSubscription?>(null);
 
   UserRepository userRepository = UserRepository(
     database: Databases(AppwriteConfig().client),
@@ -18,16 +21,27 @@ class ProfileController extends GetxController {
 
   final Realtime realtime = Realtime(AppwriteConfig().client);
 
+reload(){
+  if(_userModel == null || userModelRx.value == null){
+    getUserDetails();
+  }
+}
+
+
   @override
   void onInit() {
     super.onInit();
     getUserDetails();
-    getRealTimeUpdate();
+     getRealTimeUpdate();
+  }
+
+  logout() {
+    userModelRx.value = null;
   }
 
   Future<void> getUserDetails() async {
     String? userId = await AppLocalStorage.getCurrentUserId();
-
+    log(userId.toString());
     if (userId != null) {
       final (isSuccess, userModel) =
           await userRepository.getUserDetails(userId);
@@ -52,7 +66,7 @@ class ProfileController extends GetxController {
       _subscription.value!.stream.listen((event) async {
         // Fetch the updated user data
         await getUserDetails();
-            });
+      });
     }
   }
 

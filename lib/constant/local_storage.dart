@@ -12,6 +12,10 @@ class AppLocalStorage {
     return value;
   }
 
+  static Future logout() async {
+    await storage.delete(key: userIdKey);
+  }
+
   Future setOnboard() async {
     await storage.write(key: onBoadringKey, value: "true");
   }

@@ -1,4 +1,5 @@
 import 'package:cabonconnet/constant/app_color.dart';
+import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
@@ -14,6 +15,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final ProfileController profileController = Get.put(ProfileController());
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -63,29 +65,56 @@ class _ProfileViewState extends State<ProfileView> {
                     }),
                   ],
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColor.primaryColor,
-                      width: 2,
+                Column(
+                  children: [
+                    TransButton(
+                      title: "Edit Profile",
+                      onTap: () {},
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    "Edit Profile",
-                    style: AppTextStyle.body(
-                        color: AppColor.primaryColor,
-                        size: 15,
-                        fontWeight: FontWeight.w600),
-                  ),
+                    TransButton(
+                      title: 'Log Out',
+                      onTap: () {
+                        authController.logoutUser();
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
             const SizedBox(height: 20),
             const Divider(color: AppColor.primaryColor),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class TransButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+  const TransButton({super.key, required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppColor.primaryColor,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text(
+          title,
+          style: AppTextStyle.body(
+              color: AppColor.primaryColor,
+              size: 15,
+              fontWeight: FontWeight.w600),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cabonconnet/views/auth/login.dart';
 import 'package:cabonconnet/welcome.dart';
 import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class _Onboarding1State extends State<Onboarding1> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Welcome()));
+                            builder: (context) => const Login()));
                   } else {
                     controller.nextPage(
                         duration: const Duration(milliseconds: 200),

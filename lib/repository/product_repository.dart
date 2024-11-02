@@ -37,6 +37,7 @@ class ProductRepository {
           'user': userId, // Store only the user ID
           'commentCount': post.commentCount,
           'sharedBy': post.sharedBy,
+          "isProduct": true
         },
       );
       return (true, document.$id); // Return true and the document ID

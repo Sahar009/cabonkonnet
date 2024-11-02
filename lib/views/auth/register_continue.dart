@@ -166,7 +166,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                 _validateField(value, 'Address'), // Validator
                           ),
                           const SizedBox(height: 20),
-                          widget.role == "product_owner"
+                          widget.role == "founder"
                               ? Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,7 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/nav_bar_contoller.dart';
+import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/home/new_post.dart';
 import 'package:cabonconnet/views/home/showcase_product.dart';
@@ -91,6 +92,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ProfileController()).reload();
     return Obx(() {
       return Scaffold(
         body: contoller.screens[contoller.currentIndex.value],

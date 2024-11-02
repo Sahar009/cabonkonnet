@@ -1,8 +1,10 @@
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
+import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
+import 'package:cabonconnet/views/chat/message.dart';
 import 'package:cabonconnet/views/home/comment_screen.dart';
 import 'package:cabonconnet/views/widget/user_button.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +23,10 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  String? currentUserId;
+ 
   PostController postController = Get.put(PostController());
-
+  ChatController chatController = Get.put(ChatController());
+   String? currentUserId;
   @override
   void initState() {
     AppLocalStorage.getCurrentUserId().then((value) {
@@ -84,8 +87,13 @@ class _PostWidgetState extends State<PostWidget> {
               contentPadding: const EdgeInsets.all(0),
             ),
             ListTile(
-              onTap: () {
-                //   Get.to(() => const NewPost());
+              onTap: () async {
+                var chatRoom = await chatController.initiateChat(
+                    currentUserId!, widget.postModel.user?.id ?? "");
+                Get.to(() => MessagesScreen(
+                      chatRoom: chatRoom,
+                      currentUserId: currentUserId!,
+                    ));
               },
               leading: Image.asset(AppImages.messageIcon),
               title: Text(
@@ -97,8 +105,10 @@ class _PostWidgetState extends State<PostWidget> {
               contentPadding: const EdgeInsets.all(0),
             ),
             ListTile(
-              onTap: () {
-                //   Get.to(() => const NewPost());
+              onTap: () async {
+                // await chatController.initiateChat(
+                //     currentUserId!, widget.postModel.user?.id ?? "");
+                // Get.to(() => const MessagesScreen());
               },
               leading: Image.asset(AppImages.shareIcon),
               title: Text(
@@ -173,7 +183,7 @@ class _PostWidgetState extends State<PostWidget> {
                 size: 16,
                 likeBuilder: (bool isLiked) {
                   bool isLikeds =
-                      widget.postModel.likes!.contains(currentUserId);
+                      widget.postModel.likes?.contains(currentUserId) ?? false;
                   return Icon(
                     isLikeds ? Icons.favorite : Icons.favorite_border,
                     color: isLikeds ? Colors.red : Colors.grey,

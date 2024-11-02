@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:cabonconnet/constant/appwrite_config.dart';
+import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/repository/file_upload_repository.dart';
 import 'package:cabonconnet/repository/user_repository.dart';
@@ -18,6 +19,8 @@ class UserController extends GetxController {
     bucketId: AppwriteConfig.userFileBukectId,
     storage: AppwriteConfig().storage,
   );
+  ProfileController profileController = Get.put(ProfileController());
+
   Future updateUser({
     required UserModel userModel,
     required String address,
@@ -71,6 +74,7 @@ class UserController extends GetxController {
           'User details updated successfully!',
           snackPosition: SnackPosition.BOTTOM,
         );
+        profileController.getUserDetails();
         Get.offAll(() => Home());
       } else {
         // Handle failure to update user details

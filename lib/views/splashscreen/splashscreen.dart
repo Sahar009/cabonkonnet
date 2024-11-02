@@ -3,6 +3,7 @@ import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/models/user_model.dart';
+import 'package:cabonconnet/views/auth/login.dart';
 import 'package:cabonconnet/views/auth/register_continue.dart';
 import 'package:cabonconnet/views/auth/verification_code.dart';
 import 'package:cabonconnet/views/home/home.dart';
@@ -10,6 +11,7 @@ import 'package:cabonconnet/views/onboarding/onboarding.dart';
 import 'package:cabonconnet/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -55,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
             }
           }).onError((s, ss) {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const Welcome()));
+                MaterialPageRoute(builder: (context) => const Login()));
           });
         } else {
           Navigator.pushReplacement(context,

@@ -12,8 +12,9 @@ class ProfileWidget extends StatelessWidget {
     final ProfileController profileController = Get.put(ProfileController());
 
     return Obx(() {
-      final userModel = profileController.userModelRx.value;
+      profileController.getUserDetails();
 
+      final userModel = profileController.userModelRx.value;
       return userModel == null
           ? Container()
           : Row(

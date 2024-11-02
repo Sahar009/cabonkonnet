@@ -1,4 +1,7 @@
 import 'package:cabonconnet/constant/appwrite_config.dart';
+import 'package:cabonconnet/constant/local_storage.dart';
+import 'package:cabonconnet/controllers/nav_bar_contoller.dart';
+import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/repository/auth_repository.dart';
 import 'package:cabonconnet/views/auth/create_new_password.dart';
@@ -16,6 +19,7 @@ class AuthController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
   var isBusy = false.obs;
   final AuthRepository authRepository = AuthRepository(
     account: AppwriteConfig().account,
@@ -23,7 +27,7 @@ class AuthController extends GetxController {
     userCollectionId: AppwriteConfig.userCollectionId,
     databaseId: AppwriteConfig.databaseId,
   );
-
+  ProfileController profileController = Get.put(ProfileController());
   var otpStatus = "".obs;
   final _user = Rx<UserModel?>(null);
   UserModel? get user => _user.value;
@@ -171,6 +175,8 @@ class AuthController extends GetxController {
           Get.off(() => CreateNewPassword(
                 email: email,
               ));
+
+          return;
         }
 
         if (password.isNotEmpty) {
@@ -182,6 +188,7 @@ class AuthController extends GetxController {
                   role: _user.value?.role ?? userModel!.role,
                   userModel: _user.value ?? userModel!,
                 ));
+            return;
           }
         } else {
           Get.snackbar('Error', "Password not found, please retry login.",
@@ -189,12 +196,14 @@ class AuthController extends GetxController {
               icon: const Icon(Icons.error),
               colorText: Colors.red);
           Get.to(() => const Login());
+          return;
         }
       } else {
         Get.snackbar('Error', message,
             snackPosition: SnackPosition.BOTTOM,
             icon: const Icon(Icons.error),
             colorText: Colors.red);
+        return;
       }
     } catch (e) {
       Get.snackbar('Error', 'OTP verification failed: ${e.toString()}',
@@ -279,9 +288,15 @@ class AuthController extends GetxController {
 
   // Logout function
   Future<void> logoutUser() async {
+
     _user.value = null;
+   
+   await AppLocalStorage.logout();
+   await authRepository.account.deleteSessions();
+   Get.put(NavBarContoller()).currentIndex(0);
+    Get.put(ProfileController()).logout();
     Get.snackbar('Success', 'Successfully logged out',
         icon: const Icon(Icons.logout), colorText: Colors.green);
-    Get.offAllNamed('/login');
+    Get.offAll(() => const Login());
   }
 }

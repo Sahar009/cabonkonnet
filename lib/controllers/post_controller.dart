@@ -141,6 +141,7 @@ class PostController extends GetxController {
 
     if (isSuccess) {
       posts.add(post);
+      Get.back();
       Get.snackbar('Success', 'Post created successfully');
     } else {
       isBusy.value = false;
@@ -157,6 +158,7 @@ class PostController extends GetxController {
       if (index != -1) {
         posts[index] = post; // Update the existing post in the list
         Get.snackbar('Success', 'Post updated successfully');
+        Get.back();
       }
     } else {
       Get.snackbar('Error', 'Failed to update post');
