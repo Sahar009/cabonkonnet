@@ -2,9 +2,11 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
+import 'package:cabonconnet/helpers/custom_dialog.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/repository/file_upload_repository.dart';
 import 'package:cabonconnet/repository/user_repository.dart';
+import 'package:cabonconnet/views/auth/interest_section.dart';
 import 'package:cabonconnet/views/home/home.dart';
 import 'package:get/get.dart';
 
@@ -69,20 +71,94 @@ class UserController extends GetxController {
 
       if (isSuccess) {
         // Successfully updated user details
-        Get.snackbar(
-          'Success',
-          'User details updated successfully!',
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        CustomDialog.success(message: 'User details updated successfully!');
         profileController.getUserDetails();
-        Get.offAll(() => Home());
+        if (updatedUserModel?.interests != null &&
+            updatedUserModel!.interests!.isNotEmpty) {
+          Get.offAll(() => Home());
+        } else {
+          Get.offAll(() => const InterestSection());
+        }
       } else {
         // Handle failure to update user details
-        Get.snackbar(
-          'Error',
-          message,
-          snackPosition: SnackPosition.BOTTOM,
+        CustomDialog.success(message: message, title: 'Error');
+      }
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      isBusy.value = false;
+    }
+  }
+
+  Future updateUserAndBussines({
+    required UserModel userModel,
+    File? bussnessLogo,
+    File? profilePic,
+  }) async {
+    try {
+      isBusy.value = true;
+      String? bussnessLogoUrl;
+      String? profilePicUrl;
+
+      // Upload files if they are provided
+      if (bussnessLogo != null) {
+        if (userModel.businessLogoUrl != null) {
+          String? fileId =
+              AppwriteConfig.getFileIdFromUrl(userModel.businessLogoUrl!);
+          if (fileId != null) {
+            print(fileId);
+            print(userModel.businessLogoUrl);
+            await fileUploadRepository.delectFile(fileId);
+          }
+        }
+        bussnessLogoUrl = await fileUploadRepository.uploadFile(
+          bussnessLogo,
+          "${userModel.companyName} Logo ",
         );
+      }
+
+      if (profilePic != null) {
+        if (userModel.profileImage != null) {
+          String? fileId =
+              AppwriteConfig.getFileIdFromUrl(userModel.profileImage!);
+          print(userModel.profileImage);
+          if (fileId != null) {
+            print(fileId);
+            print(userModel.profileImage);
+            await fileUploadRepository.delectFile(fileId);
+          }
+        }
+        profilePicUrl = await fileUploadRepository.uploadFile(
+          profilePic,
+          "${userModel.fullName} Profile Pic",
+        );
+      }
+
+      // Create a copy of the user model with updated fields
+      var user = userModel.copyWith(
+        businessLogoUrl: bussnessLogoUrl,
+        profileImage: profilePicUrl,
+      );
+
+      // Update user details
+      final (isSuccess, updatedUserModel, message) =
+          await userRepository.updateUserDetails(user);
+
+      if (isSuccess) {
+        // Successfully updated user details
+
+        CustomDialog.success(message: 'User details updated successfully!');
+        profileController.getUserDetails();
+        if (updatedUserModel?.interests != null &&
+            updatedUserModel!.interests!.isNotEmpty) {
+          Get.offAll(() => Home());
+        } else {
+          Get.offAll(() => const InterestSection());
+        }
+      } else {
+        // Handle failure to update user details
+
+        CustomDialog.error(message: message, title: 'Error');
       }
     } catch (e) {
       log(e.toString());

@@ -25,7 +25,7 @@ class _EventsPageState extends State<EventsPage> {
               ),
               Row(
                 children: [
-                  Image(image: AssetImage(AppImages.homelogo)),
+                  const Image(image: AssetImage(AppImages.homelogo)),
                   const SizedBox(width: 5),
                   Text('Events',
                       style: AppTextStyle.body(
@@ -41,7 +41,7 @@ class _EventsPageState extends State<EventsPage> {
                 },
                 child: Row(
                   children: [
-                    Image(image: AssetImage(AppImages.mic)),
+                    const Image(image: AssetImage(AppImages.mic)),
                     const SizedBox(width: 8),
                     Text('Live',
                         style: AppTextStyle.body(fontWeight: FontWeight.w500))
@@ -58,14 +58,14 @@ class _EventsPageState extends State<EventsPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              EventsWidget(
+              const EventsWidget(
                   heading: 'Innovations in Solar Energy Storage',
                   subtitle:
                       'Exploring advancements in battery technoliges and storage solution',
                   imagePath: AppImages.smallpicture2,
                   hostName: 'Terry Silver'),
               const SizedBox(height: 15),
-              EventsWidget(
+              const EventsWidget(
                   heading: 'Innovations in Solar Energy Storage',
                   subtitle:
                       'Exploring advancements in battery technoliges and storage solution',
@@ -79,7 +79,7 @@ class _EventsPageState extends State<EventsPage> {
                         size: 22, fontWeight: FontWeight.w500)),
               ),
               const SizedBox(height: 15),
-              EventsWidget(
+              const EventsWidget(
                   isUpcoming: true,
                   heading: 'Offshore Wind Power Development',
                   subtitle:
@@ -87,7 +87,7 @@ class _EventsPageState extends State<EventsPage> {
                   imagePath: AppImages.smallpicture2,
                   hostName: 'Terry Silver'),
               const SizedBox(height: 15),
-              EventsWidget(
+              const EventsWidget(
                   isUpcoming: true,
                   heading: 'Green Hydrogen as a Clean Energy Carrier',
                   subtitle:

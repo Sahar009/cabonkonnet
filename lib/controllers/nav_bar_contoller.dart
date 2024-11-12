@@ -1,7 +1,7 @@
 import 'package:cabonconnet/views/chat/chatandforum.dart';
 import 'package:cabonconnet/views/events/events.dart';
 import 'package:cabonconnet/views/home/home_page.dart';
-import 'package:cabonconnet/views/home/profile_view.dart';
+import 'package:cabonconnet/views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

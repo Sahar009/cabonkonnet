@@ -5,12 +5,14 @@ import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/home/new_post.dart';
 import 'package:cabonconnet/views/home/showcase_product.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 class Home extends StatelessWidget {
   final NavBarContoller contoller = Get.put(NavBarContoller());
+  final ProfileController profileContoller = Get.put(ProfileController());
 
   Home({super.key});
 
@@ -146,12 +148,18 @@ class Home extends StatelessWidget {
               label: 'Chats',
             ),
             BottomNavigationBarItem(
-              icon: Image(
-                image: AssetImage(AppImages.smallpicture2),
-                color: contoller.checkCurrentState(4)
-                    ? AppColor.black
-                    : AppColor.grey,
-              ),
+              icon: Obx(() {
+                return CircleAvatar(
+                  backgroundImage:
+                      profileContoller.userModelRx.value?.profileImage != null
+                          ? CachedNetworkImageProvider(
+                              profileContoller.userModelRx.value!.profileImage!)
+                          : AssetImage(AppImages.smallpicture2),
+                  backgroundColor: contoller.checkCurrentState(4)
+                      ? AppColor.black
+                      : AppColor.grey,
+                );
+              }),
               label: 'Profile',
             ),
           ],

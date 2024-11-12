@@ -9,8 +9,7 @@ class RecentChat extends StatefulWidget {
   final List<ChatRoom> chatRooms;
   final String currentUserId;
   const RecentChat(
-      {Key? key, required this.currentUserId, required this.chatRooms})
-      : super(key: key);
+      {super.key, required this.currentUserId, required this.chatRooms});
 
   @override
   State<RecentChat> createState() => _RecentChatState();
@@ -57,7 +56,7 @@ class _RecentChatState extends State<RecentChat> {
                     chatRoom: chatRoom, currentUserId: widget.currentUserId));
               },
             ),
-            Divider()
+            const Divider()
           ],
         );
       },

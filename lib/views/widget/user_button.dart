@@ -1,9 +1,10 @@
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class UserButton extends StatelessWidget {
   final String text;
-  final IconData iconData;
+  final String iconData;
   final VoidCallback onTap;
   const UserButton({
     super.key,
@@ -18,7 +19,11 @@ class UserButton extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          Icon(iconData, size: 20),
+          iconData.endsWith(".png")
+              ? Image.asset(iconData)
+              : SvgPicture.asset(
+                  iconData,
+                ),
           Text(text,
               style: AppTextStyle.body(size: 13, fontWeight: FontWeight.normal))
         ],

@@ -22,10 +22,10 @@ class _NewPostState extends State<NewPost> {
   final TextEditingController contentEditingController =
       TextEditingController();
 
-  final ImagePicker _picker = ImagePicker();
+  // final ImagePicker _picker = ImagePicker();
   List<XFile> imageFiles = [];
   List<String> hashTags = [];
-
+  final ImagePicker _picker = ImagePicker();
   Future<void> _selectImages() async {
     if (imageFiles.length >= 6) {
       Get.snackbar("Maximum", "The maximum number of images you can pick is 6");

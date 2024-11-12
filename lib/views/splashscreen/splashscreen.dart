@@ -3,6 +3,7 @@ import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/models/user_model.dart';
+import 'package:cabonconnet/views/auth/interest_section.dart';
 import 'package:cabonconnet/views/auth/login.dart';
 import 'package:cabonconnet/views/auth/register_continue.dart';
 import 'package:cabonconnet/views/auth/verification_code.dart';
@@ -25,43 +26,47 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 1), () {
-      appLocalStorage.getOnBoarding().then((value) {
-        if (value == "true") {
-          authController.authRepository.account.get().then((value) async {
-            if (value.emailVerification) {
-              AppLocalStorage.setCurrentUserId(value.$id);
+      authController.authRepository.account.get().then((value) async {
+        if (value.emailVerification) {
+          AppLocalStorage.setCurrentUserId(value.$id);
 
-              await profileController.getUserDetails();
-              UserModel? user = profileController.userModelRx.value;
+          await profileController.getUserDetails();
+          UserModel? user = profileController.userModelRx.value;
 
-              if (user != null &&
-                  (user.companyName == null || user.country == null)) {
-                Get.to(
-                    () => UpdateUserDetails(userModel: user, role: user.role));
-              } else {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => Home()));
-              }
-            } else {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => VerificationCode(
-                    email: value.email,
-                    isFirstVerify: true,
-                    password: "",
-                  ),
-                ),
-              );
-            }
-          }).onError((s, ss) {
+          if (user != null &&
+              (user.companyName == null || user.country == null)) {
+            Get.to(() => UpdateUserDetails(userModel: user, role: user.role));
+          } else if (user != null &&
+              (user.interests == null || user.interests!.isEmpty)) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const InterestSection()));
+          } else {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Home()));
+          }
+        } else {
+          authController.sendOtp(value.email, true);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VerificationCode(
+                email: value.email,
+                isFirstVerify: true,
+                password: "",
+              ),
+            ),
+          );
+        }
+      }).onError((s, ss) {
+        appLocalStorage.getOnBoarding().then((value) {
+          if (value == "true") {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const Login()));
-          });
-        } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const Onboarding1()));
-        }
+          } else {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const Onboarding1()));
+          }
+        });
       });
     });
     super.initState();
@@ -69,8 +74,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffFFFFFF),
+    return const Scaffold(
+      backgroundColor: Color(0xffFFFFFF),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

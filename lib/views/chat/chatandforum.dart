@@ -4,6 +4,7 @@ import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/models/chat_rooms.dart';
 import 'package:cabonconnet/views/chat/forum_chat.dart';
 import 'package:cabonconnet/views/chat/recent_chat.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -19,9 +20,8 @@ class _ChatAndForumState extends State<ChatAndForum> {
   final TextEditingController addressController = TextEditingController();
   ProfileController profileController = Get.put(ProfileController());
   ChatController chatController = Get.put(ChatController());
-  
 
-      String? currentUserId;
+  String? currentUserId;
   @override
   void initState() {
     AppLocalStorage.getCurrentUserId().then((value) {
@@ -31,6 +31,7 @@ class _ChatAndForumState extends State<ChatAndForum> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -38,15 +39,18 @@ class _ChatAndForumState extends State<ChatAndForum> {
       child: Obx(() {
         // ignore: invalid_use_of_protected_member
         List<ChatRoom> chatRooms = chatController.chatRooms.value;
+        chatRooms.sort((a, b) =>
+            b.lastMessage!.createdAt.compareTo(a.lastMessage!.createdAt));
         return Scaffold(
           appBar: AppBar(
             title: Row(
               children: [
                 profileController.userModelRx.value?.profileImage != null
                     ? CircleAvatar(
-                        backgroundImage: NetworkImage(profileController
-                                .userModelRx.value?.profileImage! ??
-                            ""),
+                        backgroundImage: CachedNetworkImageProvider(
+                            profileController
+                                    .userModelRx.value?.profileImage! ??
+                                ""),
                       )
                     : const CircleAvatar(
                         child: Icon(Icons.person), // Optional placeholder icon
@@ -88,14 +92,17 @@ class _ChatAndForumState extends State<ChatAndForum> {
                   borderSide: BorderSide(width: 4),
                   insets: EdgeInsets.symmetric(horizontal: 60)),
               tabs: [
-                Tab(text: "Chat"),
+                Tab(text: "Inbox"),
                 Tab(text: "Forum"),
               ],
             ),
           ),
-          body:  TabBarView(
+          body: TabBarView(
             children: [
-              RecentChat(chatRooms: chatRooms ,currentUserId: currentUserId ?? "",), // Pass chatRooms here
+              RecentChat(
+                chatRooms: chatRooms,
+                currentUserId: currentUserId ?? "",
+              ), // Pass chatRooms here
               ForumChat(chatRooms: chatRooms), //
             ],
           ),

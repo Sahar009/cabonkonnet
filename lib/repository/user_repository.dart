@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/models/user_model.dart';
 
+import '../constant/local_storage.dart';
+
 class UserRepository {
   final Databases database;
   final String userCollectionId;
@@ -16,10 +18,11 @@ class UserRepository {
 
   Future<(bool, UserModel?, String)> updateUserDetails(UserModel user) async {
     try {
+       String? userId = await AppLocalStorage.getCurrentUserId();
       await database.updateDocument(
         databaseId: databaseId,
         collectionId: userCollectionId,
-        documentId: user.id,
+        documentId: userId ?? user.id,
         data: user.toMap(),
       );
       return (true, user, "Update successful");

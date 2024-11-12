@@ -1,0 +1,38 @@
+# Optimizations for Android applications
+
+# Preserve annotations
+-keepattributes *Annotation*
+
+# Keep all public classes in the application package
+-keep public class com.cabon.connet.** { *; }
+
+# Keep public methods and fields in the application package
+-keepclassmembers public class com.cabon.connet.** { *; }
+
+# Keep application class and main activity
+-keep class com.cabon.connet.YourApplication { *; }
+-keep class com.cabon.connet.MainActivity { *; }
+
+# Prevent removal of any class that might be referenced from XML files
+-keep class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+# Keep Parcelable interface implementations
+-keep class * implements android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+
+# Keep any class annotated with @Keep
+-keep @androidx.annotation.Keep class * { *; }
+
+# Optimizations
+-dontoptimize
+-dontobfuscate
+
+# Enable warnings for removing unused classes
+-verbose
+
+# Specify the ProGuard version
+# If you are using a particular library that has specific requirements, you might need to keep certain classes
+# You can add specific rules here based on the libraries you are using

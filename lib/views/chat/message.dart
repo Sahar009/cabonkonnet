@@ -2,6 +2,7 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/chat_rooms.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -12,10 +13,10 @@ class MessagesScreen extends StatefulWidget {
   final String currentUserId;
 
   const MessagesScreen({
-    Key? key,
+    super.key,
     required this.chatRoom,
     required this.currentUserId,
-  }) : super(key: key);
+  });
 
   @override
   State<MessagesScreen> createState() => _MessagesScreenState();
@@ -34,7 +35,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
     chatController.messages.listen((_) {
       // Delay to ensure the message list is updated
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
       });
     });
@@ -52,7 +53,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
             friend?.profileImage == null
                 ? CircleAvatar(child: Text(name?[0].toUpperCase() ?? ""))
                 : CircleAvatar(
-                    backgroundImage: NetworkImage(friend?.profileImage ?? ""),
+                    backgroundImage:
+                        CachedNetworkImageProvider(friend?.profileImage ?? ""),
                   ),
             const SizedBox(width: 10),
             Column(
@@ -104,7 +106,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Row(
                             children: [
-                              Expanded(child: Divider()),
+                              const Expanded(child: Divider()),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8.0, horizontal: 8),
@@ -116,7 +118,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                   ),
                                 ),
                               ),
-                              Expanded(child: Divider()),
+                              const Expanded(child: Divider()),
                             ],
                           ),
                         ),
@@ -144,7 +146,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
                         ),
                         subtitle: Text(
                           DateFormat("h:mm a").format(message.createdAt),
-                          style: TextStyle(fontSize: 10, color: Colors.grey),
+                          style:
+                              const TextStyle(fontSize: 10, color: Colors.grey),
                           textAlign:
                               isCurrentUser ? TextAlign.right : TextAlign.left,
                         ),

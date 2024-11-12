@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ForumChat extends StatelessWidget {
   final List<ChatRoom> chatRooms;
 
-  const ForumChat({Key? key, required this.chatRooms}) : super(key: key);
+  const ForumChat({super.key, required this.chatRooms});
 
   @override
   Widget build(BuildContext context) {

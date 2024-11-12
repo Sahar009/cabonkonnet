@@ -78,7 +78,6 @@ class AuthRepository {
       // Attempt to login the user
       final session = await account.createEmailPasswordSession(
           email: email, password: password);
-
       // Retrieve the user details from the database
       final userDoc = await database.getDocument(
         databaseId: databaseId,

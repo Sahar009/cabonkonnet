@@ -3,6 +3,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/models/chat_rooms.dart';
 import 'package:cabonconnet/models/message.dart';
+import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatRepository {
@@ -12,19 +13,27 @@ class ChatRepository {
 
   Future<ChatRoom?> getExistingChatRoom(String userId1, String userId2) async {
     try {
+      // Attempt to find a chat room where both users are present
       final response = await databases.listDocuments(
         databaseId: AppwriteConfig.databaseId,
         collectionId: AppwriteConfig.chatRoomCollectionId,
         queries: [
           Query.equal('type', 'direct'),
-          Query.equal('users', [userId1, userId2]),
+          Query.search('users', userId1), // Ensure userId1 is in the array
+          Query.search('users', userId2), // Ensure userId2 is in the array
         ],
       );
-      var d = response.documents.map((e) => e.data).toList();
-      log(d.toString());
+
+      // Map the results to a readable format for debugging
+      var documentData = response.documents.map((e) => e.data).toList();
+      log("Query Result: ${documentData.toString()}");
+
+      // Check if we have at least one matching chat room
       if (response.documents.isNotEmpty) {
         return ChatRoom.fromDocument(response.documents.first);
       }
+
+      // If no match, return null
       return null;
     } catch (e) {
       log("Error in getExistingChatRoom: $e");
@@ -72,7 +81,7 @@ class ChatRepository {
       );
 
       var d = response.documents.map((e) => e.data).toList();
-      log("The list Of Rooms " + d.toString());
+      log("The list Of Rooms $d");
 
       return response.documents
           .map((doc) => ChatRoom.fromDocument(doc))
@@ -143,7 +152,9 @@ class ChatRepository {
           .map((doc) => Message.fromDocument(doc))
           .toList();
     } catch (e) {
-      print('Error fetching messages: $e');
+      if (kDebugMode) {
+        print('Error fetching messages: $e');
+      }
       return [];
     }
   }

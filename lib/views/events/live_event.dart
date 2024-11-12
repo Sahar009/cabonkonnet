@@ -19,13 +19,13 @@ class _LiveEventState extends State<LiveEvent> {
           const SizedBox(height: 80),
           Stack(
                       children: [
-          Image(image: AssetImage(AppImages.liveimage)),
+          const Image(image: AssetImage(AppImages.liveimage)),
           Positioned(
             bottom: 5,
             left: 15,
             child: Row(
               children: [
-                Image(image: AssetImage(AppImages.redcircle)),
+                const Image(image: AssetImage(AppImages.redcircle)),
                 const SizedBox(width: 5),
                 Text(
                   'Live',
@@ -55,7 +55,7 @@ class _LiveEventState extends State<LiveEvent> {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Image(image: AssetImage(AppImages.smallpicture2)),
+                    const Image(image: AssetImage(AppImages.smallpicture2)),
                     const SizedBox(width: 8),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +71,7 @@ class _LiveEventState extends State<LiveEvent> {
                                   fontWeight: FontWeight.normal, size: 13),
                             ),
                             const SizedBox(width: 5),
-                            Image(
+                            const Image(
                               image: AssetImage(AppImages.mic),
                               height: 12,
                             ),

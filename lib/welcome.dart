@@ -17,7 +17,7 @@ class Welcome extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              Image(image: AssetImage(AppImages.smalllogo)),
+              const Image(image: AssetImage(AppImages.smalllogo)),
               Row(
                 children: [
                   Text(

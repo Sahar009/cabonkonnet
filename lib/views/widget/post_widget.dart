@@ -1,7 +1,9 @@
+import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
+import 'package:cabonconnet/controllers/saved_post_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
@@ -10,23 +12,24 @@ import 'package:cabonconnet/views/widget/user_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:like_button/like_button.dart';
 
 class PostWidget extends StatefulWidget {
   final PostModel postModel;
+  final bool isComment;
 
-  const PostWidget({super.key, required this.postModel});
+  const PostWidget(
+      {super.key, required this.postModel, required this.isComment});
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
 }
 
 class _PostWidgetState extends State<PostWidget> {
- 
   PostController postController = Get.put(PostController());
+  SavedPostController savedPostController = Get.put(SavedPostController());
   ChatController chatController = Get.put(ChatController());
-   String? currentUserId;
+  String? currentUserId;
   @override
   void initState() {
     AppLocalStorage.getCurrentUserId().then((value) {
@@ -147,8 +150,8 @@ class _PostWidgetState extends State<PostWidget> {
             children: [
               widget.postModel.user?.profileImage != null
                   ? CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(widget.postModel.user!.profileImage!),
+                      backgroundImage: CachedNetworkImageProvider(
+                          widget.postModel.user!.profileImage!),
                     )
                   : const CircleAvatar(),
               const SizedBox(width: 5),
@@ -175,79 +178,120 @@ class _PostWidgetState extends State<PostWidget> {
           ),
           const SizedBox(height: 5),
           _buildImageGallery(widget.postModel.imageUrls),
-          const SizedBox(height: 7),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              LikeButton(
-                size: 16,
-                likeBuilder: (bool isLiked) {
-                  bool isLikeds =
-                      widget.postModel.likes?.contains(currentUserId) ?? false;
-                  return Icon(
-                    isLikeds ? Icons.favorite : Icons.favorite_border,
-                    color: isLikeds ? Colors.red : Colors.grey,
-                    size: 16,
-                  );
-                },
-                likeCount: widget.postModel.likes?.length,
-                onTap: (isLiked) {
-                  return postController.toggleLike(widget.postModel.id);
-                },
-              ),
-              Row(
-                children: [
-                  Text(
-                    '${widget.postModel.commentCount ?? 0} comments',
-                    style: AppTextStyle.body(
-                        size: 13, fontWeight: FontWeight.normal),
+          const SizedBox(height: 10),
+          widget.postModel.isProduct
+              ? Container()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    LikeButton(
+                      size: 16,
+                      likeBuilder: (bool isLiked) {
+                        bool isLikeds =
+                            widget.postModel.likes?.contains(currentUserId) ??
+                                false;
+                        return Icon(
+                          isLikeds ? Icons.favorite : Icons.favorite_border,
+                          color: isLikeds ? Colors.red : Colors.grey,
+                          size: 16,
+                        );
+                      },
+                      likeCount: widget.postModel.likes?.length,
+                      onTap: (isLiked) {
+                        return postController.toggleLike(widget.postModel.id);
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '${widget.postModel.commentCount ?? 0} comments',
+                          style: AppTextStyle.body(
+                              size: 13, fontWeight: FontWeight.normal),
+                        ),
+                        const SizedBox(width: 5),
+                        const Icon(Icons.circle, size: 6),
+                        const SizedBox(width: 5),
+                        Text(
+                          '${widget.postModel.sharedBy?.length ?? 0} shares',
+                          style: AppTextStyle.body(
+                              size: 13, fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+          if (!widget.postModel.isProduct) const Divider(),
+          widget.postModel.isProduct
+              ? Container(
+                  height: 47,
+                  decoration: BoxDecoration(
+                      border:
+                          Border.all(color: AppColor.primaryColor, width: 2),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                    child: Text(
+                      "View product details",
+                      style: AppTextStyle.soraBody,
+                    ),
                   ),
-                  const SizedBox(width: 5),
-                  const Icon(Icons.circle, size: 6),
-                  const SizedBox(width: 5),
-                  Text(
-                    '${widget.postModel.sharedBy?.length ?? 0} shares',
-                    style: AppTextStyle.body(
-                        size: 13, fontWeight: FontWeight.normal),
+                )
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      UserButton(
+                          onTap: () {
+                            postController.toggleLike(widget.postModel.id);
+                          },
+                          iconData: AppImages.like,
+                          text: 'Like'),
+                      if (!widget.isComment)
+                        UserButton(
+                            onTap: !widget.isComment
+                                ? () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CommentScreen(
+                                                  postModel: widget.postModel,
+                                                )));
+                                  }
+                                : () {},
+                            iconData: AppImages.comment,
+                            text: 'Comment'),
+
+                      UserButton(
+                          onTap: () {},
+                          iconData: AppImages.share,
+                          text: 'Share'),
+                      UserButton(
+                          onTap: () {}, iconData: AppImages.send, text: 'Send'),
+
+                      if (widget.isComment)
+                        UserButton(
+                            onTap: () {
+                              savedPostController.savePost(widget.postModel.id);
+                            },
+                            iconData: AppImages.saveIcon,
+                            text: 'Save'),
+                      //  widget.isComment ? UserButton(
+                      //   onTap:
+                      //        () {
+                      //           Navigator.push(
+                      //               context,
+                      //               MaterialPageRoute(
+                      //                   builder: (context) => CommentScreen(
+                      //                         postModel: widget.postModel,
+                      //                       )));
+                      //         }
+                      //     ,
+                      //   iconData: AppImages.comment,
+                      //   text: 'Comment'),
+                    ],
                   ),
-                ],
-              )
-            ],
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                UserButton(
-                    onTap: () {
-                      postController.toggleLike(widget.postModel.id);
-                    },
-                    iconData: IconsaxPlusLinear.like_1,
-                    text: 'Like'),
-                UserButton(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CommentScreen(
-                                    postModel: widget.postModel,
-                                  )));
-                    },
-                    iconData: IconsaxPlusLinear.message,
-                    text: 'Comment'),
-                UserButton(
-                    onTap: () {},
-                    iconData: IconsaxPlusLinear.share,
-                    text: 'Share'),
-                UserButton(
-                    onTap: () {},
-                    iconData: IconsaxPlusLinear.send_2,
-                    text: 'Send'),
-              ],
-            ),
-          ),
+                ),
+          const Divider()
         ],
       ),
     );
@@ -258,6 +302,7 @@ class _PostWidgetState extends State<PostWidget> {
       return Container(); // No images to show
     } else if (imageUrls.length == 1) {
       return SizedBox(
+        height: 250,
         width: double.infinity,
         child: CachedNetworkImage(
           imageUrl: imageUrls[0],

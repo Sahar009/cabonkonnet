@@ -23,7 +23,8 @@ class ProfileWidget extends StatelessWidget {
                     ? CircleAvatar(
                         radius: 25,
                         backgroundImage:
-                            CachedNetworkImageProvider(userModel.profileImage!),
+                            CachedNetworkImageProvider(
+                                userModel.profileImage!),
                       )
                     : const CircleAvatar(
                         radius: 25,

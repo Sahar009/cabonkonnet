@@ -43,10 +43,10 @@ extension CustomTimeAgo on DateTime {
     }
 
     // If more than 4 days ago, use specific date formatting
-    if (now.year == this.year) {
-      return "${this.day}-${this.month}"; // day-month for same year
+    if (now.year == year) {
+      return "$day-$month"; // day-month for same year
     } else {
-      return "${this.day}-${this.month}-${this.year}"; // day-month-year for different year
+      return "$day-$month-$year"; // day-month-year for different year
     }
   }
 }

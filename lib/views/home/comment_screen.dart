@@ -3,7 +3,7 @@ import 'package:cabonconnet/controllers/comment_controller.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/home/new_post.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
-import 'package:cabonconnet/views/widget/post_wiget.dart';
+import 'package:cabonconnet/views/widget/post_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -43,7 +43,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   child: const Icon(Icons.arrow_back_ios),
                 ),
                 const SizedBox(height: 5),
-                PostWidget(postModel: widget.postModel),
+                PostWidget(postModel: widget.postModel, isComment: true,),
                 const Divider(),
               ],
             ),
@@ -59,7 +59,7 @@ class _CommentScreenState extends State<CommentScreen> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image(image: AssetImage(AppImages.smallpicture1)),
+                          const Image(image: AssetImage(AppImages.smallpicture1)),
                           const SizedBox(width: 5),
                           Expanded(
                             child: Container(
@@ -101,7 +101,7 @@ class _CommentScreenState extends State<CommentScreen> {
                 GestureDetector(
                   onTap: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const NewPost())),
-                  child: Image(image: AssetImage(AppImages.smallpicture2)),
+                  child: const Image(image: AssetImage(AppImages.smallpicture2)),
                 ),
                 const SizedBox(width: 10),
                 Expanded(

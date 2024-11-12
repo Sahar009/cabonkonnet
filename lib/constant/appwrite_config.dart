@@ -15,6 +15,9 @@ class AppwriteConfig {
   static String postLikeCollectionId = "672348e50025a8d9d6cb";
   static String postShareCollectionId = "6723490a00245a40e093";
   static String postCommentCollectionId = "67234f8a003419eeccc7";
+  static String interestCollectionId = "672cc3c3002880f0439f";
+  static String teamCollectionId = "672ee626003e72bc43e3";
+  static String savedPostCollectionId = "672cc6b900360117a799";
 
   late Client _client;
   late Account _account;
@@ -40,5 +43,23 @@ class AppwriteConfig {
 
   static String getFileUrl(String bucketId, String fileId) {
     return '$appwriteEndpoint/storage/buckets/$bucketId/files/$fileId/view?project=$projectId';
+  }
+
+  static String? getFileIdFromUrl(String url) {
+    try {
+      final uri = Uri.parse(url);
+
+      // Check if the URL is valid and structured correctly
+      if (uri.pathSegments.length >= 5 &&
+          uri.pathSegments[2] == 'buckets' &&
+          uri.pathSegments[4] == 'files') {
+        // The fileId should be in the fifth segment of the path
+        return uri.pathSegments[5];
+      }
+      return null; // Return null if the structure doesn't match
+    } catch (e) {
+      print("Invalid URL format: $e");
+      return null;
+    }
   }
 }

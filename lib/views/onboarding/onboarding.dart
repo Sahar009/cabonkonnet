@@ -46,7 +46,7 @@ class _Onboarding1State extends State<Onboarding1> {
                 height: 600,
                 child: PageView(
                   controller: controller,
-                  children: [
+                  children: const [
                     OnboardingWidget(
                       imagePath: AppImages.first,
                       title: "Meet Up The Right ",

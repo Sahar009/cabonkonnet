@@ -30,4 +30,22 @@ class FileUploadRepository {
       return null;
     }
   }
+
+  Future<bool> delectFile(String fileId) async {
+    try {
+      // Create the file and upload it to Appwrite
+      await storage.deleteFile(
+        bucketId: bucketId,
+        fileId: fileId, // Generates a unique file ID
+      );
+
+      // Return the uploaded file information
+
+      return true;
+    } on AppwriteException {
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

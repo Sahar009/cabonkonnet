@@ -2,9 +2,11 @@ import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/nav_bar_contoller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
+import 'package:cabonconnet/helpers/custom_dialog.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/repository/auth_repository.dart';
 import 'package:cabonconnet/views/auth/create_new_password.dart';
+import 'package:cabonconnet/views/auth/interest_section.dart';
 import 'package:cabonconnet/views/auth/login.dart';
 import 'package:cabonconnet/views/auth/register_continue.dart';
 import 'package:cabonconnet/views/auth/verification_code.dart';
@@ -57,18 +59,12 @@ class AuthController extends GetxController {
               password: passwordController.text,
             ));
       } else {
-        Get.snackbar('Error', message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.error),
-            colorText: Colors.red);
+        CustomDialog.error(title: 'Error', message: message);
       }
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'An error occurred: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-        icon: const Icon(Icons.error),
-        colorText: Colors.red,
+      CustomDialog.error(
+        title: 'Error',
+        message: 'An error occurred: ${e.toString()}',
       );
     } finally {
       isBusy.value = false;
@@ -88,27 +84,38 @@ class AuthController extends GetxController {
           await authRepository.loginUser(email, password);
 
       if (status) {
-        // Navigate to Profile Update page after successful login
-        if (userModel != null &&
-            (userModel.companyName == null || userModel.country == null)) {
-          Get.off(() => UpdateUserDetails(
-                role: _user.value?.role ?? userModel.role,
-                userModel: _user.value ?? userModel,
-              )); // Navigate to Profile Update Page
-        } else {
-          Get.offAll(() => Home()); // Navigate to Home if not updating profile
-        }
+        // Navigate to Profile Update page after zsuccessful login
+        authRepository.account.get().then((value) async {
+          if (value.emailVerification) {
+            if (userModel != null &&
+                (userModel.companyName == null || userModel.country == null)) {
+              Get.to(() => UpdateUserDetails(
+                  userModel: userModel, role: userModel.role));
+            } else if (userModel != null &&
+                (userModel.interests == null || userModel.interests!.isEmpty)) {
+              Get.to(() => const InterestSection());
+            } else {
+              Get.offAll(() => Home());
+            }
+          } else {
+            sendOtp(value.email, true);
+            Get.to(
+              () => VerificationCode(
+                email: value.email,
+                isFirstVerify: true,
+                password: password,
+              ),
+            );
+          }
+        });
       } else {
-        Get.snackbar('Error', message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.error),
-            colorText: Colors.red);
+        CustomDialog.error(title: 'Error', message: message);
       }
     } catch (e) {
-      Get.snackbar('Error', 'Login failed: ${e.toString()}',
-          snackPosition: SnackPosition.BOTTOM,
-          icon: const Icon(Icons.error),
-          colorText: Colors.red);
+      CustomDialog.error(
+        title: 'Error',
+        message: 'Login failed: ${e.toString()}',
+      );
     } finally {
       isBusy.value = false;
     }
@@ -125,25 +132,16 @@ class AuthController extends GetxController {
 
       if (status) {
         isBusy.value = false; // Set to false before redirect
-
-        Get.snackbar("OTP Sent", message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.check),
-            colorText: Colors.green);
+        CustomDialog.success(title: "OTP Sent", message: message);
       } else {
         isBusy.value = false; // Set to false before redirect
 
-        Get.snackbar('Error', message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.error),
-            colorText: Colors.red);
+        CustomDialog.error(title: 'Error', message: message);
       }
       isBusy.value = false; // Set to false before redirect
     } catch (e) {
-      Get.snackbar('Error', 'Failed to send OTP: ${e.toString()}',
-          snackPosition: SnackPosition.BOTTOM,
-          icon: const Icon(Icons.error),
-          colorText: Colors.red);
+      CustomDialog.error(
+          title: 'Error', message: 'Failed to send OTP: ${e.toString()}');
     } finally {
       isBusy.value = false;
     }
@@ -153,10 +151,7 @@ class AuthController extends GetxController {
   Future<void> verifyOtp(String email, String otp, String password) async {
     isBusy.value = true;
     if (otp.length != 4) {
-      Get.snackbar('Error', "Input Valid OTP",
-          snackPosition: SnackPosition.BOTTOM,
-          icon: const Icon(Icons.error),
-          colorText: Colors.red);
+      CustomDialog.error(title: 'Error', message: "Input Valid OTP");
       isBusy.value = false;
       return;
     }
@@ -166,10 +161,7 @@ class AuthController extends GetxController {
           await authRepository.verifyOtp(email: email, otp: otp);
       otpStatus.value = message;
       if (status) {
-        Get.snackbar("OTP Verified", message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.check),
-            colorText: Colors.green);
+        CustomDialog.success(title: "OTP Verified", message: message);
 
         if (isRecover == true) {
           Get.off(() => CreateNewPassword(
@@ -191,25 +183,22 @@ class AuthController extends GetxController {
             return;
           }
         } else {
-          Get.snackbar('Error', "Password not found, please retry login.",
-              snackPosition: SnackPosition.BOTTOM,
-              icon: const Icon(Icons.error),
-              colorText: Colors.red);
+          CustomDialog.error(
+              title: 'Error',
+              message: "Password not found, please retry login.");
+
           Get.to(() => const Login());
           return;
         }
       } else {
-        Get.snackbar('Error', message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.error),
-            colorText: Colors.red);
+        CustomDialog.error(title: 'Error', message: message);
         return;
       }
     } catch (e) {
-      Get.snackbar('Error', 'OTP verification failed: ${e.toString()}',
-          snackPosition: SnackPosition.BOTTOM,
-          icon: const Icon(Icons.error),
-          colorText: Colors.red);
+      CustomDialog.error(
+        title: 'Error',
+        message: 'OTP verification failed: ${e.toString()}',
+      );
     } finally {
       isBusy.value = false;
     }
@@ -225,10 +214,8 @@ class AuthController extends GetxController {
       );
 
       if (status) {
-        Get.snackbar("OTP Sent", message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.check),
-            colorText: Colors.green);
+        CustomDialog.success(title: "OTP Sent", message: message);
+
         isBusy.value = false;
         Get.to(() => VerificationCode(
               email: email,
@@ -237,16 +224,13 @@ class AuthController extends GetxController {
             ));
       } else {
         isBusy.value = false;
-        Get.snackbar('Error', message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.error),
-            colorText: Colors.red);
+        CustomDialog.error(title: 'Error', message: message);
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to send OTP: ${e.toString()}',
-          snackPosition: SnackPosition.BOTTOM,
-          icon: const Icon(Icons.error),
-          colorText: Colors.red);
+      CustomDialog.error(
+        title: 'Error',
+        message: 'Failed to send OTP: ${e.toString()}',
+      );
     } finally {
       isBusy.value = false;
     }
@@ -265,22 +249,17 @@ class AuthController extends GetxController {
       );
 
       if (status) {
-        Get.snackbar("Success", message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.check),
-            colorText: Colors.green);
+        CustomDialog.success(message: message);
+
         Get.offAll(() => const Login());
       } else {
-        Get.snackbar('Error', message,
-            snackPosition: SnackPosition.BOTTOM,
-            icon: const Icon(Icons.error),
-            colorText: Colors.red);
+        CustomDialog.error(title: 'Error', message: message);
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to update password: ${e.toString()}',
-          snackPosition: SnackPosition.BOTTOM,
-          icon: const Icon(Icons.error),
-          colorText: Colors.red);
+      CustomDialog.error(
+        title: 'Error',
+        message: 'Failed to update password: ${e.toString()}',
+      );
     } finally {
       isBusy.value = false;
     }
@@ -288,15 +267,13 @@ class AuthController extends GetxController {
 
   // Logout function
   Future<void> logoutUser() async {
-
     _user.value = null;
-   
-   await AppLocalStorage.logout();
-   await authRepository.account.deleteSessions();
-   Get.put(NavBarContoller()).currentIndex(0);
+
+    await AppLocalStorage.logout();
+    await authRepository.account.deleteSessions();
+    Get.put(NavBarContoller()).currentIndex(0);
     Get.put(ProfileController()).logout();
-    Get.snackbar('Success', 'Successfully logged out',
-        icon: const Icon(Icons.logout), colorText: Colors.green);
+    CustomDialog.success(message: 'Successfully logged out');
     Get.offAll(() => const Login());
   }
 }

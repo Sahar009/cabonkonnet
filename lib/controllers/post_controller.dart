@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
@@ -30,6 +29,7 @@ class PostController extends GetxController {
     setupRealtimePosts();
     fetchAllPosts();
   }
+
 
   // Fetch all posts
   Future<void> fetchAllPosts() async {

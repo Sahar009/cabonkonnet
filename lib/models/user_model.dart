@@ -19,23 +19,30 @@ class UserModel {
   final String? bankStatementUrl; // URL or path for bank statement
   final String? idCardUrl; // URL or path for ID card
   final String? profileImage;
+  final List? interests;
+  final String? bio;
+  final List? teamMembers;
+  final String? businessLogoUrl;
 
-  UserModel({
-    required this.id,
-    required this.fullName,
-    required this.email,
-    required this.phoneNumber,
-    required this.role,
-    this.companyName,
-    this.address,
-    this.businessRegNumber,
-    this.website,
-    this.country,
-    this.teamNumber,
-    this.bankStatementUrl,
-    this.idCardUrl,
-    this.profileImage,
-  });
+  UserModel(
+      {required this.id,
+      required this.fullName,
+      required this.email,
+      required this.phoneNumber,
+      required this.role,
+      this.companyName,
+      this.address,
+      this.businessRegNumber,
+      this.website,
+      this.country,
+      this.teamNumber,
+      this.bankStatementUrl,
+      this.idCardUrl,
+      this.profileImage,
+      this.interests,
+      this.bio,
+      this.teamMembers,
+      this.businessLogoUrl});
 
   // Method to convert UserModel to a Map for storage (e.g., in Firestore)
   Map<String, dynamic> toMap() {
@@ -53,52 +60,63 @@ class UserModel {
       'bankStatementUrl': bankStatementUrl,
       'idCardUrl': idCardUrl,
       'profileImage': profileImage,
+      'interests': interests,
+      'bio': bio,
+      'teamMembers': teamMembers,
+      'businessLogoUrl': businessLogoUrl
     };
   }
 
   // Factory method to create UserModel from a Map
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['\$id'] as String,
-      fullName: map['fullName'] as String,
-      email: map['email'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      role: map['role'] as String,
-      companyName:
-          map['companyName'] != null ? map['companyName'] as String : null,
-      address: map['address'] != null ? map['address'] as String : null,
-      businessRegNumber: map['businessRegNumber'] != null
-          ? map['businessRegNumber'] as String
-          : null,
-      website: map['website'] != null ? map['website'] as String : null,
-      country: map['country'] != null ? map['country'] as String : null,
-      teamNumber:
-          map['teamNumber'] != null ? map['teamNumber'] as String : null,
-      bankStatementUrl: map['bankStatementUrl'] != null
-          ? map['bankStatementUrl'] as String
-          : null,
-      idCardUrl: map['idCardUrl'] != null ? map['idCardUrl'] as String : null,
-      profileImage:
-          map['profileImage'] != null ? map['profileImage'] as String : null,
-    );
+        id: map['\$id'] as String,
+        fullName: map['fullName'] as String,
+        email: map['email'] as String,
+        phoneNumber: map['phoneNumber'] as String,
+        role: map['role'] as String,
+        companyName:
+            map['companyName'] != null ? map['companyName'] as String : null,
+        address: map['address'] != null ? map['address'] as String : null,
+        businessRegNumber: map['businessRegNumber'] != null
+            ? map['businessRegNumber'] as String
+            : null,
+        website: map['website'] != null ? map['website'] as String : null,
+        country: map['country'] != null ? map['country'] as String : null,
+        teamNumber:
+            map['teamNumber'] != null ? map['teamNumber'] as String : null,
+        bankStatementUrl: map['bankStatementUrl'] != null
+            ? map['bankStatementUrl'] as String
+            : null,
+        idCardUrl: map['idCardUrl'] != null ? map['idCardUrl'] as String : null,
+        profileImage:
+            map['profileImage'] != null ? map['profileImage'] as String : null,
+        interests:
+            map['interests'] != null ? List.from(map['interests']) : null,
+        bio: map['bio'] != null ? map['bio'] as String : null,
+        teamMembers:
+            map['teamMembers'] != null ? List.from(map['teamMembers']) : null,
+        businessLogoUrl: map["businessLogoUrl"]);
   }
 
-  UserModel copyWith({
-    String? id,
-    String? fullName,
-    String? email,
-    String? phoneNumber,
-    String? role,
-    String? companyName,
-    String? address,
-    String? businessRegNumber,
-    String? website,
-    String? country,
-    String? teamNumber,
-    String? bankStatementUrl,
-    String? idCardUrl,
-    String? profileImage,
-  }) {
+  UserModel copyWith(
+      {String? id,
+      String? fullName,
+      String? email,
+      String? phoneNumber,
+      String? role,
+      String? companyName,
+      String? address,
+      String? businessRegNumber,
+      String? website,
+      String? country,
+      String? teamNumber,
+      String? bankStatementUrl,
+      String? idCardUrl,
+      String? profileImage,
+      List? interests,
+      String? bio,
+      String? businessLogoUrl}) {
     return UserModel(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
@@ -114,6 +132,9 @@ class UserModel {
       bankStatementUrl: bankStatementUrl ?? this.bankStatementUrl,
       idCardUrl: idCardUrl ?? this.idCardUrl,
       profileImage: profileImage ?? this.profileImage,
+      interests: interests ?? this.interests,
+      bio: bio ?? this.bio,
+      businessLogoUrl: businessLogoUrl ?? this.bankStatementUrl,
     );
   }
 
@@ -124,7 +145,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, country: $country, teamNumber: $teamNumber, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl, profileImage: $profileImage)';
+    return 'UserModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, role: $role, companyName: $companyName, address: $address, businessRegNumber: $businessRegNumber, website: $website, country: $country, teamNumber: $teamNumber, bankStatementUrl: $bankStatementUrl, idCardUrl: $idCardUrl, profileImage: $profileImage, interests: $interests, bio: $bio, teamMembers: $teamMembers)';
   }
 
   @override
@@ -144,7 +165,10 @@ class UserModel {
         other.teamNumber == teamNumber &&
         other.bankStatementUrl == bankStatementUrl &&
         other.idCardUrl == idCardUrl &&
-        other.profileImage == profileImage;
+        other.profileImage == profileImage &&
+        other.interests == interests &&
+        other.bio == bio &&
+        other.teamMembers == teamMembers;
   }
 
   @override
@@ -162,6 +186,9 @@ class UserModel {
         teamNumber.hashCode ^
         bankStatementUrl.hashCode ^
         idCardUrl.hashCode ^
-        profileImage.hashCode;
+        profileImage.hashCode ^
+        interests.hashCode ^
+        bio.hashCode ^
+        teamMembers.hashCode;
   }
 }

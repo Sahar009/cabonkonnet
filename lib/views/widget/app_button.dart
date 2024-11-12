@@ -19,7 +19,7 @@ class AppButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         width: double.infinity,
-        height: 40,
+        height: 45,
         decoration:
             BoxDecoration(color: color, borderRadius: BorderRadius.circular(6)),
         child: Text(
