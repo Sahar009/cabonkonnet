@@ -29,7 +29,7 @@ class InterestRepository {
 
   Future<bool> updateInterest(RxList userIntrest, String userId) async {
     try {
-      final documents = await databases.updateDocument(
+      await databases.updateDocument(
           databaseId: AppwriteConfig.databaseId,
           collectionId: AppwriteConfig.userCollectionId,
           documentId: userId,

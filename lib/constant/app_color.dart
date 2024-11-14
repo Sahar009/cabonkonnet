@@ -10,4 +10,5 @@ class AppColor {
   static const Color blackTextColor = Color(0xff3B3B3B);
 
   static const Color red = Colors.red;
+  static const Color yelow = Color(0xffFFFB00);
 }

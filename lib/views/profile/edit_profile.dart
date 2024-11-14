@@ -331,12 +331,15 @@ class ProfileTextEditor extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyle.body(size: 14, fontWeight: FontWeight.w500),
+            style: AppTextStyle.body(size: 16, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 10),
           TextField(
             controller: controller,
-            decoration: InputDecoration(hintText: "Enter your $label"),
+            decoration: InputDecoration(
+                hintText: "Enter your $label",
+                hintStyle:
+                    AppTextStyle.body(size: 14, fontWeight: FontWeight.w400)),
           ),
         ],
       ),

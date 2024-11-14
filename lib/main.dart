@@ -1,7 +1,9 @@
+import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/views/splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,13 +17,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          scaffoldBackgroundColor: const Color(0xffFFFFFF)),
-      home: const SplashScreen(),
-    );
+    return Sizer(builder: (context, orientation, screenType) {
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
+            useMaterial3: true,
+            scaffoldBackgroundColor: const Color(0xffFFFFFF)),
+        home: const SplashScreen(),
+      );
+    });
   }
 }

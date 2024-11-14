@@ -5,7 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({super.key});
+  final String? name;
+  final String? profilePic;
+  final String? country;
+
+  final String subTitle;
+  const ProfileWidget(
+      {super.key,
+      this.subTitle = "Post to everyone",
+      this.name,
+      this.profilePic,
+      this.country});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +32,8 @@ class ProfileWidget extends StatelessWidget {
                 userModel.profileImage != null
                     ? CircleAvatar(
                         radius: 25,
-                        backgroundImage:
-                            CachedNetworkImageProvider(
-                                userModel.profileImage!),
+                        backgroundImage: CachedNetworkImageProvider(
+                            profilePic ?? userModel.profileImage!),
                       )
                     : const CircleAvatar(
                         radius: 25,
@@ -33,9 +42,13 @@ class ProfileWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(userModel.fullName,
+                    Text(name ?? userModel.fullName,
                         style: AppTextStyle.body(fontWeight: FontWeight.w500)),
-                    Text('Post to everyone',
+                    Text(
+                        country ??
+                            (subTitle == "country"
+                                ? (userModel.country ?? " ")
+                                : subTitle),
                         style: AppTextStyle.body(
                             fontWeight: FontWeight.w500, size: 14))
                   ],

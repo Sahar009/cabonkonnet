@@ -32,7 +32,7 @@ class _ProfileViewState extends State<ProfileView> {
           children: [
             Container(
               width: double.infinity,
-              height: MediaQuery.sizeOf(context).height * 0.33,
+              height: MediaQuery.sizeOf(context).height * 0.35,
               decoration: const BoxDecoration(color: AppColor.white),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -69,19 +69,19 @@ class _ProfileViewState extends State<ProfileView> {
                                         ),
                                         Text(
                                           userModel.role.capitalizeFirst ?? '',
-                                          style: AppTextStyle.body(size: 13),
+                                          style: AppTextStyle.body(size: 16),
                                         ),
                                         Text(
                                           userModel.country ?? "",
                                           style: AppTextStyle.body(
-                                              size: 12,
+                                              size: 15,
                                               fontWeight: FontWeight.w300),
                                         ),
                                         Text(
                                           userModel.website ??
                                               "www.greenplace.com",
                                           style: AppTextStyle.body(
-                                              size: 12,
+                                              size: 15,
                                               color: AppColor.primaryColor,
                                               fontWeight: FontWeight.w300),
                                         ),
@@ -230,7 +230,7 @@ class _ProfileViewState extends State<ProfileView> {
                   const Divider(),
                   ListTile(
                     onTap: () {
-                      Get.to(() => DeleteAccount());
+                      Get.to(() => const DeleteAccount());
                     },
                     leading: SvgPicture.asset(AppImages.delect),
                     title: Text(
@@ -270,7 +270,7 @@ class TransButton extends StatelessWidget {
             color: AppColor.primaryColor,
             width: 2,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Text(
           title,

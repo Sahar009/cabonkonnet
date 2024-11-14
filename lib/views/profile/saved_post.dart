@@ -69,7 +69,7 @@ class _SavedPostState extends State<SavedPost> {
               }
               // Check if there are saved posts
               if (savedPostController.savedPostsList.isEmpty) {
-                return NoDocument(
+                return const NoDocument(
                   title: "No saved posts found.",
                 );
               }

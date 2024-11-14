@@ -43,7 +43,7 @@ class _AppTextFieldsState extends State<AppTextFields> {
       decoration: InputDecoration(
         prefixIcon: Icon(widget.iconData),
         hintText: widget.hint,
-        hintStyle: AppTextStyle.body(size: 12, fontWeight: FontWeight.normal),
+        hintStyle: AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
         filled: true,
         fillColor: const Color(0xffF5F5F5),
         border: OutlineInputBorder(

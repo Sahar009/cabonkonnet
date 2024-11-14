@@ -26,7 +26,6 @@ class _TeamScreenState extends State<TeamScreen> {
   String? currentUserId;
   @override
   void initState() {
-    print("This is Too" + widget.userId);
     AppLocalStorage.getCurrentUserId().then((value) {
       setState(() {
         currentUserId = value;
@@ -114,7 +113,7 @@ class _TeamScreenState extends State<TeamScreen> {
                             radius: 30,
                             backgroundImage: NetworkImage(member.profilePic),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           Column(
@@ -124,7 +123,7 @@ class _TeamScreenState extends State<TeamScreen> {
                                 member.fullName.capitalizeFirst ?? "",
                                 style: AppTextStyle.body(),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 1.8,
                               ),
                               Text(
@@ -132,10 +131,10 @@ class _TeamScreenState extends State<TeamScreen> {
                                 style: AppTextStyle.body(
                                   size: 13,
                                   fontWeight: FontWeight.w300,
-                                  color: Color(0xff4F4E4E),
+                                  color: const Color(0xff4F4E4E),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 1.8,
                               ),
                               Text(
@@ -143,16 +142,16 @@ class _TeamScreenState extends State<TeamScreen> {
                                 style: AppTextStyle.body(
                                   size: 13,
                                   fontWeight: FontWeight.w300,
-                                  color: Color(0xff4F4E4E),
+                                  color: const Color(0xff4F4E4E),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                             ],
                           ),
                         ]),
-                        Divider(),
+                        const Divider(),
                       ],
                     );
                   },

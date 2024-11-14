@@ -154,7 +154,7 @@ class Home extends StatelessWidget {
                       profileContoller.userModelRx.value?.profileImage != null
                           ? CachedNetworkImageProvider(
                               profileContoller.userModelRx.value!.profileImage!)
-                          : AssetImage(AppImages.smallpicture2),
+                          : const AssetImage(AppImages.smallpicture2),
                   backgroundColor: contoller.checkCurrentState(4)
                       ? AppColor.black
                       : AppColor.grey,

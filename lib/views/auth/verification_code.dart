@@ -63,7 +63,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                           Text(
                             'Enter the verification code sent to your email \n ${widget.email}',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                         ],
                       ),
@@ -87,7 +87,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                         TextSpan(
                           text: 'Didnt get a code? ',
                           style: AppTextStyle.body(
-                              size: 14, fontWeight: FontWeight.normal),
+                              size: 16, fontWeight: FontWeight.normal),
                         ),
                         TextSpan(
                             text: 'Resend',
@@ -98,7 +98,7 @@ class _VerificationCodeState extends State<VerificationCode> {
                               },
                             style: AppTextStyle.body(
                                 fontWeight: FontWeight.normal,
-                                size: 14,
+                                size: 16,
                                 color: AppColor.primaryColor))
                       ])),
                       const SizedBox(height: 300),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:appwrite/appwrite.dart';
 
 class AppwriteConfig {
@@ -18,6 +20,8 @@ class AppwriteConfig {
   static String interestCollectionId = "672cc3c3002880f0439f";
   static String teamCollectionId = "672ee626003e72bc43e3";
   static String savedPostCollectionId = "672cc6b900360117a799";
+  static String eventBucketId = '6735d97100309cb16bee';
+  static String eventCollectionId = "67337a85001a9340ead4";
 
   late Client _client;
   late Account _account;
@@ -58,7 +62,7 @@ class AppwriteConfig {
       }
       return null; // Return null if the structure doesn't match
     } catch (e) {
-      print("Invalid URL format: $e");
+      log("Invalid URL format: $e");
       return null;
     }
   }

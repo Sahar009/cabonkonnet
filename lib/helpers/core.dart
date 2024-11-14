@@ -1,4 +1,4 @@
-
+import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 String getUserTitle(String value) {
@@ -29,9 +29,6 @@ extension ListToString on List<String> {
   }
 }
 
-
-
-
 extension CustomTimeAgo on DateTime {
   String toCustomTimeAgo() {
     final now = DateTime.now();
@@ -48,5 +45,33 @@ extension CustomTimeAgo on DateTime {
     } else {
       return "$day-$month-$year"; // day-month-year for different year
     }
+  }
+}
+
+extension GetToProdutStatus on String {
+  String toProductStatus() {
+    return this == "not_started"
+        ? "Not Started"
+        : this == "in_pending"
+            ? "In Pending"
+            : this == "in_progres"
+                ? "In Progress"
+                : this == "launched"
+                    ? "Launched"
+                    : "Not Say";
+  }
+}
+
+extension IntToSizedBox on int {
+  SizedBox toHeightWhiteSpacing() {
+    return SizedBox(
+      height: this.toDouble(),
+    );
+  }
+
+  SizedBox toWidthWhiteSpacing() {
+    return SizedBox(
+      width: this.toDouble(),
+    );
   }
 }

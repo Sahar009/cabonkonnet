@@ -81,8 +81,14 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 80),
-                          const Row(
-                            children: [Icon(Icons.arrow_back_ios, size: 16)],
+                          Row(
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Icon(Icons.arrow_back_ios, size: 16))
+                            ],
                           ),
                           const SizedBox(height: 10),
                           Text(
@@ -93,13 +99,13 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                           Text(
                             'Please fill in all information correctly',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 20),
                           Text(
                             'Name of company',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -113,7 +119,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                           Text(
                             'Country',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           DropdownButtonFormField<String>(
@@ -125,7 +131,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                               );
                             }).toList(),
                             style: AppTextStyle.body(
-                                size: 13,
+                                size: 15,
                                 fontWeight: FontWeight.normal,
                                 color: AppColor.black),
                             decoration: InputDecoration(
@@ -155,7 +161,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                           Text(
                             'Address',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -174,7 +180,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                     Text(
                                       'Business Reg. Number',
                                       style: AppTextStyle.body(
-                                          size: 13,
+                                          size: 15,
                                           fontWeight: FontWeight.normal),
                                     ),
                                     const SizedBox(height: 5),
@@ -190,7 +196,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                     Text(
                                       'Website (optional)',
                                       style: AppTextStyle.body(
-                                          size: 13,
+                                          size: 15,
                                           fontWeight: FontWeight.normal),
                                     ),
                                     const SizedBox(height: 5),
@@ -204,7 +210,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                     Text(
                                       'No of team members',
                                       style: AppTextStyle.body(
-                                          size: 13,
+                                          size: 15,
                                           fontWeight: FontWeight.normal),
                                     ),
                                     const SizedBox(height: 5),
@@ -266,7 +272,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                     Text(
                                       'Upload your bank statement or tax return',
                                       style: AppTextStyle.body(
-                                          size: 13,
+                                          size: 15,
                                           fontWeight: FontWeight.normal),
                                     ),
                                     const SizedBox(height: 5),
@@ -288,7 +294,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                     Text(
                                       'Upload valid ID card',
                                       style: AppTextStyle.body(
-                                          size: 13,
+                                          size: 15,
                                           fontWeight: FontWeight.normal),
                                     ),
                                     const SizedBox(height: 5),

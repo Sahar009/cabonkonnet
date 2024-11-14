@@ -4,10 +4,14 @@ import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/controllers/saved_post_controller.dart';
+import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
 import 'package:cabonconnet/views/home/comment_screen.dart';
+import 'package:cabonconnet/views/home/product_detail.dart';
+import 'package:cabonconnet/views/widget/app_button.dart';
+import 'package:cabonconnet/views/widget/build_image.dart';
 import 'package:cabonconnet/views/widget/user_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -84,7 +88,7 @@ class _PostWidgetState extends State<PostWidget> {
               title: Text(
                 "Save",
                 style:
-                    AppTextStyle.body(size: 12, fontWeight: FontWeight.normal),
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
               ),
               visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               contentPadding: const EdgeInsets.all(0),
@@ -102,7 +106,7 @@ class _PostWidgetState extends State<PostWidget> {
               title: Text(
                 "Message user",
                 style:
-                    AppTextStyle.body(size: 12, fontWeight: FontWeight.normal),
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
               ),
               visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               contentPadding: const EdgeInsets.all(0),
@@ -117,7 +121,7 @@ class _PostWidgetState extends State<PostWidget> {
               title: Text(
                 "Share via",
                 style:
-                    AppTextStyle.body(size: 12, fontWeight: FontWeight.normal),
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
               ),
               visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               contentPadding: const EdgeInsets.all(0),
@@ -128,7 +132,7 @@ class _PostWidgetState extends State<PostWidget> {
               title: Text(
                 "Report user",
                 style:
-                    AppTextStyle.body(size: 12, fontWeight: FontWeight.normal),
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
               ),
               visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               contentPadding: const EdgeInsets.all(0),
@@ -174,10 +178,10 @@ class _PostWidgetState extends State<PostWidget> {
           const SizedBox(height: 10),
           Text(
             widget.postModel.content,
-            style: AppTextStyle.body(size: 13, fontWeight: FontWeight.normal),
+            style: AppTextStyle.body(size: 14, fontWeight: FontWeight.normal),
           ),
           const SizedBox(height: 5),
-          _buildImageGallery(widget.postModel.imageUrls),
+          BuildImageWidget(imageUrls: widget.postModel.imageUrls),
           const SizedBox(height: 10),
           widget.postModel.isProduct
               ? Container()
@@ -206,7 +210,7 @@ class _PostWidgetState extends State<PostWidget> {
                         Text(
                           '${widget.postModel.commentCount ?? 0} comments',
                           style: AppTextStyle.body(
-                              size: 13, fontWeight: FontWeight.normal),
+                              size: 15, fontWeight: FontWeight.normal),
                         ),
                         const SizedBox(width: 5),
                         const Icon(Icons.circle, size: 6),
@@ -214,7 +218,7 @@ class _PostWidgetState extends State<PostWidget> {
                         Text(
                           '${widget.postModel.sharedBy?.length ?? 0} shares',
                           style: AppTextStyle.body(
-                              size: 13, fontWeight: FontWeight.normal),
+                              size: 15, fontWeight: FontWeight.normal),
                         ),
                       ],
                     )
@@ -222,18 +226,19 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
           if (!widget.postModel.isProduct) const Divider(),
           widget.postModel.isProduct
-              ? Container(
-                  height: 47,
-                  decoration: BoxDecoration(
-                      border:
-                          Border.all(color: AppColor.primaryColor, width: 2),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                      "View product details",
-                      style: AppTextStyle.soraBody,
+              ? Column(
+                  children: [
+                    15.toHeightWhiteSpacing(),
+                    AppButton(
+                      onTab: () {
+                        Get.to(
+                            () => ProductDetails(postModel: widget.postModel));
+                      },
+                      title: "View product details",
+                      color: null,
+                      textColor: AppColor.primaryColor,
                     ),
-                  ),
+                  ],
                 )
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -295,70 +300,5 @@ class _PostWidgetState extends State<PostWidget> {
         ],
       ),
     );
-  }
-
-  Widget _buildImageGallery(List<String> imageUrls) {
-    if (imageUrls.isEmpty) {
-      return Container(); // No images to show
-    } else if (imageUrls.length == 1) {
-      return SizedBox(
-        height: 250,
-        width: double.infinity,
-        child: CachedNetworkImage(
-          imageUrl: imageUrls[0],
-          fit: BoxFit.cover,
-        ),
-      );
-    } else if (imageUrls.length == 2) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: imageUrls
-            .map((url) => Expanded(
-                  child: CachedNetworkImage(
-                    imageUrl: url,
-                    fit: BoxFit.cover,
-                  ),
-                ))
-            .toList(),
-      );
-    } else if (imageUrls.length == 3) {
-      return SizedBox(
-        height: 100, // Adjust height as needed
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: imageUrls.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 5),
-              child: CachedNetworkImage(
-                imageUrl: imageUrls[index],
-                fit: BoxFit.cover,
-                width: 100, // Fixed width for each image
-              ),
-            );
-          },
-        ),
-      );
-    } else {
-      // For more than 3 images, use StaggeredGridView
-      return SizedBox(
-        height: 200, // Adjust height as needed
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // Two columns
-            childAspectRatio: 1, // Adjust aspect ratio
-            crossAxisSpacing: 4.0,
-            mainAxisSpacing: 4.0,
-          ),
-          itemCount: imageUrls.length,
-          itemBuilder: (context, index) {
-            return CachedNetworkImage(
-              imageUrl: imageUrls[index],
-              fit: BoxFit.cover,
-            );
-          },
-        ),
-      );
-    }
   }
 }

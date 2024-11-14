@@ -1,9 +1,11 @@
-import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/comment_controller.dart';
+import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/models/post_model.dart';
+import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/views/home/new_post.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/widget/post_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -19,7 +21,7 @@ class CommentScreen extends StatefulWidget {
 class _CommentScreenState extends State<CommentScreen> {
   final TextEditingController editingController = TextEditingController();
   final CommentController commentController = Get.put(CommentController());
-
+  UserModel? user = Get.put(ProfileController()).userModelRx.value;
   @override
   void initState() {
     super.initState();
@@ -43,7 +45,10 @@ class _CommentScreenState extends State<CommentScreen> {
                   child: const Icon(Icons.arrow_back_ios),
                 ),
                 const SizedBox(height: 5),
-                PostWidget(postModel: widget.postModel, isComment: true,),
+                PostWidget(
+                  postModel: widget.postModel,
+                  isComment: true,
+                ),
                 const Divider(),
               ],
             ),
@@ -59,7 +64,14 @@ class _CommentScreenState extends State<CommentScreen> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Image(image: AssetImage(AppImages.smallpicture1)),
+                          comment.userProfileImage != null
+                              ? CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      comment.userProfileImage!),
+                                )
+                              : CircleAvatar(
+                                  child: Text(comment.userFullName![0]),
+                                ),
                           const SizedBox(width: 5),
                           Expanded(
                             child: Container(
@@ -99,10 +111,20 @@ class _CommentScreenState extends State<CommentScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 GestureDetector(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const NewPost())),
-                  child: const Image(image: AssetImage(AppImages.smallpicture2)),
-                ),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NewPost())),
+                    child: user == null
+                        ? const CircleAvatar()
+                        : user?.profileImage != null
+                            ? CircleAvatar(
+                                backgroundImage: CachedNetworkImageProvider(
+                                    user!.profileImage!),
+                              )
+                            : CircleAvatar(
+                                child: Text(user!.fullName[0].toUpperCase()),
+                              )),
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextFormField(

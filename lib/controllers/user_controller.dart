@@ -106,8 +106,6 @@ class UserController extends GetxController {
           String? fileId =
               AppwriteConfig.getFileIdFromUrl(userModel.businessLogoUrl!);
           if (fileId != null) {
-            print(fileId);
-            print(userModel.businessLogoUrl);
             await fileUploadRepository.delectFile(fileId);
           }
         }
@@ -121,10 +119,7 @@ class UserController extends GetxController {
         if (userModel.profileImage != null) {
           String? fileId =
               AppwriteConfig.getFileIdFromUrl(userModel.profileImage!);
-          print(userModel.profileImage);
           if (fileId != null) {
-            print(fileId);
-            print(userModel.profileImage);
             await fileUploadRepository.delectFile(fileId);
           }
         }

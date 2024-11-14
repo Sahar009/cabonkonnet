@@ -30,8 +30,14 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 80),
-                      const Row(
-                        children: [Icon(Icons.arrow_back_ios, size: 16)],
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(Icons.arrow_back_ios, size: 16))
+                        ],
                       ),
                       const SizedBox(height: 10),
                       Row(
@@ -48,7 +54,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                           Text(
                             'Please fill in all information correctly',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                         ],
                       ),
@@ -56,7 +62,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                       Text(
                         'Email',
                         style: AppTextStyle.body(
-                            size: 13, fontWeight: FontWeight.normal),
+                            size: 15, fontWeight: FontWeight.normal),
                       ),
                       const SizedBox(height: 5),
                       AppTextFields(

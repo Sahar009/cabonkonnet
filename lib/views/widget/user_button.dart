@@ -25,7 +25,7 @@ class UserButton extends StatelessWidget {
                   iconData,
                 ),
           Text(text,
-              style: AppTextStyle.body(size: 13, fontWeight: FontWeight.normal))
+              style: AppTextStyle.body(size: 15, fontWeight: FontWeight.normal))
         ],
       ),
     );

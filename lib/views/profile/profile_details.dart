@@ -75,7 +75,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                         ? DecorationImage(
                             image: CachedNetworkImageProvider(
                                 widget.user.businessLogoUrl!),
-                            fit: BoxFit.cover,)
+                            fit: BoxFit.cover,
+                          )
                         : null,
                   ),
                 )
@@ -114,7 +115,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                         name:
                             "${widget.user.teamMembers!.length.toString()}  members",
                         onTap: () {
-                          print(widget.user.id);
                           Get.to(
                             () => TeamScreen(
                               userId: widget.user.id,
@@ -168,7 +168,7 @@ class ProfileLabel extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyle.body(size: 14, fontWeight: FontWeight.w500),
+            style: AppTextStyle.body(size: 16, fontWeight: FontWeight.w500),
           ),
           const SizedBox(
             height: 10,
@@ -179,7 +179,7 @@ class ProfileLabel extends StatelessWidget {
               Text(
                 name,
                 style: AppTextStyle.body(
-                    size: 13,
+                    size: 15,
                     fontWeight: FontWeight.w500,
                     color: AppColor.textColor),
               ),

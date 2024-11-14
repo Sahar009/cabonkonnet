@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
                           Text(
                             'Welcome back',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 16, fontWeight: FontWeight.normal),
                           ),
                         ],
                       ),
@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
                       Text(
                         'Email',
                         style: AppTextStyle.body(
-                            size: 13, fontWeight: FontWeight.normal),
+                            size: 15, fontWeight: FontWeight.normal),
                       ),
                       const SizedBox(height: 5),
                       AppTextFields(
@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
                       Text(
                         'Password',
                         style: AppTextStyle.body(
-                            size: 13, fontWeight: FontWeight.normal),
+                            size: 15, fontWeight: FontWeight.normal),
                       ),
                       AppTextFields(
                           hint: 'Enter password',
@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 300),
+                      const SizedBox(height: 150),
                       AppButton(
                         onTab: () {
                           authController.loginUser(

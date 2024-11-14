@@ -37,7 +37,7 @@ class _InterestSectionState extends State<InterestSection> {
                 ),
                 Text(
                   "Select three of more topics to personalize your interests \nand experience on Carbonconnect.",
-                  style: AppTextStyle.body(size: 12),
+                  style: AppTextStyle.body(size: 15),
                 ),
                 const SizedBox(
                   height: 20,
@@ -75,7 +75,7 @@ class _InterestSectionState extends State<InterestSection> {
                             Text(
                               interest['topic'].toString().trim(),
                               style: AppTextStyle.body(
-                                size: 13,
+                                size: 15,
                                 color: interestController.check(interest)
                                     ? AppColor.white
                                     : AppColor.primaryColor,

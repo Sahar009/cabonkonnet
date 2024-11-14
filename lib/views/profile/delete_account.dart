@@ -107,7 +107,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                             controller: _otherReasonController,
                             maxLines: 5,
                             minLines: 5,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               //labelText: "Please specify your reason",
                               border: OutlineInputBorder(),
                             ),

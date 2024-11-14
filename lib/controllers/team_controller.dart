@@ -38,12 +38,10 @@ class TeamController extends GetxController {
   }
 
   Future<void> fetchAllPosts() async {
-    print("love" + foundId.value);
     final (isSuccess, fetchedPosts, message) =
         await teamRepository.getTeam(foundId.value);
     if (isSuccess) {
       if (fetchedPosts != null) {
-        // fetchedPosts.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
         teams.assignAll(fetchedPosts);
       }

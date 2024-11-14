@@ -74,13 +74,13 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Please fill in all information correctly',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 20),
                           Text(
                             'Full Name',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -98,7 +98,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Email',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -119,7 +119,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Phone number',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -131,7 +131,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Password',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -145,7 +145,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Confirm Password',
                             style: AppTextStyle.body(
-                                size: 13, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(

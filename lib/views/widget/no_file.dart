@@ -8,21 +8,19 @@ class NoDocument extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image(
-              image: AssetImage(AppImages.nofile),
-            ),
-            Text(
-              title,
-              style: AppTextStyle.body(size: 14),
-            )
-          ],
-        ),
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Image(
+            image: AssetImage(AppImages.nofile),
+          ),
+          Text(
+            title,
+            style: AppTextStyle.body(size: 16),
+          )
+        ],
       ),
     );
   }
@@ -33,6 +31,8 @@ class NoDocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: NoDocument(),);
+    return const Scaffold(
+      body: NoDocument(),
+    );
   }
 }

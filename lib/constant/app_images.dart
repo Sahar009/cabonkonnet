@@ -32,6 +32,7 @@ class AppImages {
   static const String analytic = '$imagePath/analytic.svg';
   static const String activity = '$imagePath/activity.svg';
   static const String delect = '$imagePath/delete.svg';
+  static const String createEvent = "$imagePath/create-event.svg";
   //static const String redcircle = '$imagePath/redcircle.png';
   // static const String mic = '$imagePath/mic.png';
   // static const String liveimage = '$imagePath/liveimage.png';

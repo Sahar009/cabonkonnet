@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
-import 'package:iconsax_plus/iconsax_plus.dart'; // Import your PostController
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +20,12 @@ class _HomePageState extends State<HomePage> {
   TextEditingController addressController = TextEditingController();
   PageController pageController = PageController();
   bool isPost = true;
+
+  // Refresh function
+  Future<void> _refreshPosts() async {
+    await postController.fetchAllPosts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,24 +50,21 @@ class _HomePageState extends State<HomePage> {
                           IconsaxPlusLinear.search_normal,
                           size: 15,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        SizedBox(width: 10),
                         Text("Search"),
                       ],
                     ),
                   ),
                 ),
                 GestureDetector(
-                    onTap: () {
-                      // postController.fetchAllPosts();
-                      CustomDialog.error();
-                    },
-                    child: SvgPicture.asset(AppImages.notify))
+                  onTap: () {
+                    CustomDialog.error();
+                  },
+                  child: SvgPicture.asset(AppImages.notify),
+                )
               ],
             ),
             const SizedBox(height: 15),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -75,9 +78,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   title: "All posts",
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 TabButton(
                   isActive: !isPost,
                   onTap: () {
@@ -87,31 +88,37 @@ class _HomePageState extends State<HomePage> {
                     pageController.jumpToPage(1);
                   },
                   title: "All products",
-                )
+                ),
               ],
             ),
             const Divider(),
-            // Use Obx to reactively display posts
+            // Use RefreshIndicator around ListView
             Expanded(
-              child: PageView(
-                controller: pageController,
-                onPageChanged: (index) {
-                  if (index == 1) {
-                    setState(() {
-                      isPost = false;
-                    });
-                  } else {
-                    setState(() {
-                      isPost = true;
-                    });
-                  }
-                },
-                children: const [
-                  AllPost(),
-                  AllProduct(),
-                ],
+              child: RefreshIndicator(
+                onRefresh: _refreshPosts,
+                triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: PageView(
+                        controller: pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            isPost = index == 0;
+                          });
+                        },
+                        children: const [
+                          AllPost(),
+                          AllProduct(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
