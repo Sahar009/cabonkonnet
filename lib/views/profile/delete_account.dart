@@ -1,4 +1,5 @@
 import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +52,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
               const SizedBox(height: 30),
               Text(
                 "We are really sorry to see you go. Are you sure you \nwant to delete your account? Once you confirm, \nyour data will be gone.",
-                style: AppTextStyle.body(size: 12),
+                style: AppTextStyle.body(size: 14),
                 textAlign: TextAlign.start,
               ),
               const SizedBox(height: 20),
@@ -86,7 +87,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                                 child: Text(
                                   _deleteReasons[index],
                                   style: AppTextStyle.body(
-                                    size: 12,
+                                    size: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
                                 ),
@@ -108,7 +109,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                             maxLines: 5,
                             minLines: 5,
                             decoration: const InputDecoration(
-                              //labelText: "Please specify your reason",
+                              labelText: "Please specify your reason",
                               border: OutlineInputBorder(),
                             ),
                           ),
@@ -118,6 +119,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 },
               ),
               const SizedBox(height: 60),
+              AppButton(onTab:(){})
             ],
           ),
         ),

@@ -1,4 +1,3 @@
-import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/event_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/event_model.dart';

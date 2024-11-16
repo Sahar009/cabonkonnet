@@ -20,12 +20,12 @@ class UserButton extends StatelessWidget {
       child: Column(
         children: [
           iconData.endsWith(".png")
-              ? Image.asset(iconData)
+              ? Image.asset(iconData )
               : SvgPicture.asset(
                   iconData,
                 ),
           Text(text,
-              style: AppTextStyle.body(size: 15, fontWeight: FontWeight.normal))
+              style: AppTextStyle.body(size: 14, fontWeight: FontWeight.normal))
         ],
       ),
     );

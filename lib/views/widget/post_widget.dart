@@ -34,6 +34,8 @@ class _PostWidgetState extends State<PostWidget> {
   SavedPostController savedPostController = Get.put(SavedPostController());
   ChatController chatController = Get.put(ChatController());
   String? currentUserId;
+  late PostModel postModel;
+
   @override
   void initState() {
     AppLocalStorage.getCurrentUserId().then((value) {
@@ -41,6 +43,7 @@ class _PostWidgetState extends State<PostWidget> {
         currentUserId = value;
       });
     });
+
     super.initState();
   }
 
@@ -164,7 +167,10 @@ class _PostWidgetState extends State<PostWidget> {
                 children: [
                   Text(
                     widget.postModel.user?.fullName ?? "",
-                    style: AppTextStyle.body(fontWeight: FontWeight.w500),
+                    style: AppTextStyle.body(
+                      fontWeight: FontWeight.w500,
+                      size: 16,
+                    ),
                   ),
                   Text(widget.postModel.user?.country ?? "")
                 ],
@@ -247,7 +253,15 @@ class _PostWidgetState extends State<PostWidget> {
                     children: [
                       UserButton(
                           onTap: () {
+                            // if (widget.postModel.likes!
+                            //     .contains(currentUserId)) {
+                            //   widget.postModel.likes!.remove(currentUserId);
+                            // } else {
+                            //   widget.postModel.likes!.add(currentUserId!);
+                            // }
+
                             postController.toggleLike(widget.postModel.id);
+                            setState(() {});
                           },
                           iconData: AppImages.like,
                           text: 'Like'),

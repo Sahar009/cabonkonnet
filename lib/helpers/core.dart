@@ -65,13 +65,13 @@ extension GetToProdutStatus on String {
 extension IntToSizedBox on int {
   SizedBox toHeightWhiteSpacing() {
     return SizedBox(
-      height: this.toDouble(),
+      height: toDouble(),
     );
   }
 
   SizedBox toWidthWhiteSpacing() {
     return SizedBox(
-      width: this.toDouble(),
+      width: toDouble(),
     );
   }
 }

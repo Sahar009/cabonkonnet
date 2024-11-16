@@ -36,7 +36,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Icon(Icons.arrow_back_ios, size: 16))
+                              child: const Icon(Icons.arrow_back_ios, size: 16))
                         ],
                       ),
                       const SizedBox(height: 10),

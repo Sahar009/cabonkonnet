@@ -103,4 +103,20 @@ class CommentRepository {
       return (false, e.toString());
     }
   }
+
+  updateCommentLikes(String commentId, List likes) async {
+    try {
+      await databases.updateDocument(
+        databaseId: AppwriteConfig.databaseId,
+        collectionId: AppwriteConfig.postCommentCollectionId,
+        documentId: commentId,
+        data: {
+          'like': likes,
+        },
+      );
+      return (true, 'Comment updated successfully');
+    } catch (e) {
+      return (false, e.toString());
+    }
+  }
 }

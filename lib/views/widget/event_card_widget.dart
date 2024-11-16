@@ -7,17 +7,97 @@ import 'package:cabonconnet/views/events/live_event.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class EventCardWidget extends StatelessWidget {
+class EventCardWidget extends StatefulWidget {
   final EventModel event;
 
-  EventCardWidget({required this.event});
+  const EventCardWidget({super.key, required this.event});
+
+  @override
+  State<EventCardWidget> createState() => _EventCardWidgetState();
+}
+
+class _EventCardWidgetState extends State<EventCardWidget> {
+  void _showEventOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      builder: (context) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 40), // Reduced padding
+        height: 180, // Adjust height if needed
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 10,
+              offset: const Offset(0, -3),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 16),
+              width: 100,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[400],
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Image.asset(AppImages.saveIcon),
+              title: Text(
+                "Set reminder",
+                style:
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
+              ),
+              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+              contentPadding: const EdgeInsets.all(0),
+            ),
+            ListTile(
+              onTap: () async {},
+              leading: Image.asset(AppImages.shareIcon),
+              title: Text(
+                "Share via",
+                style:
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
+              ),
+              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+              contentPadding: const EdgeInsets.all(0),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: Image.asset(AppImages.reportIcon),
+              title: Text(
+                "Report event",
+                style:
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
+              ),
+              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+              contentPadding: const EdgeInsets.all(0),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     // Check if the event date is today and whether the event time has started
     DateTime now = DateTime.now();
-    bool isToday = isSameDay(event.date, now);
-    bool isEventUpcoming = event.date.isAfter(now);
+    bool isToday = isSameDay(widget.event.date, now);
+    bool isEventUpcoming = widget.event.date.isAfter(now);
 
     return Column(
       children: [
@@ -29,12 +109,12 @@ class EventCardWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
                 color: Colors.black,
                 image: DecorationImage(
-                  image: NetworkImage(event.imageUrl),
+                  image: NetworkImage(widget.event.imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
               child: Container(
-                padding: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(6),
@@ -72,34 +152,45 @@ class EventCardWidget extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              event.title,
-              style: AppTextStyle.soraBody(
-                size: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
             Row(
               children: [
-                Icon(Icons.location_on, color: AppColor.textColor, size: 18),
-                SizedBox(width: 4),
+                Expanded(
+                  child: Text(
+                    widget.event.title,
+                    style: AppTextStyle.soraBody(
+                      size: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                    onTap: () => _showEventOptions(context),
+                    child: const Icon(Icons.more_vert))
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Icon(Icons.location_on,
+                    color: AppColor.textColor, size: 18),
+                const SizedBox(width: 4),
                 Text(
-                  event.location,
+                  widget.event.location,
                   style: AppTextStyle.soraBody(size: 14)
                       .copyWith(letterSpacing: 2),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: event.accessType == "Free"
+                    color: widget.event.accessType == "Free"
                         ? Colors.lightBlue
-                        : Colors.green,
+                        : Color(0xffFFA0E1).withOpacity(0.4),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    event.accessType,
+                    widget.event.accessType,
                     style: AppTextStyle.body(size: 14),
                   ),
                 ),
@@ -110,19 +201,19 @@ class EventCardWidget extends StatelessWidget {
             if (isToday)
               Row(
                 children: [
-                  Icon(Icons.calendar_today,
+                  const Icon(Icons.calendar_today,
                       color: AppColor.textColor, size: 16),
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                   Text(
                     'Today',
                     style: AppTextStyle.body(size: 14),
                   ),
-                  SizedBox(width: 10),
-                  Icon(Icons.access_time,
+                  const SizedBox(width: 10),
+                  const Icon(Icons.access_time,
                       color: AppColor.primaryColor, size: 16),
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                   Text(
-                    DateFormat('hh:mm a').format(event.date) + ' WAT',
+                    '${DateFormat('hh:mm a').format(widget.event.date)} WAT',
                     style: AppTextStyle.body(size: 14),
                   ),
                 ],
@@ -130,19 +221,19 @@ class EventCardWidget extends StatelessWidget {
             else
               Row(
                 children: [
-                  Icon(Icons.calendar_today,
+                  const Icon(Icons.calendar_today,
                       color: AppColor.textColor, size: 16),
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                   Text(
-                    DateFormat('MMMM d, y').format(event.date),
+                    DateFormat('MMMM d, y').format(widget.event.date),
                     style: AppTextStyle.body(size: 14),
                   ),
-                  SizedBox(width: 10),
-                  Icon(Icons.access_time,
+                  const SizedBox(width: 10),
+                  const Icon(Icons.access_time,
                       color: AppColor.primaryColor, size: 16),
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                   Text(
-                    DateFormat('hh:mm a').format(event.date) + ' WAT',
+                    '${DateFormat('hh:mm a').format(widget.event.date)} WAT',
                     style: AppTextStyle.body(size: 14),
                   ),
                 ],

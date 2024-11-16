@@ -2,6 +2,7 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
+import 'package:cabonconnet/helpers/costom_dialog.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/profile/delete_account.dart';
 import 'package:cabonconnet/views/profile/profile_details.dart';
@@ -65,7 +66,7 @@ class _ProfileViewState extends State<ProfileView> {
                                         ),
                                         Text(
                                           userModel.fullName.capitalizeFirst!,
-                                          style: AppTextStyle.body(size: 20),
+                                          style: AppTextStyle.body(size: 18),
                                         ),
                                         Text(
                                           userModel.role.capitalizeFirst ?? '',
@@ -213,7 +214,8 @@ class _ProfileViewState extends State<ProfileView> {
                 children: [
                   ListTile(
                     onTap: () {
-                      authController.logoutUser();
+                      CustomDialog.logout(context: context);
+                      // authController.logoutUser();
                     },
                     leading: const Icon(
                       IconsaxPlusLinear.login,

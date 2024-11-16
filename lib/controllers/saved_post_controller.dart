@@ -1,7 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
-import 'package:cabonconnet/helpers/custom_dialog.dart';
+import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/repository/saved_post_repository.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +18,7 @@ class SavedPostController extends GetxController {
 
     // Check if the user ID is null
     if (userId == null) {
-      CustomDialog.error(
+      CustomSnackbar.error(
         title: 'Error',
         message: 'User not found. Please log in.',
       );
@@ -31,12 +31,12 @@ class SavedPostController extends GetxController {
 
     if (isSuccess) {
       // Show success dialog if the post was saved successfully
-      CustomDialog.success(
+      CustomSnackbar.success(
         message: 'Post saved successfully.',
       );
     } else {
       // Show error dialog if there was an error or post already exists
-      CustomDialog.error(
+      CustomSnackbar.error(
         title: 'Error',
         message: message ?? 'Failed to save the post.',
       );
@@ -46,7 +46,7 @@ class SavedPostController extends GetxController {
   // Method to fetch saved posts for the user
   Future<void> getUserSavedPosts(String? userId) async {
     if (userId == null) {
-      CustomDialog.error(
+      CustomSnackbar.error(
           title: 'Error', message: 'User not found. Please log in.');
       return;
     }
@@ -55,9 +55,9 @@ class SavedPostController extends GetxController {
       isBusy.value = true;
       final savedPosts = await savedPostRepository.getUserSavedPosts(userId);
       savedPostsList.assignAll(savedPosts.map((doc) => doc.data).toList());
-      CustomDialog.success(message: 'Saved posts retrieved successfully.');
+      CustomSnackbar.success(message: 'Saved posts retrieved successfully.');
     } catch (e) {
-      CustomDialog.error(
+      CustomSnackbar.error(
           title: 'Error',
           message: 'Failed to retrieve saved posts: ${e.toString()}');
     } finally {

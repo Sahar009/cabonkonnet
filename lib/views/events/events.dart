@@ -2,10 +2,9 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/event_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
+import 'package:cabonconnet/helpers/costom_dialog.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/events/create_event.dart';
-import 'package:cabonconnet/views/events/live_event.dart';
-import 'package:cabonconnet/views/widget/event_widget.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -42,7 +41,7 @@ class _EventsPageState extends State<EventsPage> {
                 const SizedBox(width: 5),
                 Text('Events',
                     style: AppTextStyle.body(
-                        size: 22, fontWeight: FontWeight.w500)),
+                        size: 17, fontWeight: FontWeight.w500)),
               ],
             ),
             const Divider(),
@@ -111,7 +110,7 @@ class _EventsPageState extends State<EventsPage> {
         backgroundColor: AppColor.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         onPressed: () {
-          Get.to(() => const CreateEvent());
+          CustomDialog.event(context: context);
         },
         child: SvgPicture.asset(AppImages.createEvent),
       ),

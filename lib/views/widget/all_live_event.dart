@@ -30,8 +30,8 @@ class _AllLiveEventState extends State<AllLiveEvent> {
         List<EventModel> liveEvents = eventController.events.where((event) {
           DateTime now = DateTime.now();
           return event.date.year == now.year &&
-                 event.date.month == now.month &&
-                 event.date.day == now.day;
+              event.date.month == now.month &&
+              event.date.day == now.day;
         }).toList();
 
         return Column(
@@ -61,13 +61,13 @@ class _AllLiveEventState extends State<AllLiveEvent> {
                 Text(
                   'Events happening today',
                   style: AppTextStyle.body(
-                    size: 11,
+                    size: 14,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             liveEvents.isEmpty
                 ? const NoDocument(title: 'No live events currently.')
                 : SizedBox(

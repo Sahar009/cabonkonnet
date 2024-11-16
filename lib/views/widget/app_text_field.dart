@@ -37,7 +37,7 @@ class _AppTextFieldsState extends State<AppTextFields> {
       controller: widget.controller,
       obscureText: widget.isPassword &&
           !_isPasswordVisible, // Toggles obscureText for password
-      style: AppTextStyle.body(fontWeight: FontWeight.normal, size: 12),
+      style: AppTextStyle.body(fontWeight: FontWeight.normal, size: 15),
       validator: widget.validator,
       readOnly: widget.isReadOnly,
       decoration: InputDecoration(

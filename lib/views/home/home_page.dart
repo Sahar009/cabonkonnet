@@ -1,6 +1,9 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
-import 'package:cabonconnet/helpers/custom_dialog.dart';
+import 'package:cabonconnet/controllers/auth_controller.dart';
+import 'package:cabonconnet/controllers/profile_controller.dart';
+import 'package:cabonconnet/helpers/core.dart';
+import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PostController postController = Get.put(PostController());
+  final ProfileController profile = Get.put(ProfileController());
   TextEditingController addressController = TextEditingController();
   PageController pageController = PageController();
   bool isPost = true;
@@ -27,99 +31,110 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    profile.reload();
+    Get.put(AuthController()).authRepository.account.get();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            Row(
-              children: [
-                const Image(image: AssetImage(AppImages.homelogo)),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.filledColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    height: 35,
-                    child: const Row(
-                      children: [
-                        Icon(
-                          IconsaxPlusLinear.search_normal,
-                          size: 15,
-                        ),
-                        SizedBox(width: 10),
-                        Text("Search"),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    CustomDialog.error();
-                  },
-                  child: SvgPicture.asset(AppImages.notify),
-                )
-              ],
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TabButton(
-                  isActive: isPost,
-                  onTap: () {
-                    setState(() {
-                      isPost = true;
-                    });
-                    pageController.jumpToPage(0);
-                  },
-                  title: "All posts",
-                ),
-                const SizedBox(width: 20),
-                TabButton(
-                  isActive: !isPost,
-                  onTap: () {
-                    setState(() {
-                      isPost = false;
-                    });
-                    pageController.jumpToPage(1);
-                  },
-                  title: "All products",
-                ),
-              ],
-            ),
-            const Divider(),
-            // Use RefreshIndicator around ListView
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: _refreshPosts,
-                triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: PageView(
-                        controller: pageController,
-                        onPageChanged: (index) {
-                          setState(() {
-                            isPost = index == 0;
-                          });
-                        },
-                        children: const [
-                          AllPost(),
-                          AllProduct(),
+        child: RefreshIndicator(
+          onRefresh: _refreshPosts,
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
+              Row(
+                children: [
+                  const Image(image: AssetImage(AppImages.homelogo)),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColor.filledColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      height: 35,
+                      child: const Row(
+                        children: [
+                          Icon(
+                            IconsaxPlusLinear.search_normal,
+                            size: 15,
+                          ),
+                          SizedBox(width: 10),
+                          Text("Search"),
                         ],
                       ),
                     ),
-                  ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // CustomDialog.error();
+                    },
+                    child: SvgPicture.asset(AppImages.notify),
+                  )
+                ],
+              ),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TabButton(
+                    isActive: isPost,
+                    onTap: () {
+                      setState(() {
+                        isPost = true;
+                      });
+                      pageController.jumpToPage(0);
+                    },
+                    title: "All posts",
+                  ),
+                  const SizedBox(width: 20),
+                  TabButton(
+                    isActive: !isPost,
+                    onTap: () {
+                      setState(() {
+                        isPost = false;
+                      });
+                      pageController.jumpToPage(1);
+                    },
+                    title: "All products",
+                  ),
+                ],
+              ),
+              const Divider(),
+              // Use RefreshIndicator around ListView
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: _refreshPosts,
+                  triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                  child: Column(
+                    //  physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      Expanded(
+                        // height: MediaQuery.of(context).size.height - 230,
+                        child: PageView(
+                          controller: pageController,
+                          onPageChanged: (index) {
+                            setState(() {
+                              isPost = index == 0;
+                            });
+                          },
+                          children: const [
+                            AllPost(),
+                            AllProduct(),
+                          ],
+                        ),
+                      ),
+                      20.toHeightWhiteSpacing()
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

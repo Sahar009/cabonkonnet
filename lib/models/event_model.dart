@@ -54,7 +54,7 @@ class EventModel {
       description: map['description'] as String,
       accessType: map['accessType'] as String,
       ticketPrice:
-          map['ticketPrice'] != null ? map['ticketPrice'] as double : null,
+          map['ticketPrice'] != null ? map['ticketPrice'].toDouble() as double : null,
       date: DateTime.parse(map['date'] as String),
       organizerId: map['organizerId'] as String,
       imageUrl: map['imageUrl'] as String,

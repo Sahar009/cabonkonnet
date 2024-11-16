@@ -15,7 +15,7 @@ class PostModel {
   final DateTime createdAt;
   final int? commentCount; // You can change this type as needed
   final List<dynamic>? sharedBy; // You can change this type as needed
-  final List<dynamic>? likes; // You can change this type as needed
+  final List<String>? likes; // You can change this type as needed
 
   PostModel({
     required this.id,
@@ -47,7 +47,7 @@ class PostModel {
       createdAt: DateTime.parse(map['createdAt']),
       commentCount: (map['commentCount']),
       sharedBy: List<dynamic>.from((map['sharedBy'] as List<dynamic>? ?? [])),
-      likes: List<dynamic>.from((map['likes'] as List<dynamic>? ?? [])),
+      likes: List<String>.from((map['likes'] as List? ?? [])),
     );
   }
 
@@ -72,19 +72,19 @@ class PostModel {
     DateTime? createdAt,
     int? commentCount,
     List<dynamic>? sharedBy,
-    List<dynamic>? like,
+    List<dynamic>? likes,
   }) {
     return PostModel(
-      id: id ?? this.id,
-      user: user ?? this.user,
-      isProduct: isProduct,
-      content: content ?? this.content,
-      hashtags: hashtags ?? this.hashtags,
-      imageUrls: imageUrls ?? this.imageUrls,
-      createdAt: createdAt ?? this.createdAt,
-      commentCount: commentCount ?? this.commentCount,
-      sharedBy: sharedBy ?? this.sharedBy,
-    );
+        id: id ?? this.id,
+        user: user ?? this.user,
+        isProduct: isProduct,
+        content: content ?? this.content,
+        hashtags: hashtags ?? this.hashtags,
+        imageUrls: imageUrls ?? this.imageUrls,
+        createdAt: createdAt ?? this.createdAt,
+        commentCount: commentCount ?? this.commentCount,
+        sharedBy: sharedBy ?? this.sharedBy,
+        likes: likes != null ? List<String>.from(likes) : this.likes);
   }
 
   String toJson() => json.encode(toMap());

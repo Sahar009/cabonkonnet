@@ -31,7 +31,6 @@ class EventRepository {
         databaseId: AppwriteConfig.databaseId,
         collectionId: AppwriteConfig.eventCollectionId,
       );
-print(documents.documents);
       List<EventModel> events = documents.documents
           .map((doc) => EventModel.fromMap(doc.data))
           .toList();

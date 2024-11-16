@@ -1,7 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
-import 'package:cabonconnet/helpers/custom_dialog.dart';
+import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/repository/interest_repository.dart';
 import 'package:cabonconnet/views/home/home.dart';
 import 'package:get/get.dart';
@@ -50,17 +50,17 @@ class InterestController extends GetxController {
   updateInterest() async {
     String? userId = await AppLocalStorage.getCurrentUserId();
     if (userIntrest.isEmpty || userIntrest.length < 3) {
-      CustomDialog.error(message: "The minimum interest you can choose is 3.");
+      CustomSnackbar.error(message: "The minimum interest you can choose is 3.");
     }
 
     if (userId != null) {
       final success =
           await interestRepository.updateInterest(userIntrest, userId);
       if (success) {
-        CustomDialog.success(message: "Interest updated succesfully");
+        CustomSnackbar.success(message: "Interest updated succesfully");
         Get.to(() => Home());
       } else {
-        CustomDialog.error(message: "Error upadating interest");
+        CustomSnackbar.error(message: "Error upadating interest");
       }
     }
   }

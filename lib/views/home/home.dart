@@ -63,7 +63,7 @@ class Home extends StatelessWidget {
               title: Text(
                 "Create a post",
                 style:
-                    AppTextStyle.body(size: 12, fontWeight: FontWeight.normal),
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
               ),
               visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               contentPadding: const EdgeInsets.all(0),
@@ -81,7 +81,7 @@ class Home extends StatelessWidget {
               title: Text(
                 "Showcase product",
                 style:
-                    AppTextStyle.body(size: 12, fontWeight: FontWeight.normal),
+                    AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
               ),
               visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               contentPadding: const EdgeInsets.all(0),
@@ -102,6 +102,7 @@ class Home extends StatelessWidget {
           currentIndex: contoller.currentIndex.value,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
+            Get.put(ProfileController()).reload();
             if (index == 2) {
               // If "Post" icon is tapped, show the BottomSheet
               _showPostOptions(context);

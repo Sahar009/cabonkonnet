@@ -21,18 +21,18 @@ class ProfileController extends GetxController {
 
   final Realtime realtime = Realtime(AppwriteConfig().client);
 
-reload(){
-  if(_userModel == null || userModelRx.value == null){
-    getUserDetails();
+  reload() {
+    if (_userModel == null || userModelRx.value == null) {
+      getUserDetails();
+      log("reloading user details");
+    }
   }
-}
-
 
   @override
   void onInit() {
     super.onInit();
     getUserDetails();
-     getRealTimeUpdate();
+    getRealTimeUpdate();
   }
 
   logout() {

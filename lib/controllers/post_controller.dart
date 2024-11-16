@@ -30,7 +30,6 @@ class PostController extends GetxController {
     fetchAllPosts();
   }
 
-
   // Fetch all posts
   Future<void> fetchAllPosts() async {
     final (isSuccess, fetchedPosts, message) =
@@ -165,6 +164,18 @@ class PostController extends GetxController {
     }
   }
 
+  Future<void> getPost(String postId) async {
+    final (isSuccess, post) = await postRepository.getSinglePost(postId);
+    if (isSuccess && post != null) {
+      final index = posts.indexWhere((p) => p.id == post.id);
+      if (index != -1) {
+        posts[index] = post; // Update the existing post in the list
+      }
+    } else {
+      getPost(postId);
+    }
+  }
+
   // Delete a post
   Future<void> deletePost(String postId) async {
     final isSuccess = await postRepository.deletePost(postId);
@@ -234,14 +245,21 @@ class PostController extends GetxController {
             // Find the existing post
             final index = posts.indexWhere((p) => p.id == postId);
             if (index != -1) {
+              log("${event.payload["\$id"]}Is Found");
+
               // Update only specific fields using copyWith
               posts[index] = posts[index].copyWith(
                   commentCount: updatedPostData["commentCount"],
                   content: updatedPostData["content"],
-                  hashtags: updatedPostData['hashtags']
+                  hashtags: updatedPostData['hashtags'],
+                  likes: updatedPostData["likes"]
+
                   // Add any additional fields that should be updated here
                   );
             }
+            log(" $postId Is geting");
+
+            getPost(postId);
           } else if (event.events
               .contains('databases.*.collections.*.documents.*.delete')) {
             final postId = event.payload['\$id'];

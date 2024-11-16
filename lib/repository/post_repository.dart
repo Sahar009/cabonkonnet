@@ -120,5 +120,18 @@ class PostRepository {
     }
   }
 
- 
+  Future<(bool isSuccess, PostModel?)> getSinglePost(String postId) async {
+    try {
+      var docs = await databases.getDocument(
+        databaseId: AppwriteConfig.databaseId,
+        collectionId: AppwriteConfig.postCollectionId,
+        documentId: postId,
+      );
+
+      PostModel postModel = PostModel.fromMap(docs.data);
+      return (true, postModel);
+    } catch (e) {
+      return (true, null);
+    }
+  }
 }

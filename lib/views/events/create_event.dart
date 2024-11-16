@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/event_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
+import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -28,19 +29,46 @@ class _CreateEventState extends State<CreateEvent> {
   String eventAccess = 'Free';
   String location = 'Online';
   DateTime? selectedDate;
+  TimeOfDay? selectedTime;
 
-  Future<void> pickDate() async {
+  /// Combined date and time picker
+  Future<void> pickDateTime() async {
+    // Step 1: Pick a date
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
+
     if (pickedDate != null) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
+      // Step 2: Pick a time after selecting the date
+      TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (pickedTime != null) {
+        setState(() {
+          selectedDate = pickedDate;
+          selectedTime = pickedTime;
+        });
+      }
     }
+  }
+
+  /// Combine selected date and time into a DateTime object
+  DateTime? get eventDateTime {
+    if (selectedDate != null && selectedTime != null) {
+      return DateTime(
+        selectedDate!.year,
+        selectedDate!.month,
+        selectedDate!.day,
+        selectedTime!.hour,
+        selectedTime!.minute,
+      );
+    }
+    return null;
   }
 
   Future<void> _selectImages() async {
@@ -53,6 +81,10 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   void _createEvent() {
+    if (selectedDate == null && imageFile == null) {
+      CustomSnackbar.error(message: "Pick Your Date Or Your Cover Image");
+      return;
+    }
     if (_formKey.currentState!.validate()) {
       eventController.createEvent(
           title: titleController.text,
@@ -74,27 +106,32 @@ class _CreateEventState extends State<CreateEvent> {
     return Scaffold(
       body: Obx(() {
         return eventController.isBusy.value
-            ? Loading()
+            ? const Loading()
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      50.toHeightWhiteSpacing(),
+                      60.toHeightWhiteSpacing(),
                       Row(
                         children: [
-                          Icon(Icons.arrow_back_ios_new_rounded),
-                          15.toWidthWhiteSpacing(),
+                          GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child:
+                                  const Icon(Icons.arrow_back_ios_new_rounded)),
+                          10.toWidthWhiteSpacing(),
                           Text(
                             "Create Event",
                             style: AppTextStyle.body(),
                           )
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColor.primaryColor,
                       ),
-                      10.toHeightWhiteSpacing(),
+                      20.toHeightWhiteSpacing(),
                       SingleChildScrollView(
                         child: Form(
                           key: _formKey, // Assign the form key
@@ -125,7 +162,7 @@ class _CreateEventState extends State<CreateEvent> {
                               EventDropdown(
                                 label: "Event Access",
                                 value: eventAccess,
-                                items: ['Free', 'Paid'],
+                                items: const ['Free', 'Paid'],
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     eventAccess = newValue!;
@@ -150,13 +187,13 @@ class _CreateEventState extends State<CreateEvent> {
                                 ),
                               EventDatePicker(
                                 label: "Event Date",
-                                selectedDate: selectedDate,
-                                onSelectDate: pickDate,
+                                selectedDateTime: eventDateTime,
+                                onSelectDateTime: pickDateTime,
                               ),
                               EventDropdown(
                                 label: "Location",
                                 value: location,
-                                items: ['Online', 'Physical'],
+                                items: const ['Online', 'Physical'],
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     location = newValue!;
@@ -198,8 +235,8 @@ class _CreateEventState extends State<CreateEvent> {
                                   onTap: _selectImages,
                                   child: Center(
                                     child: Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 40),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 40),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         border: Border.all(
@@ -273,7 +310,7 @@ class EventTextEditor extends StatelessWidget {
                   : "Enter your $label",
               filled: label.toLowerCase().contains("description"),
               border: !label.toLowerCase().contains("description")
-                  ? UnderlineInputBorder()
+                  ? const UnderlineInputBorder()
                   : OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: BorderSide.none),
@@ -341,13 +378,13 @@ class EventDatePicker extends StatelessWidget {
   const EventDatePicker({
     super.key,
     required this.label,
-    required this.selectedDate,
-    required this.onSelectDate,
+    required this.selectedDateTime,
+    required this.onSelectDateTime,
   });
 
   final String label;
-  final DateTime? selectedDate;
-  final VoidCallback onSelectDate;
+  final DateTime? selectedDateTime;
+  final VoidCallback onSelectDateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -360,10 +397,10 @@ class EventDatePicker extends StatelessWidget {
               style:
                   AppTextStyle.soraBody(size: 15, fontWeight: FontWeight.w400)),
           InkWell(
-            onTap: onSelectDate,
+            onTap: onSelectDateTime,
             child: InputDecorator(
               decoration: InputDecoration(
-                hintText: "Select Date",
+                hintText: "Select Date and Time",
                 hintStyle: AppTextStyle.soraBody(
                     size: 15, fontWeight: FontWeight.w500),
                 border: OutlineInputBorder(
@@ -371,9 +408,10 @@ class EventDatePicker extends StatelessWidget {
                     borderSide: BorderSide.none),
               ),
               child: Text(
-                selectedDate != null
-                    ? "${selectedDate!.toLocal()}".split(' ')[0]
-                    : 'Choose Date',
+                selectedDateTime != null
+                    ? "${selectedDateTime!.toLocal()}"
+                        .split('.')[0] // Format: Date and Time
+                    : 'Choose Date and Time',
                 style: AppTextStyle.soraBody(
                     size: 15, fontWeight: FontWeight.w400),
               ),

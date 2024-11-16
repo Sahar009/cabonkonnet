@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomDialog {
+class CustomSnackbar {
   static error({String title = 'Fail', String message = 'Some Error Occor'}) {
     Get.snackbar("Success", 'Successfully logged out',
         messageText: Text(

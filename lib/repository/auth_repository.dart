@@ -36,15 +36,14 @@ class AuthRepository {
       // Create a new account in Appwrite
       final user = await account.create(
         userId: 'unique()', // Automatically generates a unique ID
-        email: email,
+        email: email.trim().toLowerCase(),
         password: password,
       );
 
-      // Save user details to the database
       UserModel userModel = UserModel(
         id: user.$id,
         fullName: fullName,
-        email: email,
+        email: email.toString().toLowerCase(),
         phoneNumber: phoneNumber,
         role: role,
       );
@@ -74,10 +73,9 @@ class AuthRepository {
   Future<(bool, UserModel?, String)> loginUser(
       String email, String password) async {
     try {
-      account.deleteSessions();
       // Attempt to login the user
       final session = await account.createEmailPasswordSession(
-          email: email, password: password);
+          email: email.trim().toLowerCase(), password: password);
       // Retrieve the user details from the database
       final userDoc = await database.getDocument(
         databaseId: databaseId,
@@ -89,7 +87,11 @@ class AuthRepository {
       var userModel = UserModel.fromMap(userDoc.data);
       return (true, userModel, "Login successful");
     } on AppwriteException catch (e) {
-      log('Error logging in: ${e.message}');
+      // e.code
+      if (e.code == 401) {
+        account.deleteSessions();
+      }
+      log('Error logging in: ${e.code}');
       return (false, null, 'Error logging in: ${e.message}');
     } catch (e) {
       log('An unexpected error occurred: $e');
@@ -108,7 +110,7 @@ class AuthRepository {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "action": actionSendOtp,
-          "email": email,
+          "email": email.trim().toLowerCase(),
           "isFirstVerify": isFirstVerify,
         }),
       );
@@ -145,7 +147,7 @@ class AuthRepository {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "action": actionVerifyOtp,
-          "email": email,
+          "email": email.trim().toLowerCase(),
           "otp": otp,
         }),
       );
@@ -188,7 +190,7 @@ class AuthRepository {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "action": actionUpdatePassword,
-          "email": email,
+          "email": email.trim().toLowerCase(),
           "new_password": newPassword,
           "token": token,
         }),

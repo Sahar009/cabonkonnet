@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
-import 'package:cabonconnet/helpers/custom_dialog.dart';
+import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/repository/file_upload_repository.dart';
 import 'package:cabonconnet/repository/user_repository.dart';
@@ -70,8 +70,8 @@ class UserController extends GetxController {
           await userRepository.updateUserDetails(user);
 
       if (isSuccess) {
-        // Successfully updated user details
-        CustomDialog.success(message: 'User details updated successfully!');
+        // SCustomSnackbaruccessfully updated user details
+        CustomSnackbar.success(message: 'User details updated successfully!');
         profileController.getUserDetails();
         if (updatedUserModel?.interests != null &&
             updatedUserModel!.interests!.isNotEmpty) {
@@ -81,7 +81,7 @@ class UserController extends GetxController {
         }
       } else {
         // Handle failure to update user details
-        CustomDialog.success(message: message, title: 'Error');
+        CustomSnackbar.success(message: message, title: 'Error');
       }
     } catch (e) {
       log(e.toString());
@@ -142,7 +142,7 @@ class UserController extends GetxController {
       if (isSuccess) {
         // Successfully updated user details
 
-        CustomDialog.success(message: 'User details updated successfully!');
+        CustomSnackbar.success(message: 'User details updated successfully!');
         profileController.getUserDetails();
         if (updatedUserModel?.interests != null &&
             updatedUserModel!.interests!.isNotEmpty) {
@@ -153,7 +153,7 @@ class UserController extends GetxController {
       } else {
         // Handle failure to update user details
 
-        CustomDialog.error(message: message, title: 'Error');
+        CustomSnackbar.error(message: message, title: 'Error');
       }
     } catch (e) {
       log(e.toString());
