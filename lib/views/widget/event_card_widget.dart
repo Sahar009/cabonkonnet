@@ -186,7 +186,7 @@ class _EventCardWidgetState extends State<EventCardWidget> {
                   decoration: BoxDecoration(
                     color: widget.event.accessType == "Free"
                         ? Colors.lightBlue
-                        : Color(0xffFFA0E1).withOpacity(0.4),
+                        : const Color(0xffFFA0E1).withOpacity(0.4),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(

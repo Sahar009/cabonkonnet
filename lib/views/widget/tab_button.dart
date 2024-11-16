@@ -1,5 +1,5 @@
-
 import 'package:cabonconnet/constant/app_color.dart';
+import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:flutter/material.dart';
 
 class TabButton extends StatelessWidget {
@@ -18,7 +18,7 @@ class TabButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Column(children: [
-        Text(title),
+        Text(title, style: AppTextStyle.body(color: AppColor.black, size: 16)),
         Container(
           width: 87,
           height: 5,

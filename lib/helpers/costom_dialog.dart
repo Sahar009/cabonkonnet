@@ -11,11 +11,11 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 
 class CustomDialog {
   static void event({required BuildContext context}) {
-    showDialog(context: context, builder: (context) => DialogWiget());
+    showDialog(context: context, builder: (context) => const DialogWiget());
   }
 
   static void logout({required BuildContext context}) {
-    showDialog(context: context, builder: (context) => LogOutWiget());
+    showDialog(context: context, builder: (context) => const LogOutWiget());
   }
 }
 
@@ -34,7 +34,7 @@ class _DialogWigetState extends State<DialogWiget> {
     return Dialog(
       child: Container(
         height: 400,
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
           color: AppColor.white,
           borderRadius: BorderRadius.circular(20),
@@ -45,8 +45,8 @@ class _DialogWigetState extends State<DialogWiget> {
               onTap: () {
                 Get.back();
               },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10.0, top: 20),
+              child: const Padding(
+                padding: EdgeInsets.only(right: 10.0, top: 20),
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: Icon(Icons.close),
@@ -68,7 +68,7 @@ class _DialogWigetState extends State<DialogWiget> {
             20.toHeightWhiteSpacing(),
             Row(
               children: [
-                Icon(IconsaxPlusLinear.profile),
+                const Icon(IconsaxPlusLinear.profile),
                 10.toWidthWhiteSpacing(),
                 Expanded(
                   child: Text(
@@ -83,7 +83,7 @@ class _DialogWigetState extends State<DialogWiget> {
               width: double.infinity,
               child: Row(
                 children: [
-                  Icon(IconsaxPlusLinear.timer_1),
+                  const Icon(IconsaxPlusLinear.timer_1),
                   10.toWidthWhiteSpacing(),
                   Expanded(
                     child: Text(
@@ -95,7 +95,7 @@ class _DialogWigetState extends State<DialogWiget> {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: AppButton(
@@ -132,13 +132,13 @@ class _LogOutWigetState extends State<LogOutWiget> {
       child: Obx(() {
         return Container(
           height: 250,
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
             color: AppColor.white,
             borderRadius: BorderRadius.circular(20),
           ),
           child: authController.isBusy.value
-              ? Loading()
+              ? const Loading()
               : Column(
                   children: [
                     GestureDetector(
@@ -165,7 +165,7 @@ class _LogOutWigetState extends State<LogOutWiget> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [

@@ -7,6 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widget/widget.dart';
+
 class ProfileDetails extends StatefulWidget {
   final UserModel user;
   final bool isOrg;
@@ -91,7 +93,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           const SizedBox(
             height: 30,
           ),
-          const Divider(),
+          const CustomDivider(),
           const SizedBox(
             height: 30,
           ),
@@ -195,7 +197,7 @@ class ProfileLabel extends StatelessWidget {
                     ))
             ],
           ),
-          const Divider(),
+          const CustomDivider(),
         ],
       ),
     );

@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:intl/intl.dart';
 
+import '../widget/widget.dart';
+
 class MessagesScreen extends StatefulWidget {
   final ChatRoom chatRoom;
   final String currentUserId;
@@ -106,7 +108,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Row(
                             children: [
-                              const Expanded(child: Divider()),
+                              const Expanded(child: CustomDivider()),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8.0, horizontal: 8),
@@ -118,7 +120,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                                   ),
                                 ),
                               ),
-                              const Expanded(child: Divider()),
+                              const Expanded(child: CustomDivider()),
                             ],
                           ),
                         ),

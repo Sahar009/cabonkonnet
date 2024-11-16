@@ -151,7 +151,7 @@ class _TeamScreenState extends State<TeamScreen> {
                             ],
                           ),
                         ]),
-                        const Divider(),
+                        const CustomDivider(),
                       ],
                     );
                   },

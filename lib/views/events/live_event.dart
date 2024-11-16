@@ -1,6 +1,7 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cabonconnet/views/widget/custom_divider.dart';
 import 'package:flutter/material.dart';
 
 class LiveEvent extends StatefulWidget {
@@ -18,27 +19,27 @@ class _LiveEventState extends State<LiveEvent> {
         children: [
           const SizedBox(height: 80),
           Stack(
-                      children: [
-          const Image(image: AssetImage(AppImages.liveimage)),
-          Positioned(
-            bottom: 5,
-            left: 15,
-            child: Row(
-              children: [
-                const Image(image: AssetImage(AppImages.redcircle)),
-                const SizedBox(width: 5),
-                Text(
-                  'Live',
-                  style: AppTextStyle.body(
-                      color: AppColor.white,
-                      size: 12,
-                      fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-          ),
-                      ],
+            children: [
+              const Image(image: AssetImage(AppImages.liveimage)),
+              Positioned(
+                bottom: 5,
+                left: 15,
+                child: Row(
+                  children: [
+                    const Image(image: AssetImage(AppImages.redcircle)),
+                    const SizedBox(width: 5),
+                    Text(
+                      'Live',
+                      style: AppTextStyle.body(
+                          color: AppColor.white,
+                          size: 12,
+                          fontWeight: FontWeight.w500),
                     ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -88,7 +89,7 @@ class _LiveEventState extends State<LiveEvent> {
                     ),
                   ],
                 ),
-                const Divider(),
+                const CustomDivider(),
                 const SizedBox(height: 10),
               ],
             ),

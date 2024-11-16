@@ -3,7 +3,6 @@ import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
-import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,14 +39,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: RefreshIndicator(
-          onRefresh: _refreshPosts,
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              Row(
+      body: RefreshIndicator(
+        onRefresh: _refreshPosts,
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 13),
+              child: Row(
                 children: [
                   const Image(image: AssetImage(AppImages.homelogo)),
                   Expanded(
@@ -77,64 +76,62 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TabButton(
-                    isActive: isPost,
-                    onTap: () {
-                      setState(() {
-                        isPost = true;
-                      });
-                      pageController.jumpToPage(0);
-                    },
-                    title: "All posts",
-                  ),
-                  const SizedBox(width: 20),
-                  TabButton(
-                    isActive: !isPost,
-                    onTap: () {
-                      setState(() {
-                        isPost = false;
-                      });
-                      pageController.jumpToPage(1);
-                    },
-                    title: "All products",
-                  ),
-                ],
-              ),
-              const Divider(),
-              // Use RefreshIndicator around ListView
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _refreshPosts,
-                  triggerMode: RefreshIndicatorTriggerMode.anywhere,
-                  child: Column(
-                    //  physics: const AlwaysScrollableScrollPhysics(),
-                    children: [
-                      Expanded(
-                        // height: MediaQuery.of(context).size.height - 230,
-                        child: PageView(
-                          controller: pageController,
-                          onPageChanged: (index) {
-                            setState(() {
-                              isPost = index == 0;
-                            });
-                          },
-                          children: const [
-                            AllPost(),
-                            AllProduct(),
-                          ],
-                        ),
+            ),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TabButton(
+                  isActive: isPost,
+                  onTap: () {
+                    setState(() {
+                      isPost = true;
+                    });
+                    pageController.jumpToPage(0);
+                  },
+                  title: "All posts",
+                ),
+                const SizedBox(width: 20),
+                TabButton(
+                  isActive: !isPost,
+                  onTap: () {
+                    setState(() {
+                      isPost = false;
+                    });
+                    pageController.jumpToPage(1);
+                  },
+                  title: "All products",
+                ),
+              ],
+            ),
+            const CustomDivider(),
+            // Use RefreshIndicator around ListView
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: _refreshPosts,
+                triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: PageView(
+                        controller: pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            isPost = index == 0;
+                          });
+                        },
+                        children: const [
+                          AllPost(),
+                          AllProduct(),
+                        ],
                       ),
-                      20.toHeightWhiteSpacing()
-                    ],
-                  ),
+                    ),
+                    20.toHeightWhiteSpacing()
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

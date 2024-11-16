@@ -3,11 +3,11 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/user_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/user_model.dart';
-import 'package:cabonconnet/views/widget/app_button.dart';
-import 'package:cabonconnet/views/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../widget/widget.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel user;
@@ -238,7 +238,7 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ),
                     const SizedBox(height: 30),
-                    const Divider(),
+                    const CustomDivider(),
                     const SizedBox(height: 30),
                     widget.isOrg
                         ? Container(

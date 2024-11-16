@@ -2,6 +2,7 @@ import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/models/chat_rooms.dart';
 import 'package:cabonconnet/views/chat/message.dart';
+import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +57,7 @@ class _RecentChatState extends State<RecentChat> {
                     chatRoom: chatRoom, currentUserId: widget.currentUserId));
               },
             ),
-            const Divider()
+            const CustomDivider()
           ],
         );
       },

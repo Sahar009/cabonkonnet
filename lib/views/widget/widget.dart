@@ -12,3 +12,4 @@ export './all_live_event.dart';
 export './event_card_widget.dart';
 export './build_image.dart';
 export './all_upcoming_event.dart';
+export './custom_divider.dart';

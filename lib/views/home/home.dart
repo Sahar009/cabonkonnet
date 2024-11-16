@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
+import '../widget/widget.dart';
+
 class Home extends StatelessWidget {
   final NavBarContoller contoller = Get.put(NavBarContoller());
   final ProfileController profileContoller = Get.put(ProfileController());
@@ -68,7 +70,7 @@ class Home extends StatelessWidget {
               visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
               contentPadding: const EdgeInsets.all(0),
             ),
-            const Divider(),
+            const CustomDivider(),
             ListTile(
               onTap: () {
                 Navigator.pop(context);

@@ -19,59 +19,61 @@ class _AllUpcomingEventState extends State<AllUpcomingEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Obx(() {
-        if (eventController.events.isEmpty) {
-          return const NoDocument(title: 'No events available');
-        }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: SizedBox(
+        child: Obx(() {
+          if (eventController.events.isEmpty) {
+            return const NoDocument(title: 'No events available');
+          }
 
-        // Filter and sort events that are scheduled for future dates
-        List<EventModel> upcomingEvents = eventController.events
-            .where((event) => event.date.isAfter(DateTime.now()))
-            .toList()
-          ..sort((a, b) => a.date.compareTo(b.date));
+          // Filter and sort events that are scheduled for future dates
+          List<EventModel> upcomingEvents = eventController.events
+              .where((event) => event.date.isAfter(DateTime.now()))
+              .toList()
+            ..sort((a, b) => a.date.compareTo(b.date));
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Upcoming Events',
-                  style: AppTextStyle.body(
-                    size: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            upcomingEvents.isEmpty
-                ? const NoDocument(title: 'No upcoming events.')
-                : SizedBox(
-                    height: 400, // Set a specific height for the ListView
-                    child: ListView.builder(
-                      itemCount: upcomingEvents.length,
-                      itemBuilder: (context, index) {
-                        EventModel eventModel = upcomingEvents[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LiveEvent()),
-                            );
-                          },
-                          child: EventCardWidget(
-                            event: eventModel,
-                          ),
-                        );
-                      },
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Upcoming Events',
+                    style: AppTextStyle.body(
+                      size: 16,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
-          ],
-        );
-      }),
+                ],
+              ),
+              const SizedBox(height: 10),
+              upcomingEvents.isEmpty
+                  ? const NoDocument(title: 'No upcoming events.')
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: upcomingEvents.length,
+                        itemBuilder: (context, index) {
+                          EventModel eventModel = upcomingEvents[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LiveEvent()),
+                              );
+                            },
+                            child: EventCardWidget(
+                              event: eventModel,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+            ],
+          );
+        }),
+      ),
     );
   }
 }

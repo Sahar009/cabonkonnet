@@ -20,71 +20,71 @@ class _AllLiveEventState extends State<AllLiveEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Obx(() {
-        if (eventController.events.isEmpty) {
-          return const NoDocument(title: 'No events available');
-        }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: SizedBox(
+        child: Obx(() {
+          if (eventController.events.isEmpty) {
+            return const NoDocument(title: 'No events available');
+          }
 
-        // Filter events happening today
-        List<EventModel> liveEvents = eventController.events.where((event) {
-          DateTime now = DateTime.now();
-          return event.date.year == now.year &&
-              event.date.month == now.month &&
-              event.date.day == now.day;
-        }).toList();
+          // Filter events happening today
+          List<EventModel> liveEvents = eventController.events.where((event) {
+            DateTime now = DateTime.now();
+            return event.date.year == now.year &&
+                event.date.month == now.month &&
+                event.date.day == now.day;
+          }).toList();
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LiveEvent()),
-                );
-              },
-              child: Row(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LiveEvent()),
+                  );
+                },
+                child: Row(
+                  children: [
+                    const Image(image: AssetImage(AppImages.mic)),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Live',
+                      style: AppTextStyle.body(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
                 children: [
-                  const Image(image: AssetImage(AppImages.mic)),
-                  const SizedBox(width: 8),
                   Text(
-                    'Live',
-                    style: AppTextStyle.body(fontWeight: FontWeight.w500),
+                    'Events happening today',
+                    style: AppTextStyle.body(
+                      size: 14,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                 ],
               ),
-            ),
-            Row(
-              children: [
-                Text(
-                  'Events happening today',
-                  style: AppTextStyle.body(
-                    size: 14,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            liveEvents.isEmpty
-                ? const NoDocument(title: 'No live events currently.')
-                : SizedBox(
-                    height: 400, // Set a specific height for the ListView
-                    child: ListView.builder(
-                      itemCount: liveEvents.length,
-                      itemBuilder: (context, index) {
-                        EventModel eventModel = liveEvents[index];
-                        return EventCardWidget(
-                          event: eventModel,
-                        );
-                      },
+              liveEvents.isEmpty
+                  ? const NoDocument(title: 'No live events currently.')
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: liveEvents.length,
+                        itemBuilder: (context, index) {
+                          EventModel eventModel = liveEvents[index];
+                          return EventCardWidget(
+                            event: eventModel,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-          ],
-        );
-      }),
+            ],
+          );
+        }),
+      ),
     );
   }
 }

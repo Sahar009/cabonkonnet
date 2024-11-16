@@ -3,13 +3,13 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
-import 'package:cabonconnet/views/widget/loading_widget.dart';
-import 'package:cabonconnet/views/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../widget/widget.dart';
 
 class ShowcaseProduct extends StatefulWidget {
   const ShowcaseProduct({super.key});
@@ -94,7 +94,7 @@ class _ShowcaseProductState extends State<ShowcaseProduct> {
                               const SizedBox(height: 20),
                               const ProfileWidget(),
                               const SizedBox(height: 7),
-                              const Divider(),
+                              const CustomDivider(),
                               const SizedBox(height: 15),
                               Text(
                                 'Product Name',

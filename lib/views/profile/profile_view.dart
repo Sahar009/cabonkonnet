@@ -13,6 +13,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
+import '../widget/widget.dart';
+
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
@@ -123,7 +125,7 @@ class _ProfileViewState extends State<ProfileView> {
                         const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   ),
-                  const Divider(),
+                  const CustomDivider(),
                   ListTile(
                     onTap: () {
                       Get.to(() => ProfileDetails(
@@ -141,7 +143,7 @@ class _ProfileViewState extends State<ProfileView> {
                         const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   ),
-                  const Divider(),
+                  const CustomDivider(),
                   ListTile(
                     onTap: () {},
                     leading: SvgPicture.asset(AppImages.analytic),
@@ -177,7 +179,7 @@ class _ProfileViewState extends State<ProfileView> {
                         const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   ),
-                  const Divider(),
+                  const CustomDivider(),
                   ListTile(
                     leading: SvgPicture.asset(AppImages.activity),
                     title: const Text("Activity"),
@@ -187,7 +189,7 @@ class _ProfileViewState extends State<ProfileView> {
                         const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
                     trailing: const Icon(Icons.arrow_forward_ios_rounded),
                   ),
-                  const Divider(),
+                  const CustomDivider(),
                   ListTile(
                     onTap: () {},
                     leading: const Icon(
@@ -200,7 +202,7 @@ class _ProfileViewState extends State<ProfileView> {
                         const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
                     trailing: const Icon(Icons.arrow_forward_ios),
                   ),
-                  // const Divider(),
+                  // const CustomDivider(),
                 ],
               ),
             ),
@@ -229,7 +231,7 @@ class _ProfileViewState extends State<ProfileView> {
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
                   ),
-                  const Divider(),
+                  const CustomDivider(),
                   ListTile(
                     onTap: () {
                       Get.to(() => const DeleteAccount());

@@ -1,7 +1,8 @@
 import 'package:cabonconnet/helpers/textstyles.dart';
-import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../widget/widget.dart';
 
 class DeleteAccount extends StatefulWidget {
   const DeleteAccount({super.key});
@@ -96,7 +97,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                           ),
                         ),
                       ),
-                      const Divider(),
+                      const CustomDivider(),
 
                       // Show text field if "Other" is selected
                       if (_selectedDeleteReason == "Other" &&
@@ -119,7 +120,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 },
               ),
               const SizedBox(height: 60),
-              AppButton(onTab:(){})
+              AppButton(onTab: () {})
             ],
           ),
         ),

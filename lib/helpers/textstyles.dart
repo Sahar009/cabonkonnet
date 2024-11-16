@@ -14,7 +14,7 @@ class AppTextStyle {
     return GoogleFonts.poppins(
       fontSize: size.sp - 0.5,
       color: color,
-      letterSpacing: 0.6,
+      letterSpacing: 1,
       fontWeight: fontWeight,
       decoration: decoration,
       fontStyle: fontStyle,
@@ -50,7 +50,7 @@ class AppTextStyle {
         color: color,
         fontWeight: fontWeight,
         fontStyle: fontStyle,
-        letterSpacing: 0.6,
+        letterSpacing: 0.9,
         decoration: decoration);
   }
 }

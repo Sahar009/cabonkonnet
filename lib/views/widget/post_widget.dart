@@ -4,15 +4,12 @@ import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/controllers/saved_post_controller.dart';
-import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
 import 'package:cabonconnet/views/home/comment_screen.dart';
 import 'package:cabonconnet/views/home/product_detail.dart';
-import 'package:cabonconnet/views/widget/app_button.dart';
-import 'package:cabonconnet/views/widget/build_image.dart';
-import 'package:cabonconnet/views/widget/user_button.dart';
+import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
@@ -148,50 +145,64 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              widget.postModel.user?.profileImage != null
-                  ? CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(
-                          widget.postModel.user!.profileImage!),
-                    )
-                  : const CircleAvatar(),
-              const SizedBox(width: 5),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Text(
-                    widget.postModel.user?.fullName ?? "",
-                    style: AppTextStyle.body(
-                      fontWeight: FontWeight.w500,
-                      size: 16,
-                    ),
+                  widget.postModel.user?.profileImage != null
+                      ? CircleAvatar(
+                          backgroundImage: CachedNetworkImageProvider(
+                              widget.postModel.user!.profileImage!),
+                        )
+                      : const CircleAvatar(),
+                  const SizedBox(width: 5),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.postModel.user?.fullName ?? "",
+                        style: AppTextStyle.body(
+                          fontWeight: FontWeight.w500,
+                          size: 16,
+                        ),
+                      ),
+                      Text(widget.postModel.user?.country ?? "")
+                    ],
                   ),
-                  Text(widget.postModel.user?.country ?? "")
+                  const Spacer(),
+                  GestureDetector(
+                      onTap: () => _showPostOptions(context),
+                      child: const Icon(Icons.more_vert))
                 ],
               ),
-              const Spacer(),
-              GestureDetector(
-                  onTap: () => _showPostOptions(context),
-                  child: const Icon(Icons.more_vert))
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                child: Text(
+                  widget.postModel.content,
+                  textAlign: TextAlign.start,
+                  style: AppTextStyle.body(
+                      size: 14, fontWeight: FontWeight.normal),
+                ),
+              ),
+              const SizedBox(height: 5),
             ],
           ),
-          const SizedBox(height: 10),
-          Text(
-            widget.postModel.content,
-            style: AppTextStyle.body(size: 14, fontWeight: FontWeight.normal),
-          ),
-          const SizedBox(height: 5),
-          BuildImageWidget(imageUrls: widget.postModel.imageUrls),
-          const SizedBox(height: 10),
-          widget.postModel.isProduct
-              ? Container()
-              : Row(
+        ),
+        BuildImageWidget(imageUrls: widget.postModel.imageUrls),
+        const SizedBox(height: 10),
+        widget.postModel.isProduct
+            ? Container()
+            : Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     LikeButton(
@@ -230,12 +241,15 @@ class _PostWidgetState extends State<PostWidget> {
                     )
                   ],
                 ),
-          if (!widget.postModel.isProduct) const Divider(),
-          widget.postModel.isProduct
-              ? Column(
-                  children: [
-                    15.toHeightWhiteSpacing(),
-                    AppButton(
+              ),
+        if (!widget.postModel.isProduct) const CustomDivider(),
+        widget.postModel.isProduct
+            ? Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40.0, vertical: 15),
+                    child: AppButton(
                       onTab: () {
                         Get.to(
                             () => ProductDetails(postModel: widget.postModel));
@@ -244,75 +258,74 @@ class _PostWidgetState extends State<PostWidget> {
                       color: null,
                       textColor: AppColor.primaryColor,
                     ),
-                  ],
-                )
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                  ),
+                ],
+              )
+            : Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    UserButton(
+                        onTap: () {
+                          // if (widget.postModel.likes!
+                          //     .contains(currentUserId)) {
+                          //   widget.postModel.likes!.remove(currentUserId);
+                          // } else {
+                          //   widget.postModel.likes!.add(currentUserId!);
+                          // }
+
+                          postController.toggleLike(widget.postModel.id);
+                          setState(() {});
+                        },
+                        iconData: AppImages.like,
+                        text: 'Like'),
+                    if (!widget.isComment)
+                      UserButton(
+                          onTap: !widget.isComment
+                              ? () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CommentScreen(
+                                                postModel: widget.postModel,
+                                              )));
+                                }
+                              : () {},
+                          iconData: AppImages.comment,
+                          text: 'Comment'),
+
+                    UserButton(
+                        onTap: () {}, iconData: AppImages.share, text: 'Share'),
+                    UserButton(
+                        onTap: () {}, iconData: AppImages.send, text: 'Send'),
+
+                    if (widget.isComment)
                       UserButton(
                           onTap: () {
-                            // if (widget.postModel.likes!
-                            //     .contains(currentUserId)) {
-                            //   widget.postModel.likes!.remove(currentUserId);
-                            // } else {
-                            //   widget.postModel.likes!.add(currentUserId!);
-                            // }
-
-                            postController.toggleLike(widget.postModel.id);
-                            setState(() {});
+                            savedPostController.savePost(widget.postModel.id);
                           },
-                          iconData: AppImages.like,
-                          text: 'Like'),
-                      if (!widget.isComment)
-                        UserButton(
-                            onTap: !widget.isComment
-                                ? () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => CommentScreen(
-                                                  postModel: widget.postModel,
-                                                )));
-                                  }
-                                : () {},
-                            iconData: AppImages.comment,
-                            text: 'Comment'),
-
-                      UserButton(
-                          onTap: () {},
-                          iconData: AppImages.share,
-                          text: 'Share'),
-                      UserButton(
-                          onTap: () {}, iconData: AppImages.send, text: 'Send'),
-
-                      if (widget.isComment)
-                        UserButton(
-                            onTap: () {
-                              savedPostController.savePost(widget.postModel.id);
-                            },
-                            iconData: AppImages.saveIcon,
-                            text: 'Save'),
-                      //  widget.isComment ? UserButton(
-                      //   onTap:
-                      //        () {
-                      //           Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                   builder: (context) => CommentScreen(
-                      //                         postModel: widget.postModel,
-                      //                       )));
-                      //         }
-                      //     ,
-                      //   iconData: AppImages.comment,
-                      //   text: 'Comment'),
-                    ],
-                  ),
+                          iconData: AppImages.saveIcon,
+                          text: 'Save'),
+                    //  widget.isComment ? UserButton(
+                    //   onTap:
+                    //        () {
+                    //           Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) => CommentScreen(
+                    //                         postModel: widget.postModel,
+                    //                       )));
+                    //         }
+                    //     ,
+                    //   iconData: AppImages.comment,
+                    //   text: 'Comment'),
+                  ],
                 ),
-          const Divider()
-        ],
-      ),
+              ),
+        const CustomDivider()
+      ],
     );
   }
 }

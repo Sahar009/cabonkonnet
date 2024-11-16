@@ -5,11 +5,12 @@ import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:cabonconnet/views/home/new_post.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
-import 'package:cabonconnet/views/widget/post_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+
+import '../widget/widget.dart';
 
 class CommentScreen extends StatefulWidget {
   final PostModel postModel;
@@ -61,7 +62,7 @@ class _CommentScreenState extends State<CommentScreen> {
                     postModel: widget.postModel,
                     isComment: true,
                   ),
-                  const Divider(),
+                  const CustomDivider(),
                 ],
               ),
             ),
