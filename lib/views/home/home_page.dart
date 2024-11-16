@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                   const Image(image: AssetImage(AppImages.homelogo)),
                   Expanded(
                     child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         color: AppColor.filledColor,
                         borderRadius: BorderRadius.circular(5),
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   title: "All posts",
                 ),
-                const SizedBox(width: 20),
+                50.toWidthWhiteSpacing(),
                 TabButton(
                   isActive: !isPost,
                   onTap: () {

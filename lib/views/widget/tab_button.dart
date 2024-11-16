@@ -18,7 +18,11 @@ class TabButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Column(children: [
-        Text(title, style: AppTextStyle.body(color: AppColor.black, size: 16)),
+        Text(title,
+            style: AppTextStyle.body(
+                color: isActive ? AppColor.primaryColor : AppColor.black,
+                size: 16,
+                fontWeight: isActive ? FontWeight.w600 : FontWeight.w500)),
         Container(
           width: 87,
           height: 5,

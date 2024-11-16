@@ -2,6 +2,7 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
+import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/costom_dialog.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/profile/delete_account.dart';
@@ -40,216 +41,144 @@ class _ProfileViewState extends State<ProfileView> {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 60),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // const CircleAvatar(radius: 50),
-                            Obx(() {
-                              final userModel =
-                                  profileController.userModelRx.value;
-                              return userModel == null
-                                  ? Container()
-                                  : Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 50,
-                                          backgroundImage:
-                                              userModel.profileImage != null
-                                                  ? CachedNetworkImageProvider(
-                                                      userModel.profileImage!)
-                                                  : null,
-                                        ),
-                                        Text(
-                                          userModel.fullName.capitalizeFirst!,
-                                          style: AppTextStyle.body(size: 18),
-                                        ),
-                                        Text(
-                                          userModel.role.capitalizeFirst ?? '',
-                                          style: AppTextStyle.body(size: 16),
-                                        ),
-                                        Text(
-                                          userModel.country ?? "",
-                                          style: AppTextStyle.body(
-                                              size: 15,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        Text(
-                                          userModel.website ??
-                                              "www.greenplace.com",
-                                          style: AppTextStyle.body(
-                                              size: 15,
-                                              color: AppColor.primaryColor,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                      ],
-                                    );
-                            }),
-                          ],
-                        ),
-                      ],
-                    ),
+                    Obx(() {
+                      final userModel = profileController.userModelRx.value;
+                      return userModel == null
+                          ? Container()
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Stack(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage:
+                                          userModel.profileImage != null
+                                              ? CachedNetworkImageProvider(
+                                                  userModel.profileImage!)
+                                              : null,
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  userModel.fullName.capitalizeFirst!,
+                                  style: AppTextStyle.body(size: 18),
+                                ),
+                                Text(
+                                  userModel.role.capitalizeFirst ?? '',
+                                  style: AppTextStyle.body(size: 16),
+                                ),
+                                Text(
+                                  userModel.country ?? "",
+                                  style: AppTextStyle.body(
+                                      size: 15, fontWeight: FontWeight.w300),
+                                ),
+                                Text(
+                                  userModel.website ?? "www.greenplace.com",
+                                  style: AppTextStyle.body(
+                                      size: 15,
+                                      color: AppColor.primaryColor,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ],
+                            );
+                    }),
                   ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               color: AppColor.white,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  ListTile(
+                  CustomListTile(
                     onTap: () {
                       Get.to(() => ProfileDetails(
                             user: profileController.userModelRx.value!,
                           ));
                     },
-                    leading: SvgPicture.asset(
-                      AppImages.person,
-                      height: 25,
-                      width: 25,
-                    ),
-                    title: const Text("Profile Details"),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                    leading: SvgPicture.asset(AppImages.person,
+                        height: 25, width: 25),
+                    title: "Profile Details",
                   ),
-                  const CustomDivider(),
-                  ListTile(
+                  CustomListTile(
                     onTap: () {
                       Get.to(() => ProfileDetails(
                             user: profileController.userModelRx.value!,
                             isOrg: true,
                           ));
                     },
-                    leading: const Icon(
-                      IconsaxPlusLinear.bank,
-                    ),
-                    title: const Text("Organization"),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                    leading: const Icon(IconsaxPlusLinear.bank),
+                    title: "Organization",
                   ),
-                  const CustomDivider(),
-                  ListTile(
+                  CustomListTile(
                     onTap: () {},
                     leading: SvgPicture.asset(AppImages.analytic),
-                    title: const Text("Analytics"),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
-                    trailing: const Icon(Icons.arrow_forward_ios),
+                    title: "Analytics",
+                    isLast: true,
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               color: AppColor.white,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  ListTile(
+                  CustomListTile(
                     onTap: () {
                       Get.to(() => SavedPost(
                             user: profileController.userModelRx.value!,
                           ));
                     },
                     leading: Image.asset(AppImages.saveIcon),
-                    title: const Text("Saved posts"),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                    title: "Saved posts",
                   ),
-                  const CustomDivider(),
-                  ListTile(
-                    leading: SvgPicture.asset(AppImages.activity),
-                    title: const Text("Activity"),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
-                  ),
-                  const CustomDivider(),
-                  ListTile(
+                  CustomListTile(
                     onTap: () {},
-                    leading: const Icon(
-                      IconsaxPlusLinear.timer_1,
-                    ),
-                    title: const Text("Reminders"),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
-                    trailing: const Icon(Icons.arrow_forward_ios),
+                    leading: SvgPicture.asset(AppImages.activity),
+                    title: "Activity",
                   ),
-                  // const CustomDivider(),
+                  CustomListTile(
+                    onTap: () {},
+                    leading: const Icon(IconsaxPlusLinear.timer_1),
+                    title: "Reminders",
+                    isLast: true,
+                  ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               color: AppColor.white,
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  ListTile(
+                  CustomListTile(
                     onTap: () {
                       CustomDialog.logout(context: context);
-                      // authController.logoutUser();
                     },
-                    leading: const Icon(
-                      IconsaxPlusLinear.login,
-                    ),
-                    title: Text(
-                      "Log out",
-                      style: AppTextStyle.body(size: 16),
-                    ),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
+                    leading: const Icon(IconsaxPlusLinear.login),
+                    title: "Log out",
                   ),
-                  const CustomDivider(),
-                  ListTile(
+                  CustomListTile(
                     onTap: () {
                       Get.to(() => const DeleteAccount());
                     },
                     leading: SvgPicture.asset(AppImages.delect),
-                    title: Text(
-                      "Delete account",
-                      style: AppTextStyle.body(color: AppColor.red, size: 16),
-                    ),
-                    visualDensity:
-                        const VisualDensity(horizontal: -2, vertical: -4),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: -4),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded),
+                    title: "Delete account",
+                    isLast: true,
                   ),
                 ],
               ),
-            )
+            ),
+            50.toHeightWhiteSpacing()
           ],
         ),
       ),
@@ -284,6 +213,45 @@ class TransButton extends StatelessWidget {
               fontWeight: FontWeight.w600),
         ),
       ),
+    );
+  }
+}
+
+class CustomListTile extends StatelessWidget {
+  final VoidCallback onTap;
+  final String title;
+  final Widget leading;
+  final Widget? trailing;
+  final bool isLast;
+
+  const CustomListTile(
+      {super.key,
+      required this.onTap,
+      required this.title,
+      required this.leading,
+      this.trailing,
+      this.isLast = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          onTap: onTap,
+          leading: leading,
+          title: Text(title),
+          visualDensity: const VisualDensity(horizontal: -2, vertical: -4),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          trailing: trailing ??
+              const Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16,
+              ),
+        ),
+        5.toHeightWhiteSpacing(),
+        isLast ? Container() : const CustomDivider(),
+      ],
     );
   }
 }
