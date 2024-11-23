@@ -60,7 +60,9 @@ class _AllUpcomingEventState extends State<AllUpcomingEvent> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LiveEvent()),
+                                    builder: (context) => LiveEvent(
+                                          event: eventModel,
+                                        )),
                               );
                             },
                             child: EventCardWidget(

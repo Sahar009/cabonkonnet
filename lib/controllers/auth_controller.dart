@@ -272,4 +272,8 @@ class AuthController extends GetxController {
 
     Get.offAll(() => const Login());
   }
+
+  void reportUser({required String userId, String? reason}) {}
+
+ 
 }

@@ -19,6 +19,8 @@ class UserModel {
   final String? bankStatementUrl; // URL or path for bank statement
   final String? idCardUrl; // URL or path for ID card
   final String? profileImage;
+  final String? coverImage;
+
   final List? interests;
   final String? bio;
   final List? teamMembers;
@@ -42,7 +44,8 @@ class UserModel {
       this.interests,
       this.bio,
       this.teamMembers,
-      this.businessLogoUrl});
+      this.businessLogoUrl,
+      this.coverImage});
 
   // Method to convert UserModel to a Map for storage (e.g., in Firestore)
   Map<String, dynamic> toMap() {
@@ -63,7 +66,8 @@ class UserModel {
       'interests': interests,
       'bio': bio,
       'teamMembers': teamMembers,
-      'businessLogoUrl': businessLogoUrl
+      'businessLogoUrl': businessLogoUrl,
+      "coverImage": coverImage
     };
   }
 
@@ -96,7 +100,8 @@ class UserModel {
         bio: map['bio'] != null ? map['bio'] as String : null,
         teamMembers:
             map['teamMembers'] != null ? List.from(map['teamMembers']) : null,
-        businessLogoUrl: map["businessLogoUrl"]);
+        businessLogoUrl: map["businessLogoUrl"],
+        coverImage: map['coverImage']);
   }
 
   UserModel copyWith(
@@ -116,26 +121,27 @@ class UserModel {
       String? profileImage,
       List? interests,
       String? bio,
-      String? businessLogoUrl}) {
+      String? businessLogoUrl,
+      String? coverImage}) {
     return UserModel(
-      id: id ?? this.id,
-      fullName: fullName ?? this.fullName,
-      email: email ?? this.email,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      role: role ?? this.role,
-      companyName: companyName ?? this.companyName,
-      address: address ?? this.address,
-      businessRegNumber: businessRegNumber ?? this.businessRegNumber,
-      website: website ?? this.website,
-      country: country ?? this.country,
-      teamNumber: teamNumber ?? this.teamNumber,
-      bankStatementUrl: bankStatementUrl ?? this.bankStatementUrl,
-      idCardUrl: idCardUrl ?? this.idCardUrl,
-      profileImage: profileImage ?? this.profileImage,
-      interests: interests ?? this.interests,
-      bio: bio ?? this.bio,
-      businessLogoUrl: businessLogoUrl ?? this.bankStatementUrl,
-    );
+        id: id ?? this.id,
+        fullName: fullName ?? this.fullName,
+        email: email ?? this.email,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        role: role ?? this.role,
+        companyName: companyName ?? this.companyName,
+        address: address ?? this.address,
+        businessRegNumber: businessRegNumber ?? this.businessRegNumber,
+        website: website ?? this.website,
+        country: country ?? this.country,
+        teamNumber: teamNumber ?? this.teamNumber,
+        bankStatementUrl: bankStatementUrl ?? this.bankStatementUrl,
+        idCardUrl: idCardUrl ?? this.idCardUrl,
+        profileImage: profileImage ?? this.profileImage,
+        interests: interests ?? this.interests,
+        bio: bio ?? this.bio,
+        businessLogoUrl: businessLogoUrl ?? this.bankStatementUrl,
+        coverImage: coverImage ?? coverImage);
   }
 
   String toJson() => json.encode(toMap());

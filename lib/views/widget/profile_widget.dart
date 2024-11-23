@@ -22,9 +22,9 @@ class ProfileWidget extends StatelessWidget {
     final ProfileController profileController = Get.put(ProfileController());
 
     return Obx(() {
-      profileController.getUserDetails();
+      profileController.getCurrentUserDetails();
 
-      final userModel = profileController.userModelRx.value;
+      final userModel = profileController.currentUserModelRx.value;
       return userModel == null
           ? Container()
           : Row(

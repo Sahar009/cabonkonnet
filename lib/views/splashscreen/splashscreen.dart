@@ -30,8 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
         if (value.emailVerification) {
           AppLocalStorage.setCurrentUserId(value.$id);
 
-          await profileController.getUserDetails();
-          UserModel? user = profileController.userModelRx.value;
+          await profileController.getCurrentUserDetails();
+          UserModel? user = profileController.currentUserModelRx.value;
 
           if (user != null &&
               (user.companyName == null || user.country == null)) {

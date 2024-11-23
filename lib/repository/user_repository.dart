@@ -18,7 +18,7 @@ class UserRepository {
 
   Future<(bool, UserModel?, String)> updateUserDetails(UserModel user) async {
     try {
-       String? userId = await AppLocalStorage.getCurrentUserId();
+      String? userId = await AppLocalStorage.getCurrentUserId();
       await database.updateDocument(
         databaseId: databaseId,
         collectionId: userCollectionId,
@@ -27,6 +27,27 @@ class UserRepository {
       );
       return (true, user, "Update successful");
     } on AppwriteException catch (e) {
+      return (false, null, 'Error saving user details: ${e.message}');
+    } catch (e) {
+      return (false, null, 'An unexpected error occurred: $e');
+    }
+  }
+
+  Future<(bool, String?, String)> updateCoverImage(String coverUrl) async {
+    try {
+      String? userId = await AppLocalStorage.getCurrentUserId();
+  
+      await database.updateDocument(
+        databaseId: databaseId,
+        collectionId: userCollectionId,
+        documentId: userId ?? "",
+        data: {"coverImage": coverUrl},
+      );
+   
+
+      return (true, userId, "Update successful");
+    } on AppwriteException catch (e) {
+      log(e.message.toString());
       return (false, null, 'Error saving user details: ${e.message}');
     } catch (e) {
       return (false, null, 'An unexpected error occurred: $e');

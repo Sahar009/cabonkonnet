@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
+import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/models/event_model.dart';
 import 'package:cabonconnet/repository/event_repository.dart';
 import 'package:cabonconnet/repository/file_upload_repository.dart';
@@ -38,7 +39,8 @@ class EventController extends GetxController {
         events.assignAll(fetchedEvents);
       }
     } else {
-      Get.snackbar('Error', message ?? 'An unknown error occurred');
+      CustomSnackbar.success(
+          title: 'Error', message: message ?? 'An unknown error occurred');
     }
   }
 
@@ -73,9 +75,11 @@ class EventController extends GetxController {
 
     if (isSuccess) {
       events.add(event);
-      Get.snackbar('Success', 'Event created successfully');
+      CustomSnackbar.success(
+          title: 'Success', message: 'Event created successfully');
     } else {
-      Get.snackbar('Error', message ?? 'Failed to create event');
+      CustomSnackbar.success(
+          title: 'Error', message: message ?? 'Failed to create event');
     }
   }
 
@@ -86,11 +90,12 @@ class EventController extends GetxController {
       final index = events.indexWhere((e) => e.id == event.id);
       if (index != -1) {
         events[index] = event; // Update the existing event in the list
-        Get.snackbar('Success', 'Event updated successfully');
+        CustomSnackbar.success(
+            title: 'Success', message: 'Event updated successfully');
         Get.back();
       }
     } else {
-      Get.snackbar('Error', 'Failed to update event');
+      CustomSnackbar.success(title: 'Error', message: 'Failed to update event');
     }
   }
 
@@ -99,9 +104,27 @@ class EventController extends GetxController {
     final isSuccess = await eventRepository.deleteEvent(eventId);
     if (isSuccess) {
       events.removeWhere((event) => event.id == eventId);
-      Get.snackbar('Success', 'Event deleted successfully');
+      CustomSnackbar.success(
+          title: 'Success', message: 'Event deleted successfully');
     } else {
-      Get.snackbar('Error', 'Failed to delete event');
+      CustomSnackbar.success(title: 'Error', message: 'Failed to delete event');
+    }
+  }
+
+// Delete an event
+  Future<void> addParticipants(
+      String userId, String eventId, EventModel eventModel) async {
+    List participants = eventModel.participants ?? [];
+    participants.add(userId);
+    EventModel event = eventModel.copyWith(participants: participants);
+    final isSuccess =
+        await eventRepository.addParticipants(userId, eventId, event);
+    if (isSuccess) {
+      events.removeWhere((event) => event.id == eventId);
+      CustomSnackbar.success(
+          title: 'Success', message: 'Event deleted successfully');
+    } else {
+      CustomSnackbar.success(title: 'Error', message: 'Failed to delete event');
     }
   }
 
@@ -150,7 +173,9 @@ class EventController extends GetxController {
           imageUrls.add(fileUrl);
         }
       } catch (e) {
-        Get.snackbar('Upload Error', 'Failed to upload image: ${file.name}');
+        CustomSnackbar.success(
+            title: 'Upload  Error',
+            message: 'Failed to upload image: ${file.name}');
       }
     }
     return imageUrls;

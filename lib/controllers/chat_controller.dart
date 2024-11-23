@@ -93,7 +93,7 @@ class ChatController extends GetxController {
               .contains('databases.*.collections.*.documents.*.update')) {
             final updatedRoomData = event.payload;
             final roomId = updatedRoomData['\$id'];
-            log(updatedRoomData.keys.toList().toString());
+
             // Find the existing chat room
             final index = chatRooms.indexWhere((room) => room.id == roomId);
             if (index != -1) {

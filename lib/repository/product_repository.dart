@@ -32,6 +32,7 @@ class ProductRepository {
           'hashtags': post.hashtags,
           'imageUrls': post.imageUrls,
           "product": product.id,
+          "fundingType": product.fundingType,
           'createdAt':
               post.createdAt.toIso8601String(), // Ensure date is in ISO format
           'user': userId, // Store only the user ID

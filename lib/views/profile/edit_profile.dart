@@ -160,6 +160,7 @@ class _EditProfileState extends State<EditProfile> {
                                     : "Profile Details",
                                 style: AppTextStyle.body(
                                   fontWeight: FontWeight.w500,
+                                  size: 16,
                                 ),
                               ),
                             ],
@@ -260,10 +261,6 @@ class _EditProfileState extends State<EditProfile> {
                                 ProfileTextEditor(
                                   label: "Website",
                                   controller: websiteController,
-                                ),
-                                ProfileTextEditor(
-                                  label: "Team",
-                                  controller: teamController,
                                 ),
                               ],
                             ),

@@ -28,7 +28,7 @@ class AppButton extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(color: AppColor.primaryColor)),
         child: Text(
           title,

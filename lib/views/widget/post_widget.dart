@@ -1,14 +1,17 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
+import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/controllers/saved_post_controller.dart';
+import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
 import 'package:cabonconnet/views/home/comment_screen.dart';
 import 'package:cabonconnet/views/home/product_detail.dart';
+import 'package:cabonconnet/views/profile/profile_view.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -82,6 +85,8 @@ class _PostWidgetState extends State<PostWidget> {
             ),
             ListTile(
               onTap: () {
+                savedPostController.savePost(widget.postModel.id);
+                Get.back();
                 //   Get.to(() => const NewPost());
               },
               leading: Image.asset(AppImages.saveIcon),
@@ -97,6 +102,7 @@ class _PostWidgetState extends State<PostWidget> {
               onTap: () async {
                 var chatRoom = await chatController.initiateChat(
                     currentUserId!, widget.postModel.user?.id ?? "");
+                Get.back();
                 Get.to(() => MessagesScreen(
                       chatRoom: chatRoom,
                       currentUserId: currentUserId!,
@@ -127,7 +133,13 @@ class _PostWidgetState extends State<PostWidget> {
               contentPadding: const EdgeInsets.all(0),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Get.back();
+                showDialog(
+                    context: context,
+                    builder: (context) =>
+                        ReportUser(userId: widget.postModel.user?.id ?? ""));
+              },
               leading: Image.asset(AppImages.reportIcon),
               title: Text(
                 "Report user",
@@ -153,33 +165,39 @@ class _PostWidgetState extends State<PostWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  widget.postModel.user?.profileImage != null
-                      ? CircleAvatar(
-                          backgroundImage: CachedNetworkImageProvider(
-                              widget.postModel.user!.profileImage!),
-                        )
-                      : const CircleAvatar(),
-                  const SizedBox(width: 5),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.postModel.user?.fullName ?? "",
-                        style: AppTextStyle.body(
-                          fontWeight: FontWeight.w500,
-                          size: 16,
+              GestureDetector(
+                onTap: () {
+                  Get.to(() =>
+                      ProfileView(userId: widget.postModel.user?.id ?? ""));
+                },
+                child: Row(
+                  children: [
+                    widget.postModel.user?.profileImage != null
+                        ? CircleAvatar(
+                            backgroundImage: CachedNetworkImageProvider(
+                                widget.postModel.user!.profileImage!),
+                          )
+                        : const CircleAvatar(),
+                    const SizedBox(width: 5),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.postModel.user?.fullName ?? "",
+                          style: AppTextStyle.body(
+                            fontWeight: FontWeight.w500,
+                            size: 16,
+                          ),
                         ),
-                      ),
-                      Text(widget.postModel.user?.country ?? "")
-                    ],
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                      onTap: () => _showPostOptions(context),
-                      child: const Icon(Icons.more_vert))
-                ],
+                        Text(widget.postModel.user?.country ?? "")
+                      ],
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                        onTap: () => _showPostOptions(context),
+                        child: const Icon(Icons.more_vert))
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -326,6 +344,120 @@ class _PostWidgetState extends State<PostWidget> {
               ),
         const CustomDivider()
       ],
+    );
+  }
+}
+
+class ReportUser extends StatefulWidget {
+  final String userId;
+  const ReportUser({super.key, required this.userId});
+
+  @override
+  State<ReportUser> createState() => _ReportUserState();
+}
+
+class _ReportUserState extends State<ReportUser> {
+  final AuthController reportController = Get.put(AuthController());
+  final TextEditingController reasonController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Obx(() {
+        return Container(
+          height: 350,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          decoration: BoxDecoration(
+            color: AppColor.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: reportController.isBusy.value
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Close button
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(Icons.close, color: Colors.grey),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+
+                    // Dialog title
+                    Center(
+                      child: Text(
+                        "Report User",
+                        style: AppTextStyle.soraBody(size: 17),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Text(
+                      "Help us maintain a safe and respectful community.",
+                      style: AppTextStyle.soraBody(
+                          size: 14, fontWeight: FontWeight.normal),
+                    ),
+                    10.toHeightWhiteSpacing(),
+
+                    TextField(
+                      controller: reasonController,
+                      decoration: InputDecoration(
+                        labelText: "Reason (optional)",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Action buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Cancel Button
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: AppButton(
+                            onTab: () {
+                              Get.back();
+                            },
+                            title: "Cancel",
+                            color: AppColor.white,
+                            textColor: AppColor.primaryColor,
+                          ),
+                        ),
+
+                        // Confirm Button
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: AppButton(
+                            onTab: () {
+                              final userId = widget.userId.trim();
+                              final reason = reasonController.text.trim();
+
+                              reportController.reportUser(
+                                userId: userId,
+                                reason: reason.isNotEmpty ? reason : null,
+                              );
+                              Get.back();
+                            },
+                            title: "Confirm",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+        );
+      }),
     );
   }
 }

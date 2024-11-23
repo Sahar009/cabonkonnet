@@ -70,7 +70,6 @@ class ChatRepository {
 
   Future<List<ChatRoom>> fetchChatRoomsForUser(String userId) async {
     try {
-      log(userId);
       final response = await databases.listDocuments(
         databaseId: AppwriteConfig.databaseId,
         collectionId: AppwriteConfig.chatRoomCollectionId,

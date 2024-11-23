@@ -55,8 +55,9 @@ class CommentController extends GetxController {
           postId: postId,
           userId: userId,
           content: content,
-          userFullName: profileController.userModelRx.value?.fullName,
-          userProfileImage: profileController.userModelRx.value?.profileImage,
+          userFullName: profileController.currentUserModelRx.value?.fullName,
+          userProfileImage:
+              profileController.currentUserModelRx.value?.profileImage,
           createdAt: DateTime.now(),
         );
 

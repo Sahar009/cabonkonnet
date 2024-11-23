@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
@@ -5,11 +7,12 @@ import 'package:cabonconnet/models/event_model.dart';
 
 class EventRepository {
   final Databases databases;
-  
+
   const EventRepository({required this.databases});
 
   // Create a new event
-  Future<(bool isSuccess, String? message)> createEvent(EventModel event) async {
+  Future<(bool isSuccess, String? message)> createEvent(
+      EventModel event) async {
     try {
       final Document document = await databases.createDocument(
         databaseId: AppwriteConfig.databaseId,
@@ -66,6 +69,27 @@ class EventRepository {
       );
       return true; // Return true if the deletion is successful
     } catch (e) {
+      return false; // Return false if there's an error
+    }
+  }
+
+  Future addParticipants(
+      String userId, String eventId, EventModel event) async {
+    try {
+      await databases.createDocument(
+          databaseId: AppwriteConfig.databaseId,
+          collectionId: AppwriteConfig.eventParticipantId,
+          documentId: ID.unique(),
+          data: {"event": eventId, "participant": userId});
+
+      await databases.updateDocument(
+          databaseId: AppwriteConfig.databaseId,
+          collectionId: AppwriteConfig.eventCollectionId,
+          documentId: eventId,
+          data: {"participants": event.participants});
+      return true; // Return true if the deletion is successful
+    } on AppwriteException catch (e) {
+      log(e.message.toString());
       return false; // Return false if there's an error
     }
   }

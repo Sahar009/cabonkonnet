@@ -2,7 +2,6 @@ import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/event_controller.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/event_model.dart';
-import 'package:cabonconnet/views/events/live_event.dart';
 import 'package:cabonconnet/views/widget/no_file.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -39,23 +38,15 @@ class _AllLiveEventState extends State<AllLiveEvent> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LiveEvent()),
-                  );
-                },
-                child: Row(
-                  children: [
-                    const Image(image: AssetImage(AppImages.mic)),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Live',
-                      style: AppTextStyle.body(fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
+              Row(
+                children: [
+                  const Image(image: AssetImage(AppImages.mic)),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Live',
+                    style: AppTextStyle.body(fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
               Row(
                 children: [

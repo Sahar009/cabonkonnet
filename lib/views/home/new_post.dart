@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
@@ -22,7 +23,6 @@ class _NewPostState extends State<NewPost> {
   final TextEditingController contentEditingController =
       TextEditingController();
 
-  // final ImagePicker _picker = ImagePicker();
   List<XFile> imageFiles = [];
   List<String> hashTags = [];
   final ImagePicker _picker = ImagePicker();
@@ -41,6 +41,18 @@ class _NewPostState extends State<NewPost> {
     setState(() {
       imageFiles.removeAt(index);
     });
+  }
+
+  void _onTextChanged(String value) {
+    setState(() {
+      hashTags = value.extractHashtags();
+    });
+
+    // Detecting the @ symbol
+    if (value.contains('@')) {
+      // Trigger event to show suggestions or perform any necessary actions
+      log('Detected @ symbol, trigger event');
+    }
   }
 
   @override
@@ -72,11 +84,7 @@ class _NewPostState extends State<NewPost> {
                           Expanded(
                             child: TextFormField(
                               controller: contentEditingController,
-                              onChanged: (value) {
-                                setState(() {
-                                  hashTags = value.extractHashtags();
-                                });
-                              },
+                              onChanged: _onTextChanged, // Listen for changes
                               style: AppTextStyle.body(
                                   size: 14, fontWeight: FontWeight.normal),
                               maxLines: 10,

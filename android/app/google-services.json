@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "500779397241",
+    "project_id": "cabonkonnect",
+    "storage_bucket": "cabonkonnect.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500779397241:android:76333090d92b59884064a8",
+        "android_client_info": {
+          "package_name": "com.cabon.connet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuxyskeoTJcEY32KrcY7SELYoynpEOWlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

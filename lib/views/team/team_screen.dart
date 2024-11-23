@@ -11,9 +11,11 @@ import 'package:get/get.dart';
 
 class TeamScreen extends StatefulWidget {
   final String userId;
+  final bool isEditable;
   const TeamScreen({
     super.key,
     required this.userId,
+    required this.isEditable,
   });
 
   @override
@@ -56,12 +58,11 @@ class _TeamScreenState extends State<TeamScreen> {
                     Text(
                       "Team members",
                       style: AppTextStyle.body(
-                        fontWeight: FontWeight.w500,
-                      ),
+                          fontWeight: FontWeight.w500, size: 16),
                     )
                   ],
                 ),
-                if (currentUserId == widget.userId)
+                if (currentUserId == widget.userId && widget.isEditable)
                   GestureDetector(
                     onTap: () {
                       Get.to(() => const CreateTeam());
@@ -70,7 +71,7 @@ class _TeamScreenState extends State<TeamScreen> {
                         style: AppTextStyle.body(
                             color: AppColor.primaryColor,
                             fontWeight: FontWeight.w500,
-                            size: 15)),
+                            size: 16)),
                   ),
               ],
             ),
@@ -87,17 +88,22 @@ class _TeamScreenState extends State<TeamScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const NoDocument(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 28.0)
-                            .copyWith(top: 23),
-                        child: AppButton(
-                          onTab: () {
-                            Get.to(() => const CreateTeam());
-                          },
-                          title: "Add Member",
-                        ),
-                      )
+                      NoDocument(
+                        title: currentUserId == widget.userId
+                            ? "You have no team yet"
+                            : "User have no team yet",
+                      ),
+                      if (currentUserId == widget.userId && widget.isEditable)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28.0)
+                              .copyWith(top: 23),
+                          child: AppButton(
+                            onTab: () {
+                              Get.to(() => const CreateTeam());
+                            },
+                            title: "Add Member",
+                          ),
+                        )
                     ],
                   );
                 }
@@ -110,7 +116,7 @@ class _TeamScreenState extends State<TeamScreen> {
                       children: [
                         Row(children: [
                           CircleAvatar(
-                            radius: 30,
+                            radius: 25,
                             backgroundImage: NetworkImage(member.profilePic),
                           ),
                           const SizedBox(

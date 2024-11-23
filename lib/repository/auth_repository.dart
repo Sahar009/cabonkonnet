@@ -26,19 +26,21 @@ class AuthRepository {
   static const String actionUpdatePassword = "updatePassword";
 
   // Register a new user
-  Future<(bool, UserModel?, String)> registerUser(
-      {required String email,
-      required String password,
-      required String fullName,
-      required String phoneNumber,
-      required String role}) async {
+  Future<(bool, UserModel?, String)> registerUser({
+    required String email,
+    required String password,
+    required String fullName,
+    required String phoneNumber,
+    required String role,
+  }) async {
     try {
       // Create a new account in Appwrite
       final user = await account.create(
-        userId: 'unique()', // Automatically generates a unique ID
-        email: email.trim().toLowerCase(),
-        password: password,
-      );
+          userId: 'unique()', // Automatically generates a unique ID
+          email: email.trim().toLowerCase(),
+          password: password,
+          name: fullName);
+      await account.updatePrefs(prefs: {});
 
       UserModel userModel = UserModel(
         id: user.$id,

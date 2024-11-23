@@ -3,6 +3,7 @@ import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
+import 'package:cabonconnet/views/search/search.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -50,22 +51,27 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const Image(image: AssetImage(AppImages.homelogo)),
                   Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        color: AppColor.filledColor,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      height: 35,
-                      child: const Row(
-                        children: [
-                          Icon(
-                            IconsaxPlusLinear.search_normal,
-                            size: 15,
-                          ),
-                          SizedBox(width: 10),
-                          Text("Search"),
-                        ],
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => const SearchScreen());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          color: AppColor.filledColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        height: 35,
+                        child: const Row(
+                          children: [
+                            Icon(
+                              IconsaxPlusLinear.search_normal,
+                              size: 15,
+                            ),
+                            SizedBox(width: 10),
+                            Text("Search"),
+                          ],
+                        ),
                       ),
                     ),
                   ),

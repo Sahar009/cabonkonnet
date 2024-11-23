@@ -72,7 +72,7 @@ class UserController extends GetxController {
       if (isSuccess) {
         // SCustomSnackbaruccessfully updated user details
         CustomSnackbar.success(message: 'User details updated successfully!');
-        profileController.getUserDetails();
+        profileController.getCurrentUserDetails();
         if (updatedUserModel?.interests != null &&
             updatedUserModel!.interests!.isNotEmpty) {
           Get.offAll(() => Home());
@@ -143,7 +143,7 @@ class UserController extends GetxController {
         // Successfully updated user details
 
         CustomSnackbar.success(message: 'User details updated successfully!');
-        profileController.getUserDetails();
+        profileController.getCurrentUserDetails();
         if (updatedUserModel?.interests != null &&
             updatedUserModel!.interests!.isNotEmpty) {
           Get.offAll(() => Home());

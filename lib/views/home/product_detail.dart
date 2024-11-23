@@ -5,6 +5,7 @@ import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
+import 'package:cabonconnet/views/investment/investment_calendar.dart';
 import 'package:cabonconnet/views/widget/app_button.dart';
 import 'package:cabonconnet/views/widget/build_image.dart';
 import 'package:cabonconnet/views/widget/profile_widget.dart';
@@ -42,7 +43,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 80),
+              70.toHeightWhiteSpacing(),
               GestureDetector(
                 onTap: () {
                   Get.back();
@@ -57,21 +58,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                   country: widget.postModel.user?.country,
                   subTitle: "country",
                 ),
-                Container(
-                  height: 47,
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                      border:
-                          Border.all(color: AppColor.primaryColor, width: 2),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                      "Invest",
-                      style: AppTextStyle.body(
-                        size: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.primaryColor,
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => const InvestmentCalendar());
+                  },
+                  child: Container(
+                    height: 47,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: AppColor.primaryColor, width: 2),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                      child: Text(
+                        "Invest",
+                        style: AppTextStyle.body(
+                          size: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.primaryColor,
+                        ),
                       ),
                     ),
                   ),

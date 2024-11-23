@@ -22,6 +22,7 @@ class AppwriteConfig {
   static String savedPostCollectionId = "672cc6b900360117a799";
   static String eventBucketId = '6735d97100309cb16bee';
   static String eventCollectionId = "67337a85001a9340ead4";
+  static String eventParticipantId = "674228260031c943de56";
 
   late Client _client;
   late Account _account;

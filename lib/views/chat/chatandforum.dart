@@ -1,5 +1,4 @@
 import 'package:cabonconnet/constant/app_color.dart';
-import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
@@ -8,11 +7,9 @@ import 'package:cabonconnet/models/chat_rooms.dart';
 import 'package:cabonconnet/views/chat/forum_chat.dart';
 import 'package:cabonconnet/views/chat/recent_chat.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
-
 import '../widget/widget.dart';
 
 class ChatAndForum extends StatefulWidget {
@@ -96,7 +93,7 @@ class _ChatAndForumState extends State<ChatAndForum> {
               },
               children: [
                 Obx(() {
-                  List<ChatRoom> chatRooms = chatController.chatRooms.value;
+                  List<ChatRoom> chatRooms = chatController.chatRooms;
                   chatRooms.sort((a, b) => b.lastMessage!.createdAt
                       .compareTo(a.lastMessage!.createdAt));
                   return RecentChat(
@@ -104,43 +101,20 @@ class _ChatAndForumState extends State<ChatAndForum> {
                     currentUserId: currentUserId ?? "",
                   );
                 }),
-                ForumChat(chatRooms: chatController.chatRooms.value),
+                ForumChat(chatRooms: chatController.chatRooms),
               ],
             ),
           ),
         ],
+
       ),
     );
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: Row(
-        children: [
-          _buildProfileAvatar(),
-          const SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                fillColor: AppColor.filledColor,
-                filled: true,
-                hintText: "Search",
-                prefixIcon: const Icon(Icons.search, size: 20),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  
 
   Widget _buildProfileAvatar() {
-    final profileImage = profileController.userModelRx.value?.profileImage;
+    final profileImage = profileController.currentUserModelRx.value?.profileImage;
 
     return CircleAvatar(
       backgroundImage: profileImage != null

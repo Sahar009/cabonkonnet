@@ -12,7 +12,12 @@ import '../widget/widget.dart';
 class ProfileDetails extends StatefulWidget {
   final UserModel user;
   final bool isOrg;
-  const ProfileDetails({super.key, required this.user, this.isOrg = false});
+  final bool isEditable;
+  const ProfileDetails(
+      {super.key,
+      required this.user,
+      this.isOrg = false,
+      this.isEditable = false});
   @override
   State<ProfileDetails> createState() => _ProfileDetailsState();
 }
@@ -42,23 +47,26 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       widget.isOrg ? "Organization" : "Profile Details",
                       style: AppTextStyle.body(
                         fontWeight: FontWeight.w500,
+                        size: 16,
                       ),
                     )
                   ],
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => EditProfile(
-                          user: widget.user,
-                          isOrg: widget.isOrg,
-                        ));
-                  },
-                  child: Text("Edit profile",
-                      style: AppTextStyle.body(
-                        color: AppColor.primaryColor,
-                        fontWeight: FontWeight.w500,
-                      )),
-                ),
+                if (widget.isEditable)
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => EditProfile(
+                            user: widget.user,
+                            isOrg: widget.isOrg,
+                          ));
+                    },
+                    child: Text("Edit profile",
+                        style: AppTextStyle.body(
+                          color: AppColor.primaryColor,
+                          fontWeight: FontWeight.w500,
+                          size: 16,
+                        )),
+                  ),
               ],
             ),
           ),
@@ -120,6 +128,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           Get.to(
                             () => TeamScreen(
                               userId: widget.user.id,
+                              isEditable: widget.isEditable,
                             ),
                           );
                         },

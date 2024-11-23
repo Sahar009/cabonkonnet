@@ -24,7 +24,7 @@ class _CommentScreenState extends State<CommentScreen> {
   final TextEditingController editingController = TextEditingController();
   final CommentController commentController = Get.put(CommentController());
   final PostController postController = Get.put(PostController());
-  UserModel? user = Get.put(ProfileController()).userModelRx.value;
+  UserModel? user = Get.put(ProfileController()).currentUserModelRx.value;
 
   @override
   void initState() {

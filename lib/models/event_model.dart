@@ -15,20 +15,21 @@ class EventModel {
   final String location;
   final String? address;
   final UserModel? organizer;
+  final List? participants;
 
-  EventModel({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.accessType,
-    this.ticketPrice,
-    required this.date,
-    required this.organizerId,
-    required this.imageUrl,
-    required this.location,
-    required this.address,
-    this.organizer,
-  });
+  EventModel(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.accessType,
+      this.ticketPrice,
+      required this.date,
+      required this.organizerId,
+      required this.imageUrl,
+      required this.location,
+      required this.address,
+      this.organizer,
+      this.participants});
 
   /// Converts the EventModel instance into a Map for Appwrite.
   Map<String, dynamic> toMap() {
@@ -43,55 +44,57 @@ class EventModel {
       'location': location,
       'address': address,
       'organizer': organizerId,
+      "participants": participants
     };
   }
 
   /// Factory constructor to create an EventModel from a Map.
   factory EventModel.fromMap(Map<String, dynamic> map) {
     return EventModel(
-      id: map['\$id'] as String,
-      title: map['title'] as String,
-      description: map['description'] as String,
-      accessType: map['accessType'] as String,
-      ticketPrice:
-          map['ticketPrice'] != null ? map['ticketPrice'].toDouble() as double : null,
-      date: DateTime.parse(map['date'] as String),
-      organizerId: map['organizerId'] as String,
-      imageUrl: map['imageUrl'] as String,
-      location: map['location'] as String,
-      address: map['address'] != null ? map['address'] as String : null,
-      organizer: map['organizer'] != null
-          ? UserModel.fromMap(map['organizer'] as Map<String, dynamic>)
-          : null,
-    );
+        id: map['\$id'] as String,
+        title: map['title'] as String,
+        description: map['description'] as String,
+        accessType: map['accessType'] as String,
+        ticketPrice: map['ticketPrice'] != null
+            ? map['ticketPrice'].toDouble() as double
+            : null,
+        date: DateTime.parse(map['date'] as String),
+        organizerId: map['organizerId'] as String,
+        imageUrl: map['imageUrl'] as String,
+        location: map['location'] as String,
+        address: map['address'] != null ? map['address'] as String : null,
+        organizer: map['organizer'] != null
+            ? UserModel.fromMap(map['organizer'] as Map<String, dynamic>)
+            : null,
+        participants: map["participants"]);
   }
 
-  EventModel copyWith({
-    String? id,
-    String? title,
-    String? description,
-    String? accessType,
-    double? ticketPrice,
-    DateTime? date,
-    String? organizerId,
-    String? imageUrl,
-    String? location,
-    String? address,
-    UserModel? organizer,
-  }) {
+  EventModel copyWith(
+      {String? id,
+      String? title,
+      String? description,
+      String? accessType,
+      double? ticketPrice,
+      DateTime? date,
+      String? organizerId,
+      String? imageUrl,
+      String? location,
+      String? address,
+      UserModel? organizer,
+      List? participants}) {
     return EventModel(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      accessType: accessType ?? this.accessType,
-      ticketPrice: ticketPrice ?? this.ticketPrice,
-      date: date ?? this.date,
-      organizerId: organizerId ?? this.organizerId,
-      imageUrl: imageUrl ?? this.imageUrl,
-      location: location ?? this.location,
-      address: address ?? this.address,
-      organizer: organizer ?? this.organizer,
-    );
+        id: id ?? this.id,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        accessType: accessType ?? this.accessType,
+        ticketPrice: ticketPrice ?? this.ticketPrice,
+        date: date ?? this.date,
+        organizerId: organizerId ?? this.organizerId,
+        imageUrl: imageUrl ?? this.imageUrl,
+        location: location ?? this.location,
+        address: address ?? this.address,
+        organizer: organizer ?? this.organizer,
+        participants: participants ?? this.participants);
   }
 
   String toJson() => json.encode(toMap());

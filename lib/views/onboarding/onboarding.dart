@@ -1,6 +1,7 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
+import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/views/auth/login.dart';
 import 'package:cabonconnet/welcome.dart';
@@ -19,74 +20,80 @@ class _Onboarding1State extends State<Onboarding1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 50),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  AppLocalStorage().setOnboard();
-
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Welcome()));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Skip',
-                      style: AppTextStyle.body(size: 14),
-                    ),
-                    const Icon(Icons.arrow_forward, size: 22)
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 600,
-                child: PageView(
-                  controller: controller,
-                  children: const [
-                    OnboardingWidget(
-                      imagePath: AppImages.first,
-                      title: "Meet Up The Right ",
-                      title2: "Investors",
-                      subTitle:
-                          "Meet with the right investors to invest in your product and make it a reality.',",
-                    ),
-                    OnboardingWidget(
-                      imagePath: AppImages.second,
-                      title: "Showcase your solution and ",
-                      title2: "get Funded",
-                      subTitle:
-                          'Showcase your sustainable environmental solutions for humanity ',
-                    ),
-                    OnboardingWidget(
-                        imagePath: AppImages.third,
-                        title: "Set Up sustainable renewable energy  ",
-                        title2: "Events",
-                        subTitle:
-                            'Get to host your  events and get the necessary support you need.'),
-                  ],
-                ),
-              ),
-              AppButton(
-                onTab: () {
-                  if (controller.page == 2) {
+      body: SizedBox(
+        height: MediaQuery.sizeOf(context).height,
+        child: Center(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 50),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
                     AppLocalStorage().setOnboard();
 
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Login()));
-                  } else {
-                    controller.nextPage(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeIn);
-                  }
-                },
-              ),
-            ],
+                            builder: (context) => const Welcome()));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Skip',
+                        style: AppTextStyle.body(size: 14),
+                      ),
+                      const Icon(Icons.arrow_forward, size: 22)
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.8,
+                  child: PageView(
+                    controller: controller,
+                    children: const [
+                      OnboardingWidget(
+                        imagePath: AppImages.first,
+                        title: "Meet Up The Right ",
+                        title2: "Investors",
+                        subTitle:
+                            "Meet with the right investors to invest in your product and make it a reality.',",
+                      ),
+                      OnboardingWidget(
+                        imagePath: AppImages.second,
+                        title: "Showcase your solution and ",
+                        title2: "get Funded",
+                        subTitle:
+                            'Showcase your sustainable environmental solutions for humanity ',
+                      ),
+                      OnboardingWidget(
+                          imagePath: AppImages.third,
+                          title: "Set Up sustainable renewable energy  ",
+                          title2: "Events",
+                          subTitle:
+                              'Get to host your  events and get the necessary support you need.'),
+                    ],
+                  ),
+                ),
+                AppButton(
+                  onTab: () {
+                    if (controller.page == 2) {
+                      AppLocalStorage().setOnboard();
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Login()));
+                    } else {
+                      controller.nextPage(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn);
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -111,12 +118,14 @@ class OnboardingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 80),
+        SizedBox(
+          height: MediaQuery.sizeOf(context).height * 0.14,
+        ),
         Image(
           image: AssetImage(imagePath),
-          height: 300,
+          height: MediaQuery.sizeOf(context).height * 0.3,
         ),
-        const SizedBox(height: 40),
+        30.toHeightWhiteSpacing(),
         RichText(
             textAlign: TextAlign.center,
             text: TextSpan(

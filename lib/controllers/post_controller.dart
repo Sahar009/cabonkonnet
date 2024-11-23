@@ -8,6 +8,7 @@ import 'package:cabonconnet/models/product_model.dart';
 import 'package:cabonconnet/repository/file_upload_repository.dart';
 import 'package:cabonconnet/repository/post_repository.dart';
 import 'package:cabonconnet/repository/product_repository.dart';
+import 'package:cabonconnet/views/home/home.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -48,6 +49,7 @@ class PostController extends GetxController {
 
   // Create a new post
   Future<void> createPostProduct({
+    required String fundingType,
     required String productsName,
     required String productsDescription,
     required String productsLevel,
@@ -55,7 +57,7 @@ class PostController extends GetxController {
     required String productsImpact,
     required double fundNeeded,
     required List<String> hashtags,
-    required List<XFile> files,
+    required List<XFile?> files,
   }) async {
     isBusy.value = true;
     List<String> imageUrls = [];
@@ -63,12 +65,12 @@ class PostController extends GetxController {
     for (var file in files) {
       try {
         var fileUrl =
-            await fileRepository.uploadFile(File(file.path), "Products");
+            await fileRepository.uploadFile(File(file!.path), "Products");
         if (fileUrl != null) {
           imageUrls.add(fileUrl);
         }
       } catch (e) {
-        Get.snackbar('Upload Error', 'Failed to upload image: ${file.name}');
+        Get.snackbar('Upload Error', 'Failed to upload image: ${file!.name}');
       }
     }
 
@@ -81,7 +83,8 @@ class PostController extends GetxController {
         level: productsLevel,
         goals: productsGoal,
         fundsNeeded: fundNeeded,
-        impact: productsGoal);
+        impact: productsGoal,
+        fundingType: fundingType);
 
     PostModel post = PostModel(
       content: productsDescription,
@@ -98,6 +101,7 @@ class PostController extends GetxController {
     if (isSuccess) {
       posts.add(post);
       Get.snackbar('Success', 'Post created successfully');
+      Get.to(() => Home());
     } else {
       isBusy.value = false;
 
