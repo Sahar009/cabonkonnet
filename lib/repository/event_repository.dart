@@ -31,9 +31,9 @@ class EventRepository {
       getAllEvents() async {
     try {
       final documents = await databases.listDocuments(
-        databaseId: AppwriteConfig.databaseId,
-        collectionId: AppwriteConfig.eventCollectionId,
-      );
+          databaseId: AppwriteConfig.databaseId,
+          collectionId: AppwriteConfig.eventCollectionId,
+          queries: [Query.equal('status', 'approved')]);
       List<EventModel> events = documents.documents
           .map((doc) => EventModel.fromMap(doc.data))
           .toList();

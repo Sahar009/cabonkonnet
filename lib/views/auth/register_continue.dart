@@ -93,7 +93,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                           const SizedBox(height: 10),
                           Text(
                             'Register',
-                            style: AppTextStyle.body(size: 22),
+                            style: AppTextStyle.body(size: 22, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 5),
                           Text(
@@ -105,7 +105,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                           Text(
                             'Name of company',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -119,7 +119,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                           Text(
                             'Country',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           DropdownButtonFormField<String>(
@@ -132,13 +132,13 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                             }).toList(),
                             style: AppTextStyle.body(
                                 size: 15,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.w500,
                                 color: AppColor.black),
                             decoration: InputDecoration(
                               hintText: 'Select country',
                               hintStyle: AppTextStyle.body(
                                   size: 12,
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.w500,
                                   color: AppColor.black),
                               filled: true,
                               fillColor: const Color(0xffF5F5F5),
@@ -161,7 +161,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                           Text(
                             'Address',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -181,7 +181,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                       'Business Reg. Number',
                                       style: AppTextStyle.body(
                                           size: 15,
-                                          fontWeight: FontWeight.normal),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     const SizedBox(height: 5),
                                     AppTextFields(
@@ -197,7 +197,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                       'Website (optional)',
                                       style: AppTextStyle.body(
                                           size: 15,
-                                          fontWeight: FontWeight.normal),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     const SizedBox(height: 5),
                                     AppTextFields(
@@ -211,7 +211,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                       'No of team members',
                                       style: AppTextStyle.body(
                                           size: 15,
-                                          fontWeight: FontWeight.normal),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     const SizedBox(height: 5),
                                     SizedBox(
@@ -227,7 +227,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                                   style: AppTextStyle.body(
                                                       size: 12,
                                                       fontWeight:
-                                                          FontWeight.normal),
+                                                          FontWeight.w500),
                                                 ),
                                                 value: _teamSizes[index],
                                                 groupValue: _selectedTeamSize,
@@ -273,7 +273,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                       'Upload your bank statement or tax return',
                                       style: AppTextStyle.body(
                                           size: 15,
-                                          fontWeight: FontWeight.normal),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     const SizedBox(height: 5),
                                     GestureDetector(
@@ -295,7 +295,7 @@ class _UpdateUserDetailsState extends State<UpdateUserDetails> {
                                       'Upload valid ID card',
                                       style: AppTextStyle.body(
                                           size: 15,
-                                          fontWeight: FontWeight.normal),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     const SizedBox(height: 5),
                                     GestureDetector(

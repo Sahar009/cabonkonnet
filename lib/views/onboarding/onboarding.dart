@@ -42,7 +42,10 @@ class _Onboarding1State extends State<Onboarding1> {
                     children: [
                       Text(
                         'Skip',
-                        style: AppTextStyle.body(size: 14),
+                        style: AppTextStyle.body(
+                          size: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const Icon(Icons.arrow_forward, size: 22)
                     ],
@@ -130,18 +133,25 @@ class OnboardingWidget extends StatelessWidget {
             textAlign: TextAlign.center,
             text: TextSpan(
                 text: title,
-                style: AppTextStyle.body(color: AppColor.black),
+                style: AppTextStyle.body(
+                    size: 20,
+                    color: AppColor.black,
+                    fontWeight: FontWeight.w700),
                 children: [
                   TextSpan(
                     text: title2,
-                    style: AppTextStyle.body(color: AppColor.primaryColor),
+                    style: AppTextStyle.body(
+                      size: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColor.primaryColor,
+                    ),
                   )
                 ])),
         const SizedBox(height: 20),
         Text(
           subTitle,
           textAlign: TextAlign.center,
-          style: AppTextStyle.body(fontWeight: FontWeight.normal, size: 13),
+          style: AppTextStyle.body(fontWeight: FontWeight.normal, size: 14),
         ),
         const SizedBox(height: 60),
       ],

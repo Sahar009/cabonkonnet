@@ -11,8 +11,8 @@ class AppTextStyle {
     double size = 18,
     FontWeight fontWeight = FontWeight.normal,
   }) {
-    return GoogleFonts.poppins(
-      fontSize: size.sp - 0.5,
+    return GoogleFonts.sora(
+      fontSize: size,
       color: color,
       letterSpacing: 1,
       fontWeight: fontWeight,
@@ -28,8 +28,8 @@ class AppTextStyle {
     double size = 18,
     FontWeight fontWeight = FontWeight.bold,
   }) {
-    return GoogleFonts.poppins(
-      fontSize: size.dp - 0.8,
+    return GoogleFonts.sora(
+      fontSize: size,
       color: color,
       letterSpacing: 0.5,
       fontWeight: fontWeight,
@@ -46,7 +46,7 @@ class AppTextStyle {
     FontWeight fontWeight = FontWeight.bold,
   }) {
     return GoogleFonts.sora(
-        fontSize: size.sp - 0.8,
+        fontSize: size,
         color: color,
         fontWeight: fontWeight,
         fontStyle: fontStyle,

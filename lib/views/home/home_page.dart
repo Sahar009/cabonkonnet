@@ -1,8 +1,10 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
+import 'package:cabonconnet/controllers/product_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
+import 'package:cabonconnet/views/notifications/notification_screens.dart';
 import 'package:cabonconnet/views/search/search.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ProductController productController = Get.put(ProductController());
   final PostController postController = Get.put(PostController());
   final ProfileController profile = Get.put(ProfileController());
   TextEditingController addressController = TextEditingController();
@@ -78,6 +81,8 @@ class _HomePageState extends State<HomePage> {
                   GestureDetector(
                     onTap: () {
                       // CustomDialog.error();
+                      productController.fetchAllPosts();
+                      Get.to(() => NotificationScreens());
                     },
                     child: SvgPicture.asset(AppImages.notify),
                   )

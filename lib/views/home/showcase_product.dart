@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:cabonconnet/constant/app_color.dart';
-import 'package:cabonconnet/controllers/post_controller.dart';
+import 'package:cabonconnet/controllers/product_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
@@ -31,7 +31,7 @@ class ShowcaseProduct extends StatefulWidget {
 ProfileController profileController = Get.put(ProfileController());
 
 class _ShowcaseProductState extends State<ShowcaseProduct> {
-  final PostController postController = Get.put(PostController());
+  final ProductController postController = Get.put(ProductController());
   // Define TextEditingController for each field
 
   final TextEditingController fundsNeededController = TextEditingController();
@@ -196,7 +196,7 @@ class _ShowcaseProductState extends State<ShowcaseProduct> {
                                   const SizedBox(height: 10),
                                   FlutterCarousel(
                                     options: FlutterCarouselOptions(
-                                      initialPage: 0,
+                                      initialPage: imageFiles.length + 1,
                                       height: 200.0,
                                       showIndicator: false,
                                       enlargeCenterPage: true,
@@ -204,6 +204,7 @@ class _ShowcaseProductState extends State<ShowcaseProduct> {
                                       onPageChanged: (index, reason) {
                                         setState(() {
                                           _currentIndex = index;
+                                          
                                         });
                                       },
                                     ),
@@ -220,8 +221,8 @@ class _ShowcaseProductState extends State<ShowcaseProduct> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                             image: DecorationImage(
-                                              image: FileImage(
-                                                  File(imgFile.path)),
+                                              image:
+                                                  FileImage(File(imgFile.path)),
                                               fit: BoxFit.cover,
                                             ),
                                           ),

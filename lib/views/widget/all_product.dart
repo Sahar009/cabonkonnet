@@ -1,6 +1,9 @@
 import 'package:cabonconnet/controllers/post_controller.dart';
+import 'package:cabonconnet/controllers/product_controller.dart';
 import 'package:cabonconnet/models/post_model.dart';
+import 'package:cabonconnet/models/product_model.dart';
 import 'package:cabonconnet/views/widget/post_widget.dart';
+import 'package:cabonconnet/views/widget/product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +17,7 @@ class AllProduct extends StatefulWidget {
 }
 
 class _AllProductState extends State<AllProduct> {
-  PostController postController = Get.put(PostController());
+  ProductController postController = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -23,17 +26,12 @@ class _AllProductState extends State<AllProduct> {
           return const Center(child: Text('No posts available'));
         }
         return ListView.builder(
-          itemCount: postController.posts
-              .where((post) => post.isProduct)
-              .toList()
-              .length,
+          itemCount: postController.posts.length,
           itemBuilder: (context, index) {
-            List<PostModel> posts =
-                postController.posts.where((post) => post.isProduct).toList();
-            PostModel post = posts[index];
-            return PostWidget(
-              postModel: post,
-              isComment: false,
+            List<ProductModel> posts = postController.posts;
+            ProductModel post = posts[index];
+            return ProductWidget(
+              productModel: post,
             );
           },
         );

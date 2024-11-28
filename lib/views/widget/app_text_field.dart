@@ -31,40 +31,45 @@ class _AppTextFieldsState extends State<AppTextFields> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      onTap: widget.onTab,
-      keyboardType: widget.keyboardType,
-      controller: widget.controller,
-      obscureText: widget.isPassword &&
-          !_isPasswordVisible, // Toggles obscureText for password
-      style: AppTextStyle.body(fontWeight: FontWeight.normal, size: 15),
-      validator: widget.validator,
-      readOnly: widget.isReadOnly,
-      decoration: InputDecoration(
-        prefixIcon: Icon(widget.iconData),
-        hintText: widget.hint,
-        hintStyle: AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
-        filled: true,
-        fillColor: const Color(0xffF5F5F5),
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(8),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: TextFormField(
+        onTap: widget.onTab,
+        keyboardType: widget.keyboardType,
+        controller: widget.controller,
+        obscureText: widget.isPassword &&
+            !_isPasswordVisible, // Toggles obscureText for password
+        style: AppTextStyle.body(fontWeight: FontWeight.normal, size: 15),
+        validator: widget.validator,
+        readOnly: widget.isReadOnly,
+        decoration: InputDecoration(
+          prefixIcon: Icon(widget.iconData),
+          hintText: widget.hint,
+          hintStyle: AppTextStyle.body(size: 15, fontWeight: FontWeight.normal),
+          filled: true,
+          fillColor: const Color(0xffF5F5F5),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          // Add a suffix icon for password fields
+          suffixIcon: widget.isPassword
+              ? IconButton(
+                  icon: Icon(
+                    // Toggle between visibility icons
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    // Toggle password visibility when the icon is pressed
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                )
+              : null, // No suffix icon for non-password fields
         ),
-        // Add a suffix icon for password fields
-        suffixIcon: widget.isPassword
-            ? IconButton(
-                icon: Icon(
-                  // Toggle between visibility icons
-                  _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  // Toggle password visibility when the icon is pressed
-                  setState(() {
-                    _isPasswordVisible = !_isPasswordVisible;
-                  });
-                },
-              )
-            : null, // No suffix icon for non-password fields
       ),
     );
   }

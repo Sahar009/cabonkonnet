@@ -1,15 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
-import 'package:cabonconnet/models/product_model.dart';
 import 'package:cabonconnet/models/user_model.dart';
 
 class PostModel {
   final String id;
   final UserModel? user; // Changed from userId to user
-  final ProductModel? product;
   final String content;
-  final bool isProduct;
   final List<String> hashtags;
   final List<String> imageUrls;
   final DateTime createdAt;
@@ -20,12 +16,10 @@ class PostModel {
   PostModel({
     required this.id,
     this.user,
-    this.product,
     required this.content,
     required this.hashtags,
     required this.imageUrls,
     required this.createdAt,
-    this.isProduct = false,
     this.commentCount,
     this.sharedBy,
     this.likes,
@@ -37,10 +31,8 @@ class PostModel {
       user: map['user'] != null
           ? UserModel.fromMap(map['user'] as Map<String, dynamic>)
           : null,
-      product: map['product'] != null
-          ? ProductModel.fromMap(map['product'] as Map<String, dynamic>)
-          : null,
-      isProduct: map["isProduct"],
+     
+     
       content: map['content'] as String,
       hashtags: List<String>.from((map['hashtags'] as List<dynamic>? ?? [])),
       imageUrls: List<String>.from((map['imageUrls'] as List<dynamic>? ?? [])),
@@ -56,7 +48,7 @@ class PostModel {
       'content': content,
       'hashtags': hashtags,
       'imageUrls': imageUrls,
-      "isProduct": isProduct,
+      
       'createdAt': createdAt.millisecondsSinceEpoch,
       'commentCount': commentCount,
       'sharedBy': sharedBy,
@@ -77,7 +69,7 @@ class PostModel {
     return PostModel(
         id: id ?? this.id,
         user: user ?? this.user,
-        isProduct: isProduct,
+     
         content: content ?? this.content,
         hashtags: hashtags ?? this.hashtags,
         imageUrls: imageUrls ?? this.imageUrls,
@@ -94,6 +86,6 @@ class PostModel {
 
   @override
   String toString() {
-    return 'PostModel(id: $id, user: $user, content: $content, isProduct:$isProduct, product:$product hashtags: $hashtags, imageUrls: $imageUrls, createdAt: $createdAt, commentCount: $commentCount, sharedBy: $sharedBy)';
+    return 'PostModel(id: $id, user: $user, content: $content,  hashtags: $hashtags, imageUrls: $imageUrls, createdAt: $createdAt, commentCount: $commentCount, sharedBy: $sharedBy)';
   }
 }

@@ -13,10 +13,12 @@ import 'package:cabonconnet/views/home/comment_screen.dart';
 import 'package:cabonconnet/views/home/product_detail.dart';
 import 'package:cabonconnet/views/profile/profile_view.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
+import 'package:readmore/readmore.dart';
 
 class PostWidget extends StatefulWidget {
   final PostModel postModel;
@@ -202,9 +204,39 @@ class _PostWidgetState extends State<PostWidget> {
               const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
-                child: Text(
+                child: ReadMoreText(
                   widget.postModel.content,
                   textAlign: TextAlign.start,
+                  trimLines: 6,
+                  trimMode: TrimMode.Line,
+                  colorClickableText: Colors.pink,
+                  trimCollapsedText: 'Show more',
+                  trimExpandedText: 'Show less',
+                  annotations: [
+                    Annotation(
+                      regExp: RegExp(r'#([a-zA-Z0-9_]+)'),
+                      spanBuilder: (
+                              {required String text, TextStyle? textStyle}) =>
+                          TextSpan(
+                        text: text,
+                        style: textStyle?.copyWith(color: Colors.blue),
+                      ),
+                    ),
+                    Annotation(
+                      regExp: RegExp(r'<@(\d+)>'),
+                      spanBuilder: (
+                              {required String text, TextStyle? textStyle}) =>
+                          TextSpan(
+                        text: 'User123',
+                        style: textStyle?.copyWith(color: Colors.green),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            // Handle tap, e.g., navigate to a user profile
+                          },
+                      ),
+                    ),
+                    // Additional annotations for URLs...
+                  ],
                   style: AppTextStyle.body(
                       size: 14, fontWeight: FontWeight.normal),
                 ),
@@ -215,71 +247,50 @@ class _PostWidgetState extends State<PostWidget> {
         ),
         BuildImageWidget(imageUrls: widget.postModel.imageUrls),
         const SizedBox(height: 10),
-        widget.postModel.isProduct
-            ? Container()
-            : Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LikeButton(
-                      size: 16,
-                      likeBuilder: (bool isLiked) {
-                        bool isLikeds =
-                            widget.postModel.likes?.contains(currentUserId) ??
-                                false;
-                        return Icon(
-                          isLikeds ? Icons.favorite : Icons.favorite_border,
-                          color: isLikeds ? Colors.red : Colors.grey,
-                          size: 16,
-                        );
-                      },
-                      likeCount: widget.postModel.likes?.length,
-                      onTap: (isLiked) {
-                        return postController.toggleLike(widget.postModel.id);
-                      },
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '${widget.postModel.commentCount ?? 0} comments',
-                          style: AppTextStyle.body(
-                              size: 15, fontWeight: FontWeight.normal),
-                        ),
-                        const SizedBox(width: 5),
-                        const Icon(Icons.circle, size: 6),
-                        const SizedBox(width: 5),
-                        Text(
-                          '${widget.postModel.sharedBy?.length ?? 0} shares',
-                          style: AppTextStyle.body(
-                              size: 15, fontWeight: FontWeight.normal),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              LikeButton(
+                size: 16,
+                likeBuilder: (bool isLiked) {
+                  bool isLikeds =
+                      widget.postModel.likes?.contains(currentUserId) ?? false;
+                  return Icon(
+                    isLikeds ? Icons.favorite : Icons.favorite_border,
+                    color: isLikeds ? Colors.red : Colors.grey,
+                    size: 16,
+                  );
+                },
+                likeCount: widget.postModel.likes?.length,
+                onTap: (isLiked) {
+                  return postController.toggleLike(widget.postModel.id);
+                },
               ),
-        if (!widget.postModel.isProduct) const CustomDivider(),
-        widget.postModel.isProduct
-            ? Column(
+              Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40.0, vertical: 15),
-                    child: AppButton(
-                      onTab: () {
-                        Get.to(
-                            () => ProductDetails(postModel: widget.postModel));
-                      },
-                      title: "View product details",
-                      color: null,
-                      textColor: AppColor.primaryColor,
-                    ),
+                  Text(
+                    '${widget.postModel.commentCount ?? 0} comments',
+                    style: AppTextStyle.body(
+                        size: 15, fontWeight: FontWeight.normal),
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(Icons.circle, size: 6),
+                  const SizedBox(width: 5),
+                  Text(
+                    '${widget.postModel.sharedBy?.length ?? 0} shares',
+                    style: AppTextStyle.body(
+                        size: 15, fontWeight: FontWeight.normal),
                   ),
                 ],
               )
-            : Padding(
+            ],
+          ),
+        ),
+      const CustomDivider(),
+     
+         Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: Row(
@@ -461,3 +472,276 @@ class _ReportUserState extends State<ReportUser> {
     );
   }
 }
+
+
+
+// import 'package:cabonkonnet_admin/constant/app_color.dart';
+// import 'package:cabonkonnet_admin/constant/app_images.dart';
+// import 'package:cabonkonnet_admin/constant/local_storage.dart';
+// import 'package:cabonkonnet_admin/controllers/chat_controller.dart';
+// import 'package:cabonkonnet_admin/controllers/post_controller.dart';
+// import 'package:cabonkonnet_admin/controllers/saved_post_controller.dart';
+// import 'package:cabonkonnet_admin/helpers/textstyles.dart';
+// import 'package:cabonkonnet_admin/models/post_model.dart';
+// import 'package:cabonkonnet_admin/models/user_model.dart';
+
+// import 'package:cabonkonnet_admin/views/widget/widget.dart';
+// import 'package:flutter/material.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:get/get.dart';
+// import 'package:like_button/like_button.dart';
+
+// class PostWidget extends StatefulWidget {
+//   final PostModel postModel;
+//   final bool isComment;
+
+//   const PostWidget({
+//     super.key,
+//     required this.postModel,
+//     required this.isComment,
+//   });
+
+//   @override
+//   State<PostWidget> createState() => _PostWidgetState();
+// }
+
+// class _PostWidgetState extends State<PostWidget> {
+//   final PostController postController = Get.put(PostController());
+//   final SavedPostController savedPostController =
+//       Get.put(SavedPostController());
+//   final ChatController chatController = Get.put(ChatController());
+//   String? currentUserId;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     AppLocalStorage.getCurrentUserId().then((value) {
+//       setState(() {
+//         currentUserId = value;
+//       });
+//     });
+//   }
+
+//   void _showPostOptions(BuildContext context) {
+//     showModalBottomSheet(
+//       context: context,
+//       isScrollControlled: true,
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+//       ),
+//       builder: (context) => _PostOptions(
+//         currentUserId: currentUserId,
+//         postModel: widget.postModel,
+//         chatController: chatController,
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         _PostHeader(
+//           user: widget.postModel.user,
+//           onOptionsTap: () => _showPostOptions(context),
+//         ),
+//         const SizedBox(height: 10),
+//         Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 20),
+//           child: Text(
+//             widget.postModel.content,
+//             style: AppTextStyle.body(size: 14, fontWeight: FontWeight.normal),
+//           ),
+//         ),
+//         const SizedBox(height: 5),
+//         BuildImageWidget(imageUrls: widget.postModel.imageUrls),
+//         const SizedBox(height: 10),
+//         if (!widget.postModel.isProduct)
+//           _PostActions(
+//             postModel: widget.postModel,
+//             currentUserId: currentUserId,
+//             postController: postController,
+//           ),
+//         if (!widget.postModel.isProduct) const CustomDivider(),
+//         if (widget.postModel.isProduct)
+//           _ProductActions(
+//             postModel: widget.postModel,
+//           ),
+//       ],
+//     );
+//   }
+// }
+
+// // Modular components for reuse and cleaner structure
+// class _PostHeader extends StatelessWidget {
+//   final UserModel? user;
+//   final VoidCallback onOptionsTap;
+
+//   const _PostHeader({required this.user, required this.onOptionsTap});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//       child: Row(
+//         children: [
+//           user?.profileImage != null
+//               ? CircleAvatar(
+//                   backgroundImage:
+//                       CachedNetworkImageProvider(user!.profileImage!),
+//                 )
+//               : const CircleAvatar(),
+//           const SizedBox(width: 10),
+//           Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text(
+//                 user?.fullName ?? "Unknown User",
+//                 style: AppTextStyle.body(fontWeight: FontWeight.w500, size: 16),
+//               ),
+//               Text(user?.country ?? ""),
+//             ],
+//           ),
+//           const Spacer(),
+//           GestureDetector(
+//             onTap: onOptionsTap,
+//             child: const Icon(Icons.more_vert),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class _PostActions extends StatelessWidget {
+//   final PostModel postModel;
+//   final String? currentUserId;
+//   final PostController postController;
+
+//   const _PostActions({
+//     required this.postModel,
+//     required this.currentUserId,
+//     required this.postController,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     bool isLiked = postModel.likes?.contains(currentUserId) ?? false;
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           LikeButton(
+//             size: 16,
+//             isLiked: isLiked,
+//             likeCount: postModel.likes?.length,
+//             onTap: (isLiked) async {
+//               return await postController.toggleLike(postModel.id);
+//             },
+//           ),
+//           Text(
+//             '${postModel.commentCount ?? 0} comments',
+//             style: AppTextStyle.body(size: 14),
+//           ),
+//           Text(
+//             '${postModel.sharedBy?.length ?? 0} shares',
+//             style: AppTextStyle.body(size: 14),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class _ProductActions extends StatelessWidget {
+//   final PostModel postModel;
+
+//   const _ProductActions({required this.postModel});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+//       child: AppButton(
+//         onTab: () {
+//           // Navigate to product details
+//         },
+//         title: "View product details",
+//         color: null,
+//         textColor: AppColor.primaryColor,
+//       ),
+//     );
+//   }
+// }
+
+// class _PostOptions extends StatelessWidget {
+//   final String? currentUserId;
+//   final PostModel postModel;
+//   final ChatController chatController;
+
+//   const _PostOptions({
+//     required this.currentUserId,
+//     required this.postModel,
+//     required this.chatController,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.symmetric(horizontal: 40),
+//       height: 220,
+//       child: Column(
+//         children: [
+//           _PostOptionItem(
+//             icon: AppImages.saveIcon,
+//             title: "Save",
+//             onTap: () {},
+//           ),
+//           _PostOptionItem(
+//             icon: AppImages.messageIcon,
+//             title: "Message user",
+//             onTap: () async {
+//               await chatController.initiateChat(
+//                 currentUserId!,
+//                 postModel.user?.id ?? "",
+//               );
+//             },
+//           ),
+//           _PostOptionItem(
+//             icon: AppImages.shareIcon,
+//             title: "Share via",
+//             onTap: () {},
+//           ),
+//           _PostOptionItem(
+//             icon: AppImages.reportIcon,
+//             title: "Report user",
+//             onTap: () {},
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class _PostOptionItem extends StatelessWidget {
+//   final String icon;
+//   final String title;
+//   final VoidCallback onTap;
+
+//   const _PostOptionItem({
+//     required this.icon,
+//     required this.title,
+//     required this.onTap,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListTile(
+//       onTap: onTap,
+//       leading: Image.asset(icon),
+//       title: Text(title, style: AppTextStyle.body(size: 15)),
+//     );
+//   }
+// }

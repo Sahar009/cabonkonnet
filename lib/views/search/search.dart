@@ -1,7 +1,7 @@
 import 'package:cabonconnet/controllers/search_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/models/event_model.dart';
-import 'package:cabonconnet/models/post_model.dart';
+import 'package:cabonconnet/models/product_model.dart';
 import 'package:cabonconnet/views/events/live_event.dart';
 import 'package:cabonconnet/views/home/product_detail.dart';
 import 'package:cabonconnet/views/profile/profile_view.dart';
@@ -30,28 +30,26 @@ class _SearchScreenState extends State<SearchScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               10.toWidthWhiteSpacing(),
-              AppBackBotton(),
+              const AppBackBotton(),
               SizedBox(
                 height: 44,
                 width: MediaQuery.sizeOf(context).width * 0.8,
-                child: Expanded(
-                  child: TextField(
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        searchController
-                            .search(value); // Trigger search on input
-                      }
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Search...',
-                      prefixIcon: const Icon(IconsaxPlusLinear.search_normal_1),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
+                child: TextField(
+                  // ✅ Correct usage
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      searchController.search(value);
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    prefixIcon: const Icon(IconsaxPlusLinear.search_normal_1),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
                     ),
+                    filled: true,
+                    fillColor: Colors.grey[200],
                   ),
                 ),
               ),
@@ -65,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 return const Center(child: CircularProgressIndicator());
               }
 
-              // Handle error state
+              // Handle error state 
               if (searchController.errorMessage.isNotEmpty) {
                 return Center(
                   child: Text(
@@ -123,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       } else if (type == 'product' &&
                           (result['isProduct'] ?? false)) {
                         Get.to(() => ProductDetails(
-                              postModel: PostModel.fromMap(result),
+                              productModel: ProductModel.fromMap(result),
                             ));
                       } else if (type == 'event') {
                         Get.to(() => LiveEvent(

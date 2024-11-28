@@ -68,19 +68,22 @@ class _RegisterState extends State<Register> {
                           const SizedBox(height: 80),
                           Text(
                             'Register',
-                            style: AppTextStyle.body(size: 22),
+                            style: AppTextStyle.body(
+                              size: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 5),
                           Text(
                             'Please fill in all information correctly',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 20),
                           Text(
                             'Full Name',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -98,7 +101,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Email',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -119,7 +122,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Phone number',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -131,7 +134,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Password',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -145,7 +148,7 @@ class _RegisterState extends State<Register> {
                           Text(
                             'Confirm Password',
                             style: AppTextStyle.body(
-                                size: 15, fontWeight: FontWeight.normal),
+                                size: 15, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(height: 5),
                           AppTextFields(
@@ -202,8 +205,7 @@ class _RegisterState extends State<Register> {
                                   TextSpan(
                                     text: 'Already have an account? ',
                                     style: AppTextStyle.body(
-                                        size: 14,
-                                        fontWeight: FontWeight.normal),
+                                        size: 14, fontWeight: FontWeight.w500),
                                   ),
                                   TextSpan(
                                       text: 'Login',
@@ -213,7 +215,7 @@ class _RegisterState extends State<Register> {
                                           // Add navigation logic here
                                         },
                                       style: AppTextStyle.body(
-                                          fontWeight: FontWeight.normal,
+                                          fontWeight: FontWeight.w500,
                                           size: 14,
                                           color: AppColor.primaryColor))
                                 ])),

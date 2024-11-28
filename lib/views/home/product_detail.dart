@@ -3,7 +3,7 @@ import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/controllers/chat_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
-import 'package:cabonconnet/models/post_model.dart';
+import 'package:cabonconnet/models/product_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
 import 'package:cabonconnet/views/investment/investment_calendar.dart';
 import 'package:cabonconnet/views/widget/app_button.dart';
@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductDetails extends StatefulWidget {
-  final PostModel postModel;
-  const ProductDetails({super.key, required this.postModel});
+  final ProductModel productModel;
+  const ProductDetails({super.key, required this.productModel});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -53,9 +53,9 @@ class _ProductDetailsState extends State<ProductDetails> {
               const SizedBox(height: 20),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 ProfileWidget(
-                  name: widget.postModel.user?.fullName,
-                  profilePic: widget.postModel.user?.profileImage,
-                  country: widget.postModel.user?.country,
+                  name: widget.productModel.user?.fullName,
+                  profilePic: widget.productModel.user?.profileImage,
+                  country: widget.productModel.user?.country,
                   subTitle: "country",
                 ),
                 GestureDetector(
@@ -100,24 +100,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                       decoration: BoxDecoration(
                           color: AppColor.yelow,
                           borderRadius: BorderRadius.circular(4)),
-                      child: Text("${widget.postModel.product?.level}"
-                          .toProductStatus())),
+                      child: Text(
+                          "${widget.productModel.level}".toProductStatus())),
                 ],
               ),
               Text(
-                "${widget.postModel.product?.name}",
+                "${widget.productModel.name}",
                 style: AppTextStyle.soraBody(size: 16),
               ),
               15.toHeightWhiteSpacing(),
               Text(
-                "${widget.postModel.product?.description}",
+                "${widget.productModel.description}",
                 style: AppTextStyle.soraBody(
                   size: 15,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               15.toHeightWhiteSpacing(),
-              if (widget.postModel.product?.goals != null)
+              if (widget.productModel.goals != null)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -127,7 +127,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     5.toHeightWhiteSpacing(),
                     Text(
-                      "${widget.postModel.product?.goals}",
+                      "${widget.productModel.goals}",
                       style: AppTextStyle.soraBody(
                         size: 15,
                         fontWeight: FontWeight.w400,
@@ -136,7 +136,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ],
                 ),
               10.toHeightWhiteSpacing(),
-              BuildImageWidget(imageUrls: widget.postModel.imageUrls),
+              BuildImageWidget(imageUrls: widget.productModel.imageUrls),
               15.toHeightWhiteSpacing(),
               AppButton(
                 onTab: () {},
@@ -146,7 +146,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               AppButton(
                 onTab: () async {
                   var chatRoom = await chatController.initiateChat(
-                      currentUserId!, widget.postModel.user?.id ?? "");
+                      currentUserId!, widget.productModel.user?.id ?? "");
                   Get.to(() => MessagesScreen(
                         chatRoom: chatRoom,
                         currentUserId: currentUserId!,

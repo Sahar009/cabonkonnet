@@ -2,11 +2,9 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
-
 import 'package:cabonconnet/views/home/showcase_product.dart';
 import 'package:cabonconnet/views/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -50,9 +48,6 @@ class _CreateProductState extends State<CreateProduct> {
   final ImagePicker _picker = ImagePicker();
   List<XFile> imageFiles = [];
   List<String> hashTags = [];
-
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +102,9 @@ class _CreateProductState extends State<CreateProduct> {
                                       hintText: 'Select product level',
                                       isDropdown: true,
                                       dropdownItems: const [
-                                        "not_started",
-                                        "in_progres",
-                                        "launched"
+                                        "Not Started",
+                                        "In Progres",
+                                        "Launched"
                                       ],
                                       dropdownValue: selectedLevel,
                                       onDropdownChanged: (value) {

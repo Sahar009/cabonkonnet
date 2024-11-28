@@ -22,7 +22,8 @@ class Welcome extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome to CarbonConnect',
-                    style: AppTextStyle.body(size: 20),
+                    style: AppTextStyle.body(
+                        size: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -32,7 +33,9 @@ class Welcome extends StatelessWidget {
                   Text(
                     'Tell us who you are...',
                     style: AppTextStyle.body(
-                        size: 12, fontWeight: FontWeight.normal),
+                        size: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Color(0xff2C2C2C)),
                   ),
                 ],
               ),
@@ -54,8 +57,9 @@ class Welcome extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: AppColor.black)),
                   child: Text(
-                    'Founder',
-                    style: AppTextStyle.body(size: 14),
+                    'Ecoboss',
+                    style: AppTextStyle.body(
+                        size: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -76,8 +80,9 @@ class Welcome extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(color: AppColor.black)),
                   child: Text(
-                    'Investor',
-                    style: AppTextStyle.body(size: 14),
+                    'Greenvester',
+                    style: AppTextStyle.body(
+                        size: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -90,8 +95,9 @@ class Welcome extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(color: AppColor.black)),
                 child: Text(
-                  'Events Planner',
-                  style: AppTextStyle.body(size: 14),
+                  'Impact maker',
+                  style:
+                      AppTextStyle.body(size: 14, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 30),

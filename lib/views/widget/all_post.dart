@@ -23,13 +23,9 @@ class _AllPostState extends State<AllPost> {
           return const Center(child: Text('No posts available'));
         }
         return ListView.builder(
-          itemCount: postController.posts
-              .where((post) => !post.isProduct)
-              .toList()
-              .length,
+          itemCount: postController.posts.length,
           itemBuilder: (context, index) {
-            List<PostModel> posts =
-                postController.posts.where((post) => !post.isProduct).toList();
+            List<PostModel> posts = postController.posts;
             PostModel post = posts[index];
             return PostWidget(
               postModel: post,
