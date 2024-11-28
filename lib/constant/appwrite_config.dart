@@ -24,6 +24,8 @@ class AppwriteConfig {
   static String eventCollectionId = "67337a85001a9340ead4";
   static String eventParticipantId = "674228260031c943de56";
   static String notificationCollectionId = "67456c09001532220397";
+  static String reportUserCollectionId = "6742126400214710dc23";
+  static String meetingCollectionId = "674829b5003066240a8c";
 
   late Client _client;
   late Account _account;

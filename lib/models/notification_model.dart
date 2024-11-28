@@ -10,6 +10,7 @@ class NotificationModel {
   final NotificationType type; // Using enum
   final String senderId;
   final String receiverId;
+  final String? postId;
   final bool isRead;
   DateTime createdAt;
 
@@ -20,20 +21,21 @@ class NotificationModel {
     required this.type,
     required this.senderId,
     required this.receiverId,
+    required this.postId,
     required this.isRead,
     required this.createdAt,
   });
 
-  NotificationModel copyWith({
-    String? id,
-    String? title,
-    String? message,
-    NotificationType? type,
-    String? senderId,
-    String? receiverId,
-    bool? isRead,
-    DateTime? createdAt,
-  }) {
+  NotificationModel copyWith(
+      {String? id,
+      String? title,
+      String? message,
+      NotificationType? type,
+      String? senderId,
+      String? receiverId,
+      bool? isRead,
+      DateTime? createdAt,
+      String? postId}) {
     return NotificationModel(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -43,6 +45,7 @@ class NotificationModel {
       receiverId: receiverId ?? this.receiverId,
       isRead: isRead ?? this.isRead,
       createdAt: createdAt ?? this.createdAt,
+      postId: postId ?? this.postId,
     );
   }
 
@@ -54,6 +57,7 @@ class NotificationModel {
       'senderId': senderId,
       'receiverId': receiverId,
       'isRead': isRead,
+      "postId": postId
     };
   }
 
@@ -62,8 +66,11 @@ class NotificationModel {
       id: map['\$id'] as String,
       title: map['title'] as String,
       message: map['message'] as String,
-      type: NotificationTypeExtension.fromAppwriteValue(
-          map['type'] as String)!, // Pass the value to fromAppwriteValue
+      postId: map["postId"],
+      type:
+          NotificationTypeExtension.fromAppwriteValue(map['type'] as String) ??
+              NotificationType
+                  .meetingSubmission, // Pass the value to fromAppwriteValue
       senderId: map['senderId'] as String,
       receiverId: map['receiverId'] as String,
       isRead: map['isRead'] as bool,

@@ -10,7 +10,6 @@ import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
 import 'package:cabonconnet/views/home/comment_screen.dart';
-import 'package:cabonconnet/views/home/product_detail.dart';
 import 'package:cabonconnet/views/profile/profile_view.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/gestures.dart';

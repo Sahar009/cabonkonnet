@@ -2,6 +2,7 @@ import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/controllers/meeting_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
+import 'package:cabonconnet/models/meeting_model.dart';
 import 'package:cabonconnet/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,15 +10,15 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../widget/widget.dart';
 
-class InvestmentCalendar extends StatefulWidget {
-  final ProductModel productModel;
-  const InvestmentCalendar({super.key, required this.productModel});
+class RescheduleMeeting extends StatefulWidget {
+  final MeetingModel meetingModel;
+  const RescheduleMeeting({super.key, required this.meetingModel});
 
   @override
-  InvestmentCalendarState createState() => InvestmentCalendarState();
+  RescheduleMeetingState createState() => RescheduleMeetingState();
 }
 
-class InvestmentCalendarState extends State<InvestmentCalendar> {
+class RescheduleMeetingState extends State<RescheduleMeeting> {
   // Track the selected date and time
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = const TimeOfDay(hour: 10, minute: 30);
@@ -162,13 +163,26 @@ class InvestmentCalendarState extends State<InvestmentCalendar> {
                   const SizedBox(width: 16),
                   // AM / PM Selector
 
-                  Card(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      decoration:
-                          const BoxDecoration(color: AppColor.filledColor),
-                      child: Text(_selectedTime.format(context)),
+                  GestureDetector(
+                    onTap: () async {
+                      TimeOfDay? pickedTime = await showTimePicker(
+                        context: context,
+                        initialTime: _selectedTime,
+                      );
+                      if (pickedTime != null) {
+                        setState(() {
+                          _selectedTime = pickedTime;
+                        });
+                      }
+                    },
+                    child: Card(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 8),
+                        decoration:
+                            const BoxDecoration(color: AppColor.filledColor),
+                        child: Text(_selectedTime.format(context)),
+                      ),
                     ),
                   ),
                   Container(
@@ -243,7 +257,7 @@ class InvestmentCalendarState extends State<InvestmentCalendar> {
                           _selectedDate.day,
                           _selectedTime.hour,
                           _selectedTime.minute),
-                      widget.productModel);
+                      widget.meetingModel);
                 },
                 title: "Confirm",
               ),
@@ -280,13 +294,13 @@ class InvestmentCalendarState extends State<InvestmentCalendar> {
   }
 
   // Show a dialog to add reminder
-  _showAddtionalPromtDialog(DateTime date, ProductModel productModel) async {
+  _showAddtionalPromtDialog(DateTime date, MeetingModel meetingModel) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return InvestPromt(
           date: date,
-          productModel: productModel,
+          meetingModel: meetingModel,
         );
       },
     );
@@ -295,11 +309,11 @@ class InvestmentCalendarState extends State<InvestmentCalendar> {
 
 class InvestPromt extends StatefulWidget {
   final DateTime date;
-  final ProductModel productModel;
+  final MeetingModel meetingModel;
   const InvestPromt({
     super.key,
     required this.date,
-    required this.productModel,
+    required this.meetingModel,
   });
 
   @override
@@ -366,10 +380,10 @@ class _InvestPromtState extends State<InvestPromt> {
                     width: MediaQuery.sizeOf(context).width * 0.5,
                     child: AppButton(
                       onTab: () {
-                        meetingController.createMeeting(
-                            date: widget.date,
-                            productModel: widget.productModel,
-                            meetingNote: meetingNote.text);
+                        meetingController.rescheduleMeeting(
+                            widget.meetingModel.id,
+                            widget.date,
+                            widget.meetingModel);
                         //Get.to(() => const CreateEvent());
                       },
                       title: "Confirm",

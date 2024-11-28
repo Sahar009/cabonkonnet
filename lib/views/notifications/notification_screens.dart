@@ -1,9 +1,11 @@
+import 'package:cabonconnet/constant/app_color.dart';
+import 'package:cabonconnet/enum/notification_type_enum.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/notification_model.dart';
-import 'package:cabonconnet/views/widget/app_back_botton.dart';
-import 'package:cabonconnet/views/widget/custom_divider.dart';
 import 'package:cabonconnet/controllers/notification_controller.dart';
+import 'package:cabonconnet/views/investment/meeting_invitation.dart';
+import 'package:cabonconnet/views/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +24,8 @@ class _NotificationScreensState extends State<NotificationScreens> {
   void initState() {
     super.initState();
     // Fetch notifications for a specific user
-    notificationController.fetchNotifications(
-        "receiver_user_id"); // Replace with actual receiverId
+    notificationController
+        .fetchNotifications(); // Replace with actual receiverId
   }
 
   @override
@@ -126,7 +128,7 @@ class NotificationItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${notification.message}",
+                    notification.message,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: AppTextStyle.body(
@@ -136,12 +138,28 @@ class NotificationItem extends StatelessWidget {
                           : FontWeight.bold,
                     ),
                   ),
+                  10.toHeightWhiteSpacing(),
+                  if (notification.title.contains("Meeting") ||
+                      notification.type == NotificationType.eventSubmission)
+                    SizedBox(
+                      width: 150,
+                      child: AppButton(
+                        onTab: () {
+                          Get.off(() => MeetingInvitation(
+                                meetingId: notification.postId ?? "",
+                              ));
+                        },
+                        color: AppColor.white,
+                        textColor: AppColor.primaryColor,
+                        title: "View details",
+                      ),
+                    )
                 ],
               ),
             ),
           ],
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         const CustomDivider(),
       ],
     );

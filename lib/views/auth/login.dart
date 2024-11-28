@@ -99,7 +99,7 @@ class _LoginState extends State<Login> {
                           ],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       AppButton(
                         onTab: () {
                           authController.loginUser(

@@ -60,7 +60,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => const InvestmentCalendar());
+                    Get.to(() => InvestmentCalendar(
+                          productModel: widget.productModel,
+                        ));
                   },
                   child: Container(
                     height: 47,
@@ -101,40 +103,39 @@ class _ProductDetailsState extends State<ProductDetails> {
                           color: AppColor.yelow,
                           borderRadius: BorderRadius.circular(4)),
                       child: Text(
-                          "${widget.productModel.level}".toProductStatus())),
+                          widget.productModel.level.toProductStatus())),
                 ],
               ),
               Text(
-                "${widget.productModel.name}",
+                widget.productModel.name,
                 style: AppTextStyle.soraBody(size: 16),
               ),
               15.toHeightWhiteSpacing(),
               Text(
-                "${widget.productModel.description}",
+                widget.productModel.description,
                 style: AppTextStyle.soraBody(
                   size: 15,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               15.toHeightWhiteSpacing(),
-              if (widget.productModel.goals != null)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Product Goal",
-                      style: AppTextStyle.soraBody(size: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Product Goal",
+                    style: AppTextStyle.soraBody(size: 16),
+                  ),
+                  5.toHeightWhiteSpacing(),
+                  Text(
+                    widget.productModel.goals,
+                    style: AppTextStyle.soraBody(
+                      size: 15,
+                      fontWeight: FontWeight.w400,
                     ),
-                    5.toHeightWhiteSpacing(),
-                    Text(
-                      "${widget.productModel.goals}",
-                      style: AppTextStyle.soraBody(
-                        size: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
               10.toHeightWhiteSpacing(),
               BuildImageWidget(imageUrls: widget.productModel.imageUrls),
               15.toHeightWhiteSpacing(),

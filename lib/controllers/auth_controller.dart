@@ -273,7 +273,36 @@ class AuthController extends GetxController {
     Get.offAll(() => const Login());
   }
 
-  void reportUser({required String userId, String? reason}) {}
+  Future<void> reportUser({
+    required String userId,
+    String? reason,
+  }) async {
+    String? reportingUser = await AppLocalStorage.getCurrentUserId();
 
- 
+    if (reportingUser == null) {
+      CustomSnackbar.error(
+        title: "Error",
+        message: "Unable to identify the reporting user. Please try again.",
+      );
+      return;
+    }
+
+    final (status, message) = await authRepository.reportUser(
+      reportingUser: reportingUser,
+      reportedUser: userId,
+      reason: reason,
+    );
+
+    if (status) {
+      CustomSnackbar.success(
+        title: "Report Submitted",
+        message: "Thank you for keeping CabonConnet clean.",
+      );
+    } else {
+      CustomSnackbar.error(
+        title: "Submission Failed",
+        message: message,
+      );
+    }
+  }
 }

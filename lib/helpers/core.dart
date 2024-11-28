@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 String getUserTitle(String value) {
@@ -73,5 +74,13 @@ extension IntToSizedBox on int {
     return SizedBox(
       width: toDouble(),
     );
+  }
+}
+
+
+class Core {
+  /// Formats a [DateTime] into a human-readable string.
+  static String formatDate(DateTime dateTime) {
+    return DateFormat('EEEE, MMM d, y, h:mm a').format(dateTime);
   }
 }

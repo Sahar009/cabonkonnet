@@ -18,7 +18,8 @@ class ShowcaseProduct extends StatefulWidget {
   final String productDescription;
   final String productGoal;
   const ShowcaseProduct(
-      {super.key,
+      {
+      super.key,
       required this.productName,
       required this.productLevel,
       required this.productDescription,
@@ -33,7 +34,6 @@ ProfileController profileController = Get.put(ProfileController());
 class _ShowcaseProductState extends State<ShowcaseProduct> {
   final ProductController postController = Get.put(ProductController());
   // Define TextEditingController for each field
-
   final TextEditingController fundsNeededController = TextEditingController();
   final TextEditingController productImpactController = TextEditingController();
   final TextEditingController additionalNotesController =

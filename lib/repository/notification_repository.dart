@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/models/notification_model.dart';
@@ -15,6 +17,9 @@ class NotificationRepository {
         collectionId: _collectionId,
         queries: [
           Query.equal('receiverId', receiverId),
+          Query.orderDesc(
+            '\$createdAt',
+          ),
         ],
       );
 
@@ -22,7 +27,7 @@ class NotificationRepository {
           .map((doc) => NotificationModel.fromMap(doc.data))
           .toList();
     } catch (e) {
-      print("Error fetching notifications: $e");
+      log("Error fetching notifications: $e");
       return [];
     }
   }
@@ -37,7 +42,7 @@ class NotificationRepository {
         data: notification.toMap(),
       );
     } catch (e) {
-      print("Error creating notification: $e");
+      log("Error creating notification: $e");
     }
   }
 
@@ -51,7 +56,7 @@ class NotificationRepository {
         data: {'isRead': true},
       );
     } catch (e) {
-      print("Error marking notification as read: $e");
+      log("Error marking notification as read: $e");
     }
   }
 
@@ -64,7 +69,7 @@ class NotificationRepository {
         documentId: notificationId,
       );
     } catch (e) {
-      print("Error deleting notification: $e");
+      log("Error deleting notification: $e");
     }
   }
 

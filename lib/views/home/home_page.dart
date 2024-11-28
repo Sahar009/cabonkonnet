@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       // CustomDialog.error();
                       productController.fetchAllPosts();
-                      Get.to(() => NotificationScreens());
+                      Get.to(() => const NotificationScreens());
                     },
                     child: SvgPicture.asset(AppImages.notify),
                   )

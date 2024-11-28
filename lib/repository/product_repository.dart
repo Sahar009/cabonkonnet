@@ -30,12 +30,12 @@ class ProductRepository {
 
   // Retrieve a Product by ID
   Future<(bool isSuccess, ProductModel? product, String? message)> getProduct(
-      String ProductId) async {
+      String productId) async {
     try {
       final Document document = await databases.getDocument(
         databaseId: AppwriteConfig.databaseId,
         collectionId: AppwriteConfig.productCollectionId,
-        documentId: ProductId,
+        documentId: productId,
       );
       return (true, ProductModel.fromMap(document.data), null);
     } catch (e) {

@@ -35,7 +35,7 @@ class Welcome extends StatelessWidget {
                     style: AppTextStyle.body(
                         size: 12,
                         fontWeight: FontWeight.normal,
-                        color: Color(0xff2C2C2C)),
+                        color: const Color(0xff2C2C2C)),
                   ),
                 ],
               ),

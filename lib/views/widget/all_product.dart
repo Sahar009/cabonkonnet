@@ -1,8 +1,5 @@
-import 'package:cabonconnet/controllers/post_controller.dart';
 import 'package:cabonconnet/controllers/product_controller.dart';
-import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/models/product_model.dart';
-import 'package:cabonconnet/views/widget/post_widget.dart';
 import 'package:cabonconnet/views/widget/product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

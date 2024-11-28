@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/models/notification_model.dart';
 import 'package:cabonconnet/repository/notification_repository.dart';
@@ -11,16 +13,16 @@ class NotificationController extends GetxController {
   RxBool isLoading = false.obs;
 
   // Fetch notifications for a specific user
-  Future<void> fetchNotifications(String receiverId) async {
+  Future<void> fetchNotifications() async {
     String? userId = await AppLocalStorage.getCurrentUserId();
-
+    log(userId.toString());
     isLoading.value = true;
     try {
       final fetchedNotifications =
-          await notificationRepository.fetchNotifications(userId ?? receiverId);
+          await notificationRepository.fetchNotifications(userId ?? "");
       notifications.assignAll(fetchedNotifications);
     } catch (e) {
-      print("Error fetching notifications: $e");
+      log("Error fetching notifications: $e");
     } finally {
       isLoading.value = false;
     }
@@ -32,7 +34,7 @@ class NotificationController extends GetxController {
       await notificationRepository.createNotification(notification);
       notifications.add(notification); // Optimistically update UI
     } catch (e) {
-      print("Error creating notification: $e");
+      log("Error creating notification: $e");
     }
   }
 
@@ -52,7 +54,7 @@ class NotificationController extends GetxController {
         }
       }
     } catch (e) {
-      print("Error marking notification as read: $e");
+      log("Error marking notification as read: $e");
     }
   }
 
@@ -66,7 +68,7 @@ class NotificationController extends GetxController {
         notifications[index] = notifications[index].copyWith(isRead: true);
       }
     } catch (e) {
-      print("Error marking notification as read: $e");
+      log("Error marking notification as read: $e");
     }
   }
 
@@ -76,7 +78,7 @@ class NotificationController extends GetxController {
       await notificationRepository.deleteNotification(notificationId);
       notifications.removeWhere((notif) => notif.id == notificationId);
     } catch (e) {
-      print("Error deleting notification: $e");
+      log("Error deleting notification: $e");
     }
   }
 

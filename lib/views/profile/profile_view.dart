@@ -108,107 +108,102 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     File? imageFile;
-    return userModel == null
-        ? Container()
-        : Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            height: MediaQuery.sizeOf(context).height * 0.35,
-            decoration: const BoxDecoration(color: AppColor.white),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                50.toHeightWhiteSpacing(),
-                Stack(
-                  children: [
-                    Container(
-                      height: 120,
-                      decoration: BoxDecoration(
-                          color: AppColor.filledColor,
-                          borderRadius: BorderRadius.circular(5),
-                          // ignore: unnecessary_null_comparison
-                          image: imageFile != null
-                              ? DecorationImage(
-                                  image: FileImage(imageFile!),
-                                  fit: BoxFit.cover)
-                              : userModel.coverImage != null
-                                  ? DecorationImage(
-                                      image: CachedNetworkImageProvider(
-                                          userModel.coverImage!),
-                                      fit: BoxFit.cover)
-                                  : null),
-                      child: userModel.coverImage == null && isEditable
-                          ? Center(
-                              child: GestureDetector(
-                                onTap: onEditCover,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 8),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all()),
-                                  child: const Text("Add cover photo"),
-                                ),
-                              ),
-                            )
-                          : null,
-                    ),
-                    Positioned(
-                      bottom: 3,
-                      left: 5,
-                      child: CircleAvatar(
-                        radius: 45,
-                        backgroundImage: userModel.profileImage != null
-                            ? CachedNetworkImageProvider(
-                                userModel.profileImage!)
-                            : null,
-                      ),
-                    ),
-                    if (userModel.coverImage != null && isEditable)
-                      Positioned(
-                        right: 10,
-                        top: 10,
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      height: MediaQuery.sizeOf(context).height * 0.35,
+      decoration: const BoxDecoration(color: AppColor.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          50.toHeightWhiteSpacing(),
+          Stack(
+            children: [
+              Container(
+                height: 120,
+                decoration: BoxDecoration(
+                    color: AppColor.filledColor,
+                    borderRadius: BorderRadius.circular(5),
+                    // ignore: unnecessary_null_comparison
+                    image: imageFile != null
+                        ? DecorationImage(
+                            image: FileImage(imageFile), fit: BoxFit.cover)
+                        : userModel.coverImage != null
+                            ? DecorationImage(
+                                image: CachedNetworkImageProvider(
+                                    userModel.coverImage!),
+                                fit: BoxFit.cover)
+                            : null),
+                child: userModel.coverImage == null && isEditable
+                    ? Center(
                         child: GestureDetector(
-                          onTap: () {
-                            //    _selectImages();
-
-                            onEditCover;
-                          },
-                          child: const Icon(
-                            IconsaxPlusLinear.edit_2,
-                            color: AppColor.red,
+                          onTap: onEditCover,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 8),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all()),
+                            child: const Text("Add cover photo"),
                           ),
                         ),
                       )
-                  ],
+                    : null,
+              ),
+              Positioned(
+                bottom: 3,
+                left: 5,
+                child: CircleAvatar(
+                  radius: 45,
+                  backgroundImage: userModel.profileImage != null
+                      ? CachedNetworkImageProvider(userModel.profileImage!)
+                      : null,
                 ),
-                10.toHeightWhiteSpacing(),
-                Text(
-                  userModel.fullName.capitalizeFirst!,
-                  style: AppTextStyle.body(size: 18),
-                ),
-                3.toHeightWhiteSpacing(),
-                Text(
-                  userModel.role.capitalizeFirst ?? '',
-                  style: AppTextStyle.body(size: 16),
-                ),
-                3.toHeightWhiteSpacing(),
-                Text(
-                  userModel.country ?? "",
-                  style:
-                      AppTextStyle.body(size: 15, fontWeight: FontWeight.w300),
-                ),
-                2.toHeightWhiteSpacing(),
-                Text(
-                  userModel.website ?? "www.greenplace.com",
-                  style: AppTextStyle.body(
-                      size: 15,
-                      color: AppColor.primaryColor,
-                      fontWeight: FontWeight.w300),
-                ),
-              ],
-            ),
-          );
+              ),
+              if (userModel.coverImage != null && isEditable)
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      //    _selectImages();
+
+                      onEditCover;
+                    },
+                    child: const Icon(
+                      IconsaxPlusLinear.edit_2,
+                      color: AppColor.red,
+                    ),
+                  ),
+                )
+            ],
+          ),
+          10.toHeightWhiteSpacing(),
+          Text(
+            userModel.fullName.capitalizeFirst!,
+            style: AppTextStyle.body(size: 18),
+          ),
+          3.toHeightWhiteSpacing(),
+          Text(
+            userModel.role.capitalizeFirst ?? '',
+            style: AppTextStyle.body(size: 16),
+          ),
+          3.toHeightWhiteSpacing(),
+          Text(
+            userModel.country ?? "",
+            style: AppTextStyle.body(size: 15, fontWeight: FontWeight.w300),
+          ),
+          2.toHeightWhiteSpacing(),
+          Text(
+            userModel.website ?? "www.greenplace.com",
+            style: AppTextStyle.body(
+                size: 15,
+                color: AppColor.primaryColor,
+                fontWeight: FontWeight.w300),
+          ),
+        ],
+      ),
+    );
   }
 }
 

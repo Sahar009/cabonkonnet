@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:appwrite/appwrite.dart';
+import 'package:cabonconnet/constant/appwrite_config.dart';
 import 'package:cabonconnet/constant/local_storage.dart';
 import 'package:cabonconnet/models/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -40,7 +41,6 @@ class AuthRepository {
           email: email.trim().toLowerCase(),
           password: password,
           name: fullName);
-      await account.updatePrefs(prefs: {});
 
       UserModel userModel = UserModel(
         id: user.$id,
@@ -85,7 +85,7 @@ class AuthRepository {
         documentId: session.userId,
       );
 
-      AppLocalStorage.setCurrentUserId(session.userId);
+      await AppLocalStorage.setCurrentUserId(session.userId);
       var userModel = UserModel.fromMap(userDoc.data);
       return (true, userModel, "Login successful");
     } on AppwriteException catch (e) {
@@ -213,6 +213,30 @@ class AuthRepository {
     } catch (e) {
       log("Error: $e");
       return (false, "Error: $e");
+    }
+  }
+
+  Future<(bool, String)> reportUser({
+    required String reportingUser,
+    required String reportedUser,
+    String? reason,
+  }) async {
+    try {
+      await database.createDocument(
+        databaseId: AppwriteConfig.databaseId,
+        collectionId: AppwriteConfig.reportUserCollectionId,
+        documentId: ID.unique(),
+        data: {
+          "reportingUser": reportingUser,
+          "reportedUser": reportedUser,
+          "reason": reason ?? "No reason provided",
+        },
+      );
+
+      return (true, "Report submitted successfully");
+    } catch (e) {
+      print("Error reporting user: $e");
+      return (false, "Failed to submit the report");
     }
   }
 }

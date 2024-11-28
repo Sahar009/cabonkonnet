@@ -6,7 +6,6 @@ import 'package:cabonconnet/views/home/showcase_product.dart';
 import 'package:cabonconnet/views/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../widget/widget.dart';
 
@@ -45,9 +44,6 @@ class _CreateProductState extends State<CreateProduct> {
     super.dispose();
   }
 
-  final ImagePicker _picker = ImagePicker();
-  List<XFile> imageFiles = [];
-  List<String> hashTags = [];
 
   @override
   Widget build(BuildContext context) {
