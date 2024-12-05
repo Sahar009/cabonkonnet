@@ -87,6 +87,7 @@ class _CreateEventState extends State<CreateEvent> {
     }
     if (_formKey.currentState!.validate()) {
       eventController.createEvent(
+    
           title: titleController.text,
           description: descriptionController.text,
           accessType: eventAccess,

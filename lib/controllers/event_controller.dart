@@ -7,6 +7,7 @@ import 'package:cabonconnet/helpers/custom_snackbar.dart';
 import 'package:cabonconnet/models/event_model.dart';
 import 'package:cabonconnet/repository/event_repository.dart';
 import 'package:cabonconnet/repository/file_upload_repository.dart';
+import 'package:cabonconnet/views/home/home.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -54,6 +55,7 @@ class EventController extends GetxController {
     double? ticketPrice,
     required DateTime date,
     required File file,
+ 
   }) async {
     isBusy.value = true;
     String? imageUrl = await fileRepository.uploadFile(file, "EventImages");
@@ -76,7 +78,9 @@ class EventController extends GetxController {
     if (isSuccess) {
       events.add(event);
       CustomSnackbar.success(
-          title: 'Success', message: 'Event created successfully');
+          title: 'Success',
+          message: 'Event created successfully, please wait for approval');
+      Get.offAll(() => Home());
     } else {
       CustomSnackbar.success(
           title: 'Error', message: message ?? 'Failed to create event');

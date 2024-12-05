@@ -9,6 +9,7 @@ import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/post_model.dart';
 import 'package:cabonconnet/views/chat/message.dart';
+import 'package:cabonconnet/views/coming_soon/coming_soon.dart';
 import 'package:cabonconnet/views/home/comment_screen.dart';
 import 'package:cabonconnet/views/profile/profile_view.dart';
 import 'package:cabonconnet/views/widget/widget.dart';
@@ -18,6 +19,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
 import 'package:readmore/readmore.dart';
+import 'package:share_plus/share_plus.dart';
+
 
 class PostWidget extends StatefulWidget {
   final PostModel postModel;
@@ -323,8 +326,20 @@ class _PostWidgetState extends State<PostWidget> {
                     text: 'Comment'),
 
               UserButton(
-                  onTap: () {}, iconData: AppImages.share, text: 'Share'),
-              UserButton(onTap: () {}, iconData: AppImages.send, text: 'Send'),
+                  onTap: ()async {
+                   // await Share.share('https://www.carbonkonnect.co.uk/');
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const ComingSoon()));
+                  },
+                  iconData: AppImages.share,
+                  text: 'Share'),
+              UserButton(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const ComingSoon()));
+                  },
+                  iconData: AppImages.send,
+                  text: 'Send'),
 
               if (widget.isComment)
                 UserButton(

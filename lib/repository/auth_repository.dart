@@ -135,8 +135,8 @@ class AuthRepository {
     } catch (e) {
       log("Error sending OTP: ${e.toString()}");
       // return (false, "Error sending OTP: ${e.toString()}");
-       "Failed to send OTP. Status code: ${response.statusCode}"
-      
+      //   "Failed to send OTP. Status code: ${response.statusCode}";
+      return (false, 'An unexpected error occurred: $e');
     }
   }
 
