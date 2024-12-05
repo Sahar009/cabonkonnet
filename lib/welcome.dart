@@ -104,7 +104,7 @@ class Welcome extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Note: You cant undo your choice once selected',
+                    "Note: You cant undo your choice once selected.",
                     style: AppTextStyle.body(
                         fontWeight: FontWeight.normal, size: 13),
                   ),
