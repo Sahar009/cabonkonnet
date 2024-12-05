@@ -12,6 +12,12 @@ class NotificationController extends GetxController {
   RxList<NotificationModel> notifications = <NotificationModel>[].obs;
   RxBool isLoading = false.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    fetchNotifications();
+  }
+
   // Fetch notifications for a specific user
   Future<void> fetchNotifications() async {
     String? userId = await AppLocalStorage.getCurrentUserId();

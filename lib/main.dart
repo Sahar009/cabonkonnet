@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
             useMaterial3: true,
-            scaffoldBackgroundColor: const Color(0xffFFFFFF)),
+            scaffoldBackgroundColor:  Colors.white),
         home: const SplashScreen(),
       );
     });

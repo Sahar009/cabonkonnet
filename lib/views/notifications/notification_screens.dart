@@ -23,9 +23,7 @@ class _NotificationScreensState extends State<NotificationScreens> {
   @override
   void initState() {
     super.initState();
-    // Fetch notifications for a specific user
-    notificationController
-        .fetchNotifications(); // Replace with actual receiverId
+ 
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sizer/sizer.dart';
 
 class AppTextStyle {
   static TextStyle body({
@@ -12,7 +11,7 @@ class AppTextStyle {
     FontWeight fontWeight = FontWeight.normal,
   }) {
     return GoogleFonts.sora(
-      fontSize: size,
+      fontSize: size -0.5,
       color: color,
       letterSpacing: 1,
       fontWeight: fontWeight,
@@ -29,7 +28,7 @@ class AppTextStyle {
     FontWeight fontWeight = FontWeight.bold,
   }) {
     return GoogleFonts.sora(
-      fontSize: size,
+      fontSize: size -0.5,
       color: color,
       letterSpacing: 0.5,
       fontWeight: fontWeight,
@@ -46,7 +45,7 @@ class AppTextStyle {
     FontWeight fontWeight = FontWeight.bold,
   }) {
     return GoogleFonts.sora(
-        fontSize: size,
+        fontSize: size -0.5,
         color: color,
         fontWeight: fontWeight,
         fontStyle: fontStyle,

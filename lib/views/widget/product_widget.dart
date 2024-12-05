@@ -205,7 +205,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 child: ReadMoreText(
                   widget.productModel.description,
                   textAlign: TextAlign.start,
-                  trimLines: 6,
+                  trimLines: 4,
                   trimMode: TrimMode.Line,
                   colorClickableText: Colors.pink,
                   trimCollapsedText: 'Show more',

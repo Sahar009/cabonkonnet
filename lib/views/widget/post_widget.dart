@@ -206,7 +206,7 @@ class _PostWidgetState extends State<PostWidget> {
                 child: ReadMoreText(
                   widget.postModel.content,
                   textAlign: TextAlign.start,
-                  trimLines: 6,
+                  trimLines: 4,
                   trimMode: TrimMode.Line,
                   colorClickableText: Colors.pink,
                   trimCollapsedText: 'Show more',
@@ -287,71 +287,68 @@ class _PostWidgetState extends State<PostWidget> {
             ],
           ),
         ),
-      const CustomDivider(),
-     
-         Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    UserButton(
-                        onTap: () {
-                          // if (widget.postModel.likes!
-                          //     .contains(currentUserId)) {
-                          //   widget.postModel.likes!.remove(currentUserId);
-                          // } else {
-                          //   widget.postModel.likes!.add(currentUserId!);
-                          // }
+        const CustomDivider(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              UserButton(
+                  onTap: () {
+                    // if (widget.postModel.likes!
+                    //     .contains(currentUserId)) {
+                    //   widget.postModel.likes!.remove(currentUserId);
+                    // } else {
+                    //   widget.postModel.likes!.add(currentUserId!);
+                    // }
 
-                          postController.toggleLike(widget.postModel.id);
-                          setState(() {});
-                        },
-                        iconData: AppImages.like,
-                        text: 'Like'),
-                    if (!widget.isComment)
-                      UserButton(
-                          onTap: !widget.isComment
-                              ? () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CommentScreen(
-                                                postModel: widget.postModel,
-                                              )));
-                                }
-                              : () {},
-                          iconData: AppImages.comment,
-                          text: 'Comment'),
+                    postController.toggleLike(widget.postModel.id);
+                    setState(() {});
+                  },
+                  iconData: AppImages.like,
+                  text: 'Like'),
+              if (!widget.isComment)
+                UserButton(
+                    onTap: !widget.isComment
+                        ? () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CommentScreen(
+                                          postModel: widget.postModel,
+                                        )));
+                          }
+                        : () {},
+                    iconData: AppImages.comment,
+                    text: 'Comment'),
 
-                    UserButton(
-                        onTap: () {}, iconData: AppImages.share, text: 'Share'),
-                    UserButton(
-                        onTap: () {}, iconData: AppImages.send, text: 'Send'),
+              UserButton(
+                  onTap: () {}, iconData: AppImages.share, text: 'Share'),
+              UserButton(onTap: () {}, iconData: AppImages.send, text: 'Send'),
 
-                    if (widget.isComment)
-                      UserButton(
-                          onTap: () {
-                            savedPostController.savePost(widget.postModel.id);
-                          },
-                          iconData: AppImages.saveIcon,
-                          text: 'Save'),
-                    //  widget.isComment ? UserButton(
-                    //   onTap:
-                    //        () {
-                    //           Navigator.push(
-                    //               context,
-                    //               MaterialPageRoute(
-                    //                   builder: (context) => CommentScreen(
-                    //                         postModel: widget.postModel,
-                    //                       )));
-                    //         }
-                    //     ,
-                    //   iconData: AppImages.comment,
-                    //   text: 'Comment'),
-                  ],
-                ),
-              ),
+              if (widget.isComment)
+                UserButton(
+                    onTap: () {
+                      savedPostController.savePost(widget.postModel.id);
+                    },
+                    iconData: AppImages.saveIcon,
+                    text: 'Save'),
+              //  widget.isComment ? UserButton(
+              //   onTap:
+              //        () {
+              //           Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) => CommentScreen(
+              //                         postModel: widget.postModel,
+              //                       )));
+              //         }
+              //     ,
+              //   iconData: AppImages.comment,
+              //   text: 'Comment'),
+            ],
+          ),
+        ),
         const CustomDivider()
       ],
     );

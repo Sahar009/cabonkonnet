@@ -12,19 +12,28 @@ import 'package:get/get.dart';
 class MeetingInvitation extends StatelessWidget {
   final String meetingId;
 
-  const MeetingInvitation({super.key, required this.meetingId});
+  const MeetingInvitation({Key? key, required this.meetingId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Controller instance
-    MeetingController meetingController = Get.put(MeetingController());
+    final MeetingController meetingController = Get.put(MeetingController());
 
-    // Fetch the meeting details
-    meetingController.fetchMeeting(meetingId);
+    // Fetch meeting details once
+    if (!meetingController.isLoading.value) {
+      meetingController.fetchMeeting(meetingId);
+    }
 
     return Scaffold(
       body: Obx(() {
         final meeting = meetingController.meeting.value;
+
+        if (meeting == null) {
+          return const Center(
+              child: CircularProgressIndicator()); // Loading state
+        }
+
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -34,125 +43,98 @@ class MeetingInvitation extends StatelessWidget {
                 pageTitle: "Invitation",
                 vertical: true,
               ),
-              20.toHeightWhiteSpacing(),
-              // Text("data")
-              // // Meeting details with reactive UI
-              SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.6,
-                  child: meetingController.meeting.value == null ||
-                          meeting == null
-                      ? const Loading()
-                      : // Loading state
+              const SizedBox(height: 20),
 
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RichText(
-                              textAlign: TextAlign.start,
-                              text: TextSpan(
-                                style: AppTextStyle.body(
-                                    size: 15,
-                                    color: AppColor
-                                        .primaryColor), // Base style for the whole text
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        "${meeting.investor?.companyName ?? meeting.investor?.fullName}",
-                                    style: AppTextStyle.body(
-                                        size: 15,
-                                        color: AppColor.primaryColor,
-                                        fontWeight: FontWeight
-                                            .bold), // Bold style for the company name
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        " invited you to a business meet-up scheduled for ${Core.formatDate(meeting.scheduledAt!)}",
-                                    style: AppTextStyle.body(
-                                        size: 15), // Regular style for the rest
-                                  ),
-                                ],
-                              ),
-                            ),
-                            20.toHeightWhiteSpacing(),
+              // Meeting Details
+              RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  style:
+                      AppTextStyle.body(size: 15, color: AppColor.primaryColor),
+                  children: [
+                    TextSpan(
+                      text:
+                          meeting.investor?.companyName ?? meeting.investor?.fullName ?? "Unknown Investor",
+                      style: AppTextStyle.body(
+                        size: 15,
+                        color: AppColor.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          " invited you to a business meet-up scheduled for ${Core.formatDate(meeting.scheduledAt!)}",
+                      style: AppTextStyle.body(size: 15),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
 
-                            // Action buttons
-                            if (meeting.status == MeetingStatus.rejected)
-                              Container(
-                                child: Text(
-                                  "You declined this meeting because: ${meeting.founderRejectReason}",
-                                  style: AppTextStyle.body(size: 14),
-                                ),
-                              ),
-                            if (meeting.status == MeetingStatus.cancelled)
-                              Container(
-                                child: Text(
-                                  "The investor canceled this meeting because: ${meeting.investorCancelReason}",
-                                  style: AppTextStyle.body(size: 14),
-                                ),
-                              ),
-                            if (meeting.status == MeetingStatus.scheduled)
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Below is the meeting link:",
-                                      style: AppTextStyle.body(size: 14),
-                                    ),
-                                    Text(
-                                      "${meeting.meetingLink ?? "N/A"}",
-                                      style: AppTextStyle.body(size: 14),
-                                    ),
-                                  ],
-                                ),
-                              ),
+              // Status-Specific Details
+              if (meeting.status == MeetingStatus.rejected)
+                Text(
+                  "You declined this meeting for the following reason: ${meeting.founderRejectReason ?? "No reason provided."}",
+                  style: AppTextStyle.body(size: 14),
+                ),
+              if (meeting.status == MeetingStatus.cancelled)
+                Text(
+                  "The investor canceled this meeting for the following reason: ${meeting.investorCancelReason ?? "No reason provided."}",
+                  style: AppTextStyle.body(size: 14),
+                ),
+              if (meeting.status == MeetingStatus.scheduled)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Meeting Link:",
+                      style: AppTextStyle.body(size: 14),
+                    ),
+                    Text(
+                      meeting.meetingLink ?? "N/A",
+                      style: AppTextStyle.body(size: 14),
+                    ),
+                  ],
+                ),
 
-                            if (meeting.status == MeetingStatus.pending)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  SizedBox(
-                                    width: 120,
-                                    child: AppButton(
-                                      onTab: () => meetingController
-                                          .acceptMeeting(meeting.id, meeting),
-                                      title: "Accept",
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 120,
-                                    child: AppButton(
-                                      onTab: () {
-                                        Get.to(() => DeclineMeeting(
-                                              meetingModel: meeting,
-                                            ));
-                                      },
-                                      title: "Decline",
-                                      color: AppColor.white,
-                                      textColor: AppColor.primaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 120,
-                                    child: AppButton(
-                                      onTab: () {
-                                        Get.to(() => RescheduleMeeting(
-                                              meetingModel: meeting,
-                                            ));
-                                      },
-                                      title: "Reschedule",
-                                      color: AppColor.white,
-                                      textColor: AppColor.primaryColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
+              // Action Buttons
+              if (meeting.status == MeetingStatus.pending)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: AppButton(
+                        onTab: () => meetingController.acceptMeeting(
+                            meeting.id, meeting),
+                        title: "Accept",
+                      ),
+                    ),
+                    SizedBox(
+                      width: 120,
+                      child: AppButton(
+                        onTab: () =>
+                            Get.to(() => DeclineMeeting(meetingModel: meeting)),
+                        title: "Decline",
+                        color: AppColor.white,
+                        textColor: AppColor.primaryColor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 120,
+                      child: AppButton(
+                        onTab: () => Get.to(
+                            () => RescheduleMeeting(meetingModel: meeting)),
+                        title: "Reschedule",
+                        color: AppColor.white,
+                        textColor: AppColor.primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
 
-                            15.toHeightWhiteSpacing(),
-                            const CustomDivider(),
-                          ],
-                        )),
+              const SizedBox(height: 15),
+              const CustomDivider(),
             ],
           ),
         );

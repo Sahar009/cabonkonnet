@@ -1,6 +1,7 @@
 import 'package:cabonconnet/constant/app_color.dart';
 import 'package:cabonconnet/constant/app_images.dart';
 import 'package:cabonconnet/controllers/auth_controller.dart';
+import 'package:cabonconnet/controllers/notification_controller.dart';
 import 'package:cabonconnet/controllers/product_controller.dart';
 import 'package:cabonconnet/controllers/profile_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
@@ -24,6 +25,8 @@ class _HomePageState extends State<HomePage> {
   final ProductController productController = Get.put(ProductController());
   final PostController postController = Get.put(PostController());
   final ProfileController profile = Get.put(ProfileController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   TextEditingController addressController = TextEditingController();
   PageController pageController = PageController();
   bool isPost = true;

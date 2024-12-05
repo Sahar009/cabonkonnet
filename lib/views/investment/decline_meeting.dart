@@ -26,8 +26,8 @@ class _DeclineMeetingState extends State<DeclineMeeting> {
     return Scaffold(
       body: Obx(
          () {
-          return meetingController.isLoading.value ? Loading() : Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+          return meetingController.isLoading.value ? const Loading() : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,7 +58,7 @@ class _DeclineMeetingState extends State<DeclineMeeting> {
                           borderSide: BorderSide.none),
                       hintText: "Give your reasons..."),
                 ),
-                Spacer(),
+                const Spacer(),
                 AppButton(
                   onTab: () {
                     if (reason.text.isNotEmpty) {

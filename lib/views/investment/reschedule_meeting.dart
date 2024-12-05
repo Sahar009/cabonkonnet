@@ -3,7 +3,6 @@ import 'package:cabonconnet/controllers/meeting_controller.dart';
 import 'package:cabonconnet/helpers/core.dart';
 import 'package:cabonconnet/helpers/textstyles.dart';
 import 'package:cabonconnet/models/meeting_model.dart';
-import 'package:cabonconnet/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';

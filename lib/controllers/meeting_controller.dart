@@ -108,6 +108,10 @@ class MeetingController extends GetxController {
           createdAt: DateTime.now(),
         );
         notificationRepository.createNotification(notificationModel);
+        CustomSnackbar.success(
+            title: "Success",
+            message: "The meeting request has been accepted.");
+        Get.off(() => Home());
 
         return true;
       } else {
@@ -137,7 +141,9 @@ class MeetingController extends GetxController {
           createdAt: DateTime.now(),
         );
         notificationRepository.createNotification(notificationModel);
-        CustomSnackbar.success(title: "Success", message: "The Re");
+        CustomSnackbar.success(
+            title: "Success",
+            message: "The meeting request has been accepted.");
         return true;
       } else {
         errorMessage.value = 'Failed to accept meeting';
@@ -171,6 +177,9 @@ class MeetingController extends GetxController {
           createdAt: DateTime.now(),
         );
         notificationRepository.createNotification(notificationModel);
+        Get.to(() => Home());
+        CustomSnackbar.success(
+            title: "Success", message: "The meeting has been rescheduled");
 
         return true;
       } else {
